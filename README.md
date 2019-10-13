@@ -217,7 +217,7 @@ It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 ```bash
 BITCREDS_ROOT=$(pwd)
 
-# Pick some path to install BDB to, here we create a directory within the credits directory
+# Pick some path to install BDB to, here we create a directory within the Bitcreds directory
 BDB_PREFIX="${BITCREDS_ROOT}/db4"
 mkdir -p $BDB_PREFIX
 
