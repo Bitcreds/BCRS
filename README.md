@@ -183,7 +183,7 @@ libqrencode (optional) can be installed with:
 
     sudo apt-get install libqrencode-dev
 
-Once these are installed, they will be found by configure and a credits-qt executable will be
+Once these are installed, they will be found by configure and a bitcreds-qt executable will be
 built by default.
 
 Notes
