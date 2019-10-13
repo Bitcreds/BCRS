@@ -1,19 +1,19 @@
-# **Credits (CRDS) v1.4.0.0**
+# **Bitcreds (BCRS) v1.5.0.0**
 
 ![CRDS logo](https://github.com/Credits-CRDS/Credits/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/CRDS/Credits.svg?branch=master)](https://travis-ci.org/CRDS/Credits)
 
-**Copyright (c) 2017-2019 Credits Developers**
+**Copyright (c) 2017-2019 Bitcreds Developers**
 
-What is Credits?
+What are Bitcreds?
 ----------------
-* Coin Suffix: CRDS
+* Coin Suffix: BCRS
 * PoW Mining Algorithm: Argon2d
 * PoW Difficulty Algorithm: DELTA
 * PoW Target Spacing: 128 Seconds
 * PoW Reward per Block: See Below
 * Maturity: 10 Blocks
 * PoW Blocks: ~675 per day
-* Masternode Collateral Amount: 5,000 CRDS
+* Masternode Collateral Amount: 5,000 BCRS
 * Masternode Min Confirmation: 16 Blocks
 * Masternode Reward: See Below
 * Total Coins (until 2 PoW / 2 MN reward): 18,987,500* (~6 Years)
@@ -21,11 +21,11 @@ What is Credits?
 
 *Until block 375,000 all transaction fees get burned.
 
-Credits uses peer-to-peer technology to operate securly with no central authority (decentralisation): managing transactions and issuing currency (CRDS) are carried out collectively by the Credits network. Credits is the name of open source software which enables the use of the currency CRDS.
+Bitcreds uses peer-to-peer technology to operate securly with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
-Credits utilises Masternodes, Privatesend and InstantSend to provide anonymous and near instant transaction confirmations.
+Bitcreds utilises Masternodes, Privatesend and InstantSend to provide anonymous and near instant transaction confirmations.
 
-Credits implements Gavin Andresens signature cache optimisation from Bitcoin for significantly faster transaction validation.
+Bitcreds implements Gavin Andresens signature cache optimisation from Bitcoin for significantly faster transaction validation.
 
 
 **Masternode/Privatesend Network Information**
@@ -53,29 +53,29 @@ Magic Bytes = 0x1f 0x22 0x05 0x2f
 
  Year |           Blocks        |   PoW   | Masternodes  | Development Fund |  Total Generated  |
 ------|-------------------------|---------|--------------|------------------|-------------------|
- 2017 |           0 - 375,000   | 10 CRDS |    1 CRDS    |      0 CRDS      |     11 CRDS       |
- 2018 |     375,001 - 500,000   |  8 CRDS |    2 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2018 |     500,001 - 550,000   |  7 CRDS |    3 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2019 |     550,001 - 625,000   |  7 CRDS |    3 CRDS    |      1 CRDS      |     11 CRDS       |
- 2019 |     625,001 - 750,000   |  6 CRDS |    4 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2019 |     750,001 - 875,000   |  5 CRDS |    5 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2020 |    875,001 - 1,000,000  |  4 CRDS |    6 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2020 |  1,000,001 - 1,125,000  |  3 CRDS |    7 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2021 |  1,125,001 - 1,375,000  |  2 CRDS |    8 CRDS    |      0.5 CRDS    |     10.5 CRDS     |
- 2022 |  1,375,001 - 1,500,000  |  2 CRDS |    7 CRDS    |      0 CRDS      |      9 CRDS       |
- 2022 |  1,500,001 - 1,625,000  |  2 CRDS |    6 CRDS    |      0 CRDS      |      8 CRDS       |
- 2023 |  1,625,001 - 1,750,000  |  2 CRDS |    5 CRDS    |      0 CRDS      |      7 CRDS       |
- 2023 |  1,750,001 - 1,875,000  |  2 CRDS |    4 CRDS    |      0 CRDS      |      6 CRDS       |
- 2024 |  1,875,001 - 2,000,000  |  2 CRDS |    3 CRDS    |      0 CRDS      |      5 CRDS       |
- 2024 |  2,000,001 - ∞          |  2 CRDS |    2 CRDS    |      0 CRDS      |      4 CRDS       |
+ 2017 |           0 - 375,000   | 10 BCRS |    1 BCRS    |      0 BCRS      |     11 BCRS       |
+ 2018 |     375,001 - 500,000   |  8 BCRS |    2 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2018 |     500,001 - 550,000   |  7 BCRS |    3 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2019 |     550,001 - 625,000   |  7 BCRS |    3 BCRS    |      1 BCRS      |     11 BCRS       |
+ 2019 |     625,001 - 750,000   |  6 BCRS |    4 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2019 |     750,001 - 875,000   |  5 BCRS |    5 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2020 |    875,001 - 1,000,000  |  4 BCRS |    6 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2020 |  1,000,001 - 1,125,000  |  3 BCRS |    7 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2021 |  1,125,001 - 1,375,000  |  2 BCRS |    8 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2022 |  1,375,001 - 1,500,000  |  2 BCRS |    7 BCRS    |      0 BCRS      |      9 BCRS       |
+ 2022 |  1,500,001 - 1,625,000  |  2 BCRS |    6 BCRS    |      0 BCRS      |      8 BCRS       |
+ 2023 |  1,625,001 - 1,750,000  |  2 BCRS |    5 BCRS    |      0 BCRS      |      7 BCRS       |
+ 2023 |  1,750,001 - 1,875,000  |  2 BCRS |    4 BCRS    |      0 BCRS      |      6 BCRS       |
+ 2024 |  1,875,001 - 2,000,000  |  2 BCRS |    3 BCRS    |      0 BCRS      |      5 BCRS       |
+ 2024 |  2,000,001 - ∞          |  2 BCRS |    2 BCRS    |      0 BCRS      |      4 BCRS       |
 
 UNIX BUILD NOTES
 ====================
-Some notes on how to build Credits in Unix.
+Some notes on how to build Bitcreds in Unix.
 
 Note
 ---------------------
-Always use absolute paths to configure and compile Credits and the dependencies,
+Always use absolute paths to configure and compile Bitcreds and the dependencies,
 for example, when specifying the the path of the dependency:
 
     ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
@@ -93,7 +93,7 @@ make
 make install # optional
 ```
 
-This will build credits-qt as well if the dependencies are met.
+This will build bitcreds-qt as well if the dependencies are met.
 
 Dependencies
 ---------------------
@@ -123,7 +123,7 @@ System requirements
 --------------------
 
 C++ compilers are memory-hungry. It is recommended to have at least 3 GB of
-memory available when compiling Credits.
+memory available when compiling Bitcreds.
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
@@ -170,7 +170,7 @@ ZMQ dependencies (provides ZMQ API 4.x):
 Dependencies for the GUI: Ubuntu & Debian
 -----------------------------------------
 
-If you want to build Credits-Qt, make sure that the required packages for Qt development
+If you want to build Bitcred-Qt, make sure that the required packages for Qt development
 are installed. Qt 5 is necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used. Pass `--with-gui=qt5` to configure to choose Qt5.
 To build without GUI pass `--without-gui`.
@@ -188,7 +188,7 @@ built by default.
 
 Notes
 -----
-The release is built with GCC and then "strip creditsd" to strip the debug
+The release is built with GCC and then "strip bitcredsd" to strip the debug
 symbols, which reduces the executable size by about 90%.
 
 miniupnpc
@@ -215,10 +215,10 @@ Berkeley DB
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 
 ```bash
-CREDITS_ROOT=$(pwd)
+BITCREDS_ROOT=$(pwd)
 
 # Pick some path to install BDB to, here we create a directory within the credits directory
-BDB_PREFIX="${CREDITS_ROOT}/db4"
+BDB_PREFIX="${BITCREDS_ROOT}/db4"
 mkdir -p $BDB_PREFIX
 
 # Fetch the source and verify that it is not tampered with
@@ -234,8 +234,8 @@ cd db-4.8.30.NC/build_unix/
 make
 sudo make install
 
-# Configure Credits to use our own-built instance of BDB
-cd $CREDITS_ROOT
+# Configure Bitcreds to use our own-built instance of BDB
+cd $BITCRDS_ROOT
 ./configure (other args...) LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 ```
 
@@ -252,7 +252,7 @@ If you need to build Boost yourself:
 
 Security
 --------
-To help make your Credits installation more secure by making certain attacks impossible to
+To help make your Bitcreds installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 
@@ -276,7 +276,7 @@ Hardening enables the following features:
 
     To test that you have built PIE executable, install scanelf, part of paxutils, and use:
 
-        scanelf -e ./creditsd
+        scanelf -e ./bitcredsd
 
     The output should contain:
      TYPE
@@ -284,13 +284,13 @@ Hardening enables the following features:
 
 * Non-executable Stack
     If the stack is executable then trivial stack based buffer overflow exploits are possible if
-    vulnerable buffers are found. By default, credits should be built with a non-executable stack
+    vulnerable buffers are found. By default, bitcreds should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake
     and uses a compiler extension which requires an executable stack, it will silently build an
     executable without the non-executable stack protection.
 
     To verify that the stack is non-executable after compiling use:
-    `scanelf -e ./creditsd`
+    `scanelf -e ./bitcredsd`
 
     the output should contain:
     STK/REL/PTL
@@ -300,7 +300,7 @@ Hardening enables the following features:
 
 Disable-wallet mode
 --------------------
-When the intention is to run only a P2P node without a wallet, credits may be compiled in
+When the intention is to run only a P2P node without a wallet, Bitcreds may be compiled in
 disable-wallet mode with:
 
     ./configure --disable-wallet
