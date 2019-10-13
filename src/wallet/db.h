@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_WALLET_DB_H
-#define CREDITS_WALLET_DB_H
+#ifndef BITCREDS_WALLET_DB_H
+#define BITCREDS_WALLET_DB_H
 
 #include "clientversion.h"
 #include "serialize.h"
@@ -314,4 +314,4 @@ public:
     bool static Rewrite(const std::string& strFile, const char* pszSkip = NULL);
 };
 
-#endif // CREDITS_WALLET_DB_H
+#endif // BITCREDS_WALLET_DB_H

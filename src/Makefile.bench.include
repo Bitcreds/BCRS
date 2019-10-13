@@ -10,32 +10,32 @@ bench_bench_bitcreds_SOURCES = \
   bench/Examples.cpp \
   bench/lockedpool.cpp
 
-bench_bench_bitcreds_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES) $(EVENT_CLFAGS) $(EVENT_PTHREADS_CFLAGS) -I$(builddir)/bench/
+bench_bench_bitcreds_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES) $(EVENT_CLFAGS) $(EVENT_PTHREADS_CFLAGS) -I$(builddir)/bench/
 bench_bench_bitcreds_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 bench_bench_bitcreds_LDADD = \
-  $(LIBCREDITS_SERVER) \
-  $(LIBCREDITS_COMMON) \
-  $(LIBCREDITS_UNIVALUE) \
-  $(LIBCREDITS_UTIL) \
-  $(LIBCREDITS_CRYPTO) \
+  $(LIBBITCREDS_SERVER) \
+  $(LIBBITCREDS_COMMON) \
+  $(LIBBITCREDS_UNIVALUE) \
+  $(LIBBITCREDS_UTIL) \
+  $(LIBBITCREDS_CRYPTO) \
   $(LIBLEVELDB) \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
 if ENABLE_ZMQ
-bench_bench_bitcreds_LDADD += $(LIBCREDITS_ZMQ) $(ZMQ_LIBS)
+bench_bench_bitcreds_LDADD += $(LIBBITCREDS_ZMQ) $(ZMQ_LIBS)
 endif
 
 if ENABLE_WALLET
-bench_bench_bitcreds_LDADD += $(LIBCREDITS_WALLET)
+bench_bench_bitcreds_LDADD += $(LIBBITCREDS_WALLET)
 endif
 
 bench_bench_bitcreds_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
 bench_bench_bitcreds_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
-CLEAN_CREDITS_BENCH = bench/*.gcda bench/*.gcno
+CLEAN_BITCREDS_BENCH = bench/*.gcda bench/*.gcno
 
-CLEANFILES += $(CLEAN_CREDITS_BENCH)
+CLEANFILES += $(CLEAN_BITCREDS_BENCH)
 
 bitcreds_bench: $(BENCH_BINARY)
 
@@ -43,4 +43,4 @@ bench: $(BENCH_BINARY) FORCE
 	$(BENCH_BINARY)
 
 bitcreds_bench_clean : FORCE
-	rm -f $(CLEAN_CREDITS_BENCH) $(bench_bench_bitcreds_OBJECTS) $(BENCH_BINARY)
+	rm -f $(CLEAN_BITCREDS_BENCH) $(bench_bench_bitcreds_OBJECTS) $(BENCH_BINARY)

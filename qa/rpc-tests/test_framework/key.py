@@ -2,7 +2,7 @@
 #
 # key.py - OpenSSL wrapper
 #
-# This file is modified from python-creditslib.
+# This file is modified from python-bitcredslib.
 #
 
 """ECC secp256k1 crypto routines

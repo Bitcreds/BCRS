@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_PUBKEY_H
-#define CREDITS_PUBKEY_H
+#ifndef BITCREDS_PUBKEY_H
+#define BITCREDS_PUBKEY_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -250,4 +250,4 @@ public:
     ~ECCVerifyHandle();
 };
 
-#endif // CREDITS_PUBKEY_H
+#endif // BITCREDS_PUBKEY_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_UI_INTERFACE_H
-#define CREDITS_UI_INTERFACE_H
+#ifndef BITCREDS_UI_INTERFACE_H
+#define BITCREDS_UI_INTERFACE_H
 
 #include <stdint.h>
 #include <string>
@@ -123,4 +123,4 @@ std::string AmountHighWarn(const std::string& optname);
 
 extern CClientUIInterface uiInterface;
 
-#endif // CREDITS_UI_INTERFACE_H
+#endif // BITCREDS_UI_INTERFACE_H

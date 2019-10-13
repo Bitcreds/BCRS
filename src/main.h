@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MAIN_H
-#define CREDITS_MAIN_H
+#ifndef BITCREDS_MAIN_H
+#define BITCREDS_MAIN_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -874,4 +874,4 @@ static const unsigned int REJECT_ALREADY_KNOWN = 0x101;
 /** Transaction conflicts with a transaction already known */
 static const unsigned int REJECT_CONFLICT = 0x102;
 
-#endif // CREDITS_MAIN_H
+#endif // BITCREDS_MAIN_H

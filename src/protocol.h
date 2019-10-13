@@ -10,8 +10,8 @@
 #error This header can only be compiled as C++.
 #endif
 
-#ifndef CREDITS_PROTOCOL_H
-#define CREDITS_PROTOCOL_H
+#ifndef BITCREDS_PROTOCOL_H
+#define BITCREDS_PROTOCOL_H
 
 #include "netbase.h"
 #include "serialize.h"
@@ -359,4 +359,4 @@ enum {
     MSG_MASTERNODE_VERIFY,
 };
 
-#endif // CREDITS_PROTOCOL_H
+#endif // BITCREDS_PROTOCOL_H

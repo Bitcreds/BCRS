@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MASTERNODEMAN_H
-#define CREDITS_MASTERNODEMAN_H
+#ifndef BITCREDS_MASTERNODEMAN_H
+#define BITCREDS_MASTERNODEMAN_H
 
 #include "masternode.h"
 #include "sync.h"
@@ -363,4 +363,4 @@ public:
 
 };
 
-#endif // CREDITS_MASTERNODEMAN_H
+#endif // BITCREDS_MASTERNODEMAN_H

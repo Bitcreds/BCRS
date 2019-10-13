@@ -1,6 +1,6 @@
-usr/local/bin/credits-qt usr/bin
-share/pixmaps/credits32.xpm usr/share/pixmaps
-share/pixmaps/credits16.xpm usr/share/pixmaps
-share/pixmaps/credits128.png usr/share/pixmaps
-debian/credits-qt.desktop usr/share/applications
-debian/credits-qt.protocol usr/share/kde4/services/
+usr/local/bin/bitcreds-qt usr/bin
+share/pixmaps/bitcreds32.xpm usr/share/pixmaps
+share/pixmaps/bitcreds16.xpm usr/share/pixmaps
+share/pixmaps/bitcreds128.png usr/share/pixmaps
+debian/bitcreds-qt.desktop usr/share/applications
+debian/bitcreds-qt.protocol usr/share/kde4/services/

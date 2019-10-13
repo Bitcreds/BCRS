@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_MASTERNODELIST_H
-#define CREDITS_QT_MASTERNODELIST_H
+#ifndef BITCREDS_QT_MASTERNODELIST_H
+#define BITCREDS_QT_MASTERNODELIST_H
 
 #include "platformstyle.h"
 
@@ -81,4 +81,4 @@ private Q_SLOTS:
     void on_tableWidgetMyMasternodes_itemSelectionChanged();
     void on_UpdateButton_clicked();
 };
-#endif // CREDITS_QT_MASTERNODELIST_H
+#endif // BITCREDS_QT_MASTERNODELIST_H

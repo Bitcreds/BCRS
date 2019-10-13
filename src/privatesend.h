@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_PRIVATESEND_H
-#define CREDITS_PRIVATESEND_H
+#ifndef BITCREDS_PRIVATESEND_H
+#define BITCREDS_PRIVATESEND_H
 
 #include "masternode.h"
 #include "wallet/wallet.h"
@@ -467,4 +467,4 @@ public:
 
 void ThreadCheckPrivateSendPool();
 
-#endif // CREDITS_PRIVATESEND_H
+#endif // BITCREDS_PRIVATESEND_H

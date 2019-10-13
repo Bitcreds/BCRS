@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_COMPAT_H
-#define CREDITS_COMPAT_H
+#ifndef BITCREDS_COMPAT_H
+#define BITCREDS_COMPAT_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -104,4 +104,4 @@ bool static inline IsSelectableSocket(SOCKET s) {
 #endif
 }
 
-#endif // CREDITS_COMPAT_H
+#endif // BITCREDS_COMPAT_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_CLIENTMODEL_H
-#define CREDITS_QT_CLIENTMODEL_H
+#ifndef BITCREDS_QT_CLIENTMODEL_H
+#define BITCREDS_QT_CLIENTMODEL_H
 
 #include <QObject>
 #include <QDateTime>
@@ -118,4 +118,4 @@ public Q_SLOTS:
     void updateBanlist();
 };
 
-#endif // CREDITS_QT_CLIENTMODEL_H
+#endif // BITCREDS_QT_CLIENTMODEL_H

@@ -107,8 +107,8 @@ bool fLiteMode = false;
 */
 int nWalletBackups = 10;
 
-const char * const CREDITS_CONF_FILENAME = "bitcreds.conf";
-const char * const CREDITS_PID_FILENAME = "bitcredsd.pid";
+const char * const BITCREDS_CONF_FILENAME = "bitcreds.conf";
+const char * const BITCREDS_PID_FILENAME = "bitcredsd.pid";
 
 std::map<std::string, std::string> mapArgs;
 std::map<std::string, std::vector<std::string> > mapMultiArgs;
@@ -638,7 +638,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", CREDITS_CONF_FILENAME));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", BITCREDS_CONF_FILENAME));
     if (!pathConfigFile.is_complete())
         pathConfigFile = GetDataDir(false) / pathConfigFile;
 
@@ -687,7 +687,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
 #ifndef WIN32
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", CREDITS_PID_FILENAME));
+    boost::filesystem::path pathPidFile(GetArg("-pid", BITCREDS_PID_FILENAME));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }

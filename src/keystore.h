@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_KEYSTORE_H
-#define CREDITS_KEYSTORE_H
+#ifndef BITCREDS_KEYSTORE_H
+#define BITCREDS_KEYSTORE_H
 
 #include "hdchain.h"
 #include "key.h"
@@ -119,4 +119,4 @@ public:
 typedef std::vector<unsigned char, secure_allocator<unsigned char> > CKeyingMaterial;
 typedef std::map<CKeyID, std::pair<CPubKey, std::vector<unsigned char> > > CryptedKeyMap;
 
-#endif // CREDITS_KEYSTORE_H
+#endif // BITCREDS_KEYSTORE_H

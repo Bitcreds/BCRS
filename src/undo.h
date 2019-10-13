@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_UNDO_H
-#define CREDITS_UNDO_H
+#ifndef BITCREDS_UNDO_H
+#define BITCREDS_UNDO_H
 
 #include "compressor.h" 
 #include "serialize.h"
@@ -85,4 +85,4 @@ public:
     }
 };
 
-#endif // CREDITS_UNDO_H
+#endif // BITCREDS_UNDO_H

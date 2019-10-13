@@ -1,6 +1,6 @@
 [Protocol]
-exec=credits-qt '%u'
-protocol=credits
+exec=bitcreds-qt '%u'
+protocol=bitcreds
 input=none
 output=none
 helper=true

@@ -1,15 +1,15 @@
 [Unit]
-Description=Credits's distributed currency daemon
+Description=Bitcreds's distributed currency daemon
 After=network.target
 
 [Service]
-User=credits
-Group=credits
+User=bitcreds
+Group=bitcreds
 
 Type=forking
-PIDFile=/var/lib/creditsd/creditsd.pid
-ExecStart=/usr/bin/creditsd -daemon -pid=/var/lib/creditsd/creditsd.pid \
--conf=/etc/credits/credits.conf -datadir=/var/lib/creditsd -disablewallet
+PIDFile=/var/lib/bitcredsd/bitcredsd.pid
+ExecStart=/usr/bin/bitcredsd -daemon -pid=/var/lib/bitcredsd/bitcredsd.pid \
+-conf=/etc/bitcreds/bitcreds.conf -datadir=/var/lib/bitcredsd -disablewallet
 
 Restart=always
 PrivateTmp=true

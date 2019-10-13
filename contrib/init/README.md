@@ -1,11 +1,11 @@
 Sample configuration files for:
 
-SystemD: creditsd.service
-Upstart: creditsd.conf
-OpenRC:  creditsd.openrc
-         creditsd.openrcconf
-CentOS:  creditsd.init
-OS X:    org.credits.creditsd.plist
+SystemD: bitcredsd.service
+Upstart: bitcredsd.conf
+OpenRC:  bitcredsd.openrc
+         bitcredsd.openrcconf
+CentOS:  bitcredsd.init
+OS X:    org.bitcreds.bitcredsd.plist
 
 have been made available to assist packagers in creating node packages here.
 

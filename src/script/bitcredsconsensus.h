@@ -6,10 +6,10 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CREDITSCONSENSUS_H
-#define CREDITS_CREDITSCONSENSUS_H
+#ifndef BITCREDS_BITCREDSCONSENSUS_H
+#define BITCREDS_BITCREDSCONSENSUS_H
 
-#if defined(BUILD_CREDITS_INTERNAL) && defined(HAVE_CONFIG_H)
+#if defined(BUILD_BITCREDS_INTERNAL) && defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
   #if defined(_WIN32)
     #if defined(DLL_EXPORT)
@@ -22,7 +22,7 @@
   #elif defined(HAVE_FUNC_ATTRIBUTE_VISIBILITY)
     #define EXPORT_SYMBOL __attribute__ ((visibility ("default")))
   #endif
-#elif defined(MSC_VER) && !defined(STATIC_LIBCREDITSCONSENSUS)
+#elif defined(MSC_VER) && !defined(STATIC_LIBBITCREDSCONSENSUS)
   #define EXPORT_SYMBOL __declspec(dllimport)
 #endif
 
@@ -34,7 +34,7 @@
 extern "C" {
 #endif
 
-#define CREDITSCONSENSUS_API_VER 0
+#define BITCREDSCONSENSUS_API_VER 0
 
 typedef enum bitcredsconsensus_error_t
 {
@@ -73,4 +73,4 @@ EXPORT_SYMBOL unsigned int bitcredsconsensus_version();
 
 #undef EXPORT_SYMBOL
 
-#endif // CREDITS_CREDITSCONSENSUS_H
+#endif // BITCREDS_BITCREDSCONSENSUS_H

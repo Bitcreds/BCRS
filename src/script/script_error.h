@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SCRIPT_SCRIPT_ERROR_H
-#define CREDITS_SCRIPT_SCRIPT_ERROR_H
+#ifndef BITCREDS_SCRIPT_SCRIPT_ERROR_H
+#define BITCREDS_SCRIPT_SCRIPT_ERROR_H
 
 typedef enum ScriptError_t
 {
@@ -59,4 +59,4 @@ typedef enum ScriptError_t
 
 const char* ScriptErrorString(const ScriptError error);
 
-#endif // CREDITS_SCRIPT_SCRIPT_ERROR_H
+#endif // BITCREDS_SCRIPT_SCRIPT_ERROR_H

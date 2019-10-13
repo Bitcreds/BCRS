@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_WINSHUTDOWNMONITOR_H
-#define CREDITS_QT_WINSHUTDOWNMONITOR_H
+#ifndef BITCREDS_QT_WINSHUTDOWNMONITOR_H
+#define BITCREDS_QT_WINSHUTDOWNMONITOR_H
 
 #ifdef WIN32
 #include <QByteArray>
@@ -30,4 +30,4 @@ public:
 #endif
 #endif
 
-#endif // CREDITS_QT_WINSHUTDOWNMONITOR_H
+#endif // BITCREDS_QT_WINSHUTDOWNMONITOR_H

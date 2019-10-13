@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_CREDITSGUI_H
-#define CREDITS_QT_CREDITSGUI_H
+#ifndef BITCREDS_QT_BITCREDSGUI_H
+#define BITCREDS_QT_BITCREDSGUI_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -326,4 +326,4 @@ private Q_SLOTS:
     void onMenuSelection(QAction* action);
 };
 
-#endif // CREDITS_QT_CREDITSGUI_H
+#endif // BITCREDS_QT_BITCREDSGUI_H

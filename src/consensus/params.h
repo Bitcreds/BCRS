@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CONSENSUS_PARAMS_H
-#define CREDITS_CONSENSUS_PARAMS_H
+#ifndef BITCREDS_CONSENSUS_PARAMS_H
+#define BITCREDS_CONSENSUS_PARAMS_H
 
 #include "uint256.h"
 
@@ -88,4 +88,4 @@ struct Params {
 };
 } // namespace Consensus
 
-#endif // CREDITS_CONSENSUS_PARAMS_H
+#endif // BITCREDS_CONSENSUS_PARAMS_H

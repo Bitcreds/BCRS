@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_TRANSACTIONTABLEMODEL_H
-#define CREDITS_QT_TRANSACTIONTABLEMODEL_H
+#ifndef BITCREDS_QT_TRANSACTIONTABLEMODEL_H
+#define BITCREDS_QT_TRANSACTIONTABLEMODEL_H
 
 #include "bitcredsunits.h"
 
@@ -119,4 +119,4 @@ public Q_SLOTS:
     friend class TransactionTablePriv;
 };
 
-#endif // CREDITS_QT_TRANSACTIONTABLEMODEL_H
+#endif // BITCREDS_QT_TRANSACTIONTABLEMODEL_H

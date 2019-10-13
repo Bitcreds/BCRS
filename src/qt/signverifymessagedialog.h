@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_SIGNVERIFYMESSAGEDIALOG_H
-#define CREDITS_QT_SIGNVERIFYMESSAGEDIALOG_H
+#ifndef BITCREDS_QT_SIGNVERIFYMESSAGEDIALOG_H
+#define BITCREDS_QT_SIGNVERIFYMESSAGEDIALOG_H
 
 #include <QDialog>
 
@@ -54,4 +54,4 @@ private Q_SLOTS:
     void on_clearButton_VM_clicked();
 };
 
-#endif // CREDITS_QT_SIGNVERIFYMESSAGEDIALOG_H
+#endif // BITCREDS_QT_SIGNVERIFYMESSAGEDIALOG_H

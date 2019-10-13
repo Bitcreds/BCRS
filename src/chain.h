@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CHAIN_H
-#define CREDITS_CHAIN_H
+#ifndef BITCREDS_CHAIN_H
+#define BITCREDS_CHAIN_H
 
 #include "arith_uint256.h"
 #include "primitives/block.h"
@@ -411,4 +411,4 @@ public:
     const CBlockIndex *FindFork(const CBlockIndex *pindex) const;
 };
 
-#endif // CREDITS_CHAIN_H
+#endif // BITCREDS_CHAIN_H

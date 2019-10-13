@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>org.credits.creditsd</string>
+	<string>org.bitcreds.bitcredsd</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/creditsd</string>
+		<string>/usr/local/bin/bitcredsd</string>
 		<string>-daemon</string>
 	</array>
 	<key>RunAtLoad</key>

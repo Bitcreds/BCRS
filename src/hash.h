@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_HASH_H
-#define CREDITS_HASH_H
+#ifndef BITCREDS_HASH_H
+#define BITCREDS_HASH_H
 
 #include "crypto/argon2d/argon2.h"
 #include "crypto/blake2/blake2.h"
@@ -344,4 +344,4 @@ inline uint256 hash_Argon2d(const T1 pbegin, const T1 pend, const unsigned int& 
     return hashResult;
 }
 
-#endif // CREDITS_HASH_H
+#endif // BITCREDS_HASH_H

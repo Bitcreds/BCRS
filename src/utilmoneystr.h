@@ -9,8 +9,8 @@
 /**
  * Money parsing/formatting utilities.
  */
-#ifndef CREDITS_UTILMONEYSTR_H
-#define CREDITS_UTILMONEYSTR_H
+#ifndef BITCREDS_UTILMONEYSTR_H
+#define BITCREDS_UTILMONEYSTR_H
 
 #include "amount.h"
 
@@ -21,4 +21,4 @@ std::string FormatMoney(const CAmount& n);
 bool ParseMoney(const std::string& str, CAmount& nRet);
 bool ParseMoney(const char* pszIn, CAmount& nRet);
 
-#endif // CREDITS_UTILMONEYSTR_H
+#endif // BITCREDS_UTILMONEYSTR_H

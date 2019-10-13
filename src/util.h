@@ -10,8 +10,8 @@
  * Server/client environment: argument handling, config file parsing,
  * logging, thread wrappers
  */
-#ifndef CREDITS_UTIL_H
-#define CREDITS_UTIL_H
+#ifndef BITCREDS_UTIL_H
+#define BITCREDS_UTIL_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -36,8 +36,8 @@
 
 // Uncomment the following line to enable debugging messages
 // or enable on a per file basis prior to inclusion of util.h
-//#define ENABLE_CREDITS_DEBUG
-#ifdef ENABLE_CREDITS_DEBUG
+//#define ENABLE_BITCREDS_DEBUG
+#ifdef ENABLE_BITCREDS_DEBUG
 #define DBG( x ) x
 #else
 #define DBG( x ) 
@@ -76,8 +76,8 @@ extern bool fLogIPs;
 extern volatile bool fReopenDebugLog;
 extern CTranslationInterface translationInterface;
 
-extern const char * const CREDITS_CONF_FILENAME;
-extern const char * const CREDITS_PID_FILENAME;
+extern const char * const BITCREDS_CONF_FILENAME;
+extern const char * const BITCREDS_PID_FILENAME;
 
 /**
  * Translation function: Call Translate signal on UI interface, which returns a boost::optional result.
@@ -272,4 +272,4 @@ template <typename Callable> void TraceThread(const char* name,  Callable func)
     }
 }
 
-#endif // CREDITS_UTIL_H
+#endif // BITCREDS_UTIL_H

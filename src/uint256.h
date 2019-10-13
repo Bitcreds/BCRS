@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_UINT256_H
-#define CREDITS_UINT256_H
+#ifndef BITCREDS_UINT256_H
+#define BITCREDS_UINT256_H
 
 #include "crypto/common.h"
 
@@ -181,4 +181,4 @@ public:
 };
 
 
-#endif // CREDITS_UINT256_H
+#endif // BITCREDS_UINT256_H

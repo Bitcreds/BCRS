@@ -1,6 +1,6 @@
 Mac OS X Build Instructions and Notes
 ====================================
-This guide will show you how to build creditsd (headless client) for OSX.
+This guide will show you how to build bitcredsd (headless client) for OSX.
 
 Notes
 -----
@@ -82,14 +82,14 @@ CPU's with AVX2 support:
         Carrizo processor, Q2 2015
         Ryzen processor, Q1 2017
         
-### Building `creditsd`
+### Building `bitcredsd`
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone https://github.com/credits-crds/credits.git
-        cd credits
+        git clone https://github.com/bitcreds-crds/bitcreds.git
+        cd bitcreds
 
-2.  Build creditsd:
+2.  Build bitcredsd:
 
         ./autogen.sh
         ./configure
@@ -99,7 +99,7 @@ CPU's with AVX2 support:
 
         make check
 
-4.  (Optional) You can also install creditsd to your path:
+4.  (Optional) You can also install bitcredsd to your path:
 
         make install
 
@@ -111,7 +111,7 @@ Download Qt Creator from http://www.qt.io/download/. Download the "community edi
 1. Make sure you installed everything through homebrew mentioned above 
 2. Do a proper ./configure --with-gui=qt5 --enable-debug
 3. In Qt Creator do "New Project" -> Import Project -> Import Existing Project
-4. Enter "credits-qt" as project name, enter src/qt as location
+4. Enter "bitcreds-qt" as project name, enter src/qt as location
 5. Leave the file selection as it is
 6. Confirm the "summary page"
 7. In the "Projects" tab select "Manage Kits..."
@@ -121,11 +121,11 @@ Download Qt Creator from http://www.qt.io/download/. Download the "community edi
 
 Creating a release build
 ------------------------
-You can ignore this section if you are building `creditsd` for your own use.
+You can ignore this section if you are building `bitcredsd` for your own use.
 
-creditsd/credits-cli binaries are not included in the Credits-Qt.app bundle.
+bitcredsd/bitcreds-cli binaries are not included in the Bitcreds-Qt.app bundle.
 
-If you are building `creditsd` or `Credits-Qt` for others, your build machine should be set up
+If you are building `bitcredsd` or `Bitcreds-Qt` for others, your build machine should be set up
 as follows for maximum compatibility:
 
 All dependencies should be compiled with these flags:
@@ -134,30 +134,30 @@ All dependencies should be compiled with these flags:
  -arch x86_64
  -isysroot $(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
 
-Once dependencies are compiled, see release-process.md for how the Credits-Qt.app
+Once dependencies are compiled, see release-process.md for how the Bitcreds-Qt.app
 bundle is packaged and signed to create the .dmg disk image that is distributed.
 
 Running
 -------
 
-It's now available at `./creditsd`, provided that you are still in the `src`
+It's now available at `./bitcredsd`, provided that you are still in the `src`
 directory. We have to first create the RPC configuration file, though.
 
-Run `./creditsd` to get the filename where it should be put, or just try these
+Run `./bitcredsd` to get the filename where it should be put, or just try these
 commands:
 
-    echo -e "rpcuser=creditsrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Credits/credits.conf"
-    chmod 600 "/Users/${USER}/Library/Application Support/Credits/credits.conf"
+    echo -e "rpcuser=bitcredsrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Bitcreds/bitcreds.conf"
+    chmod 600 "/Users/${USER}/Library/Application Support/Bitcreds/bitcreds.conf"
 
 The next time you run it, it will start downloading the blockchain, but it won't
 output anything while it's doing this. This process may take several hours;
 you can monitor its process by looking at the debug.log file, like this:
 
-    tail -f $HOME/Library/Application\ Support/Credits/debug.log
+    tail -f $HOME/Library/Application\ Support/Bitcreds/debug.log
 
 Other commands:
 -------
 
-    ./creditsd -daemon # to start the credits daemon.
-    ./credits-cli --help  # for a list of command-line options.
-    ./credits-cli help    # When the daemon is running, to get a list of RPC commands
+    ./bitcredsd -daemon # to start the bitcreds daemon.
+    ./bitcreds-cli --help  # for a list of command-line options.
+    ./bitcreds-cli help    # When the daemon is running, to get a list of RPC commands

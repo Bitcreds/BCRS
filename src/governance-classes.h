@@ -6,10 +6,10 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_GOVERNANCE_CLASSES_H
-#define CREDITS_GOVERNANCE_CLASSES_H
+#ifndef BITCREDS_GOVERNANCE_CLASSES_H
+#define BITCREDS_GOVERNANCE_CLASSES_H
 
-//#define ENABLE_CREDITS_DEBUG
+//#define ENABLE_BITCREDS_DEBUG
 
 #include "base58.h"
 #include "chainparams.h"
@@ -191,4 +191,4 @@ public:
     bool IsValid(const CTransaction& txNew, int nBlockHeight, CAmount blockReward);
 };
 
-#endif // CREDITS_GOVERNANCE_CLASSES_H
+#endif // BITCREDS_GOVERNANCE_CLASSES_H

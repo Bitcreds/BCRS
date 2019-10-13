@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_GOVERNANCE_VOTEDB_H
-#define CREDITS_GOVERNANCE_VOTEDB_H
+#ifndef BITCREDS_GOVERNANCE_VOTEDB_H
+#define BITCREDS_GOVERNANCE_VOTEDB_H
 
 #include "governance-vote.h"
 #include "serialize.h"
@@ -92,4 +92,4 @@ private:
 
 };
 
-#endif // CREDITS_GOVERNANCE_VOTEDB_H
+#endif // BITCREDS_GOVERNANCE_VOTEDB_H

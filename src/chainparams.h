@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CHAINPARAMS_H
-#define CREDITS_CHAINPARAMS_H
+#ifndef BITCREDS_CHAINPARAMS_H
+#define BITCREDS_CHAINPARAMS_H
 
 #include "primitives/block.h"
 #include "chainparamsbase.h"
@@ -130,4 +130,4 @@ CChainParams& Params(const std::string& chain);
  */
 void SelectParams(const std::string& chain);
 
-#endif // CREDITS_CHAINPARAMS_H
+#endif // BITCREDS_CHAINPARAMS_H

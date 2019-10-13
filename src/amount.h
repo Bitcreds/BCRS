@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_AMOUNT_H
-#define CREDITS_AMOUNT_H
+#ifndef BITCREDS_AMOUNT_H
+#define BITCREDS_AMOUNT_H
 
 #include "serialize.h"
 
@@ -63,4 +63,4 @@ public:
     }
 };
 
-#endif //  CREDITS_AMOUNT_H
+#endif //  BITCREDS_AMOUNT_H

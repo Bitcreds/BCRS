@@ -1,5 +1,5 @@
 ---
-name: "credits-dmg-signer"
+name: "bitcreds-dmg-signer"
 suites:
 - "trusty"
 architectures:
@@ -8,10 +8,10 @@ packages:
 - "faketime"
 reference_datetime: "2017-01-01 00:00:00"
 remotes:
-- "url": "https://github.com/credits-crds/credits-detached-sigs.git"
+- "url": "https://github.com/bitcreds-crds/bitcreds-detached-sigs.git"
   "dir": "signature"
 files:
-- "credits-osx-unsigned.tar.gz"
+- "bitcreds-osx-unsigned.tar.gz"
 script: |
   WRAP_DIR=$HOME/wrapped
   mkdir -p ${WRAP_DIR}
@@ -28,10 +28,10 @@ script: |
     chmod +x ${WRAP_DIR}/${prog}
   done
 
-  UNSIGNED=credits-osx-unsigned.tar.gz
-  SIGNED=credits-osx-signed.dmg
+  UNSIGNED=bitcreds-osx-unsigned.tar.gz
+  SIGNED=bitcreds-osx-signed.dmg
 
   tar -xf ${UNSIGNED}
   ./detached-sig-apply.sh ${UNSIGNED} signature/osx
-  ${WRAP_DIR}/genisoimage -no-cache-inodes -D -l -probe -V "Credits" -no-pad -r -dir-mode 0755 -apple -o uncompressed.dmg signed-app
+  ${WRAP_DIR}/genisoimage -no-cache-inodes -D -l -probe -V "Bitcreds" -no-pad -r -dir-mode 0755 -apple -o uncompressed.dmg signed-app
   ${WRAP_DIR}/dmg dmg uncompressed.dmg ${OUTDIR}/${SIGNED}

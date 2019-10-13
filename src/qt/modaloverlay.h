@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_MODALOVERLAY_H
-#define CREDITS_QT_MODALOVERLAY_H
+#ifndef BITCREDS_QT_MODALOVERLAY_H
+#define BITCREDS_QT_MODALOVERLAY_H
 
 #include <QDateTime>
 #include <QWidget>
@@ -47,4 +47,4 @@ private:
     bool userClosed;
 };
 
-#endif // CREDITS_QT_MODALOVERLAY_H
+#endif // BITCREDS_QT_MODALOVERLAY_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_LIMITEDMAP_H
-#define CREDITS_LIMITEDMAP_H
+#ifndef BITCREDS_LIMITEDMAP_H
+#define BITCREDS_LIMITEDMAP_H
 
 #include <assert.h>
 #include <map>
@@ -101,4 +101,4 @@ public:
     }
 };
 
-#endif // CREDITS_LIMITEDMAP_H
+#endif // BITCREDS_LIMITEDMAP_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_REVERSELOCK_H
-#define CREDITS_REVERSELOCK_H
+#ifndef BITCREDS_REVERSELOCK_H
+#define BITCREDS_REVERSELOCK_H
 
 /**
  * An RAII-style reverse lock. Unlocks on construction and locks on destruction.
@@ -35,4 +35,4 @@ private:
     Lock templock;
 };
 
-#endif // CREDITS_REVERSELOCK_H
+#endif // BITCREDS_REVERSELOCK_H

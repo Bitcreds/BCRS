@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_CREDITSADDRESSVALIDATOR_H
-#define CREDITS_QT_CREDITSADDRESSVALIDATOR_H
+#ifndef BITCREDS_QT_BITCREDSADDRESSVALIDATOR_H
+#define BITCREDS_QT_BITCREDSADDRESSVALIDATOR_H
 
 #include <QValidator>
 
@@ -36,4 +36,4 @@ public:
     State validate(QString &input, int &pos) const;
 };
 
-#endif // CREDITS_QT_CREDITSADDRESSVALIDATOR_H
+#endif // BITCREDS_QT_BITCREDSADDRESSVALIDATOR_H

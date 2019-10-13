@@ -7,8 +7,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_ADDRMAN_H
-#define CREDITS_ADDRMAN_H
+#ifndef BITCREDS_ADDRMAN_H
+#define BITCREDS_ADDRMAN_H
 
 #include "netbase.h"
 #include "protocol.h"
@@ -584,4 +584,4 @@ public:
 
 };
 
-#endif // CREDITS_ADDRMAN_H
+#endif // BITCREDS_ADDRMAN_H

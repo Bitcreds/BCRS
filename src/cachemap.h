@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CACHEMAP_H
-#define CREDITS_CACHEMAP_H
+#ifndef BITCREDS_CACHEMAP_H
+#define BITCREDS_CACHEMAP_H
 
 #include "serialize.h"
 
@@ -203,4 +203,4 @@ private:
     }
 };
 
-#endif // CREDITS_CACHEMAP_H
+#endif // BITCREDS_CACHEMAP_H

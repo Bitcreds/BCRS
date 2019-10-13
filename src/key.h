@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_KEY_H
-#define CREDITS_KEY_H
+#ifndef BITCREDS_KEY_H
+#define BITCREDS_KEY_H
 
 #include "pubkey.h"
 #include "support/allocators/secure.h"
@@ -197,4 +197,4 @@ void ECC_Stop(void);
 /** Check that required EC support is available at runtime. */
 bool ECC_InitSanityCheck(void);
 
-#endif // CREDITS_KEY_H
+#endif // BITCREDS_KEY_H

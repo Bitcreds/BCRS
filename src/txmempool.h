@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_TXMEMPOOL_H
-#define CREDITS_TXMEMPOOL_H
+#ifndef BITCREDS_TXMEMPOOL_H
+#define BITCREDS_TXMEMPOOL_H
 
 #include "addressindex.h"
 #include "amount.h"
@@ -653,4 +653,4 @@ struct TxCoinAgePriorityCompare
     }
 };
 
-#endif // CREDITS_TXMEMPOOL_H
+#endif // BITCREDS_TXMEMPOOL_H

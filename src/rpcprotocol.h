@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_RPCPROTOCOL_H
-#define CREDITS_RPCPROTOCOL_H
+#ifndef BITCREDS_RPCPROTOCOL_H
+#define BITCREDS_RPCPROTOCOL_H
 
 #include <univalue.h>
 
@@ -94,4 +94,4 @@ bool GetAuthCookie(std::string *cookie_out);
 /** Delete RPC authentication cookie from disk */
 void DeleteAuthCookie();
 
-#endif // CREDITS_RPCPROTOCOL_H
+#endif // BITCREDS_RPCPROTOCOL_H

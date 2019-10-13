@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CORE_MEMUSAGE_H
-#define CREDITS_CORE_MEMUSAGE_H
+#ifndef BITCREDS_CORE_MEMUSAGE_H
+#define BITCREDS_CORE_MEMUSAGE_H
 
 #include "memusage.h"
 
@@ -64,4 +64,4 @@ static inline size_t RecursiveBitcredsUsage(const CBlockLocator& locator) {
     return memusage::BitcredsUsage(locator.vHave);
 }
 
-#endif // CREDITS_CORE_MEMUSAGE_H
+#endif // BITCREDS_CORE_MEMUSAGE_H

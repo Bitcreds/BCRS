@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_VALIDATIONINTERFACE_H
-#define CREDITS_VALIDATIONINTERFACE_H
+#ifndef BITCREDS_VALIDATIONINTERFACE_H
+#define BITCREDS_VALIDATIONINTERFACE_H
 
 #include <boost/signals2/signal.hpp>
 #include <boost/shared_ptr.hpp>
@@ -75,4 +75,4 @@ struct CMainSignals {
 
 CMainSignals& GetMainSignals();
 
-#endif // CREDITS_VALIDATIONINTERFACE_H
+#endif // BITCREDS_VALIDATIONINTERFACE_H

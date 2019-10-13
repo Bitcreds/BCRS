@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_MACDOCKICONHANDLER_H
-#define CREDITS_QT_MACDOCKICONHANDLER_H
+#ifndef BITCREDS_QT_MACDOCKICONHANDLER_H
+#define BITCREDS_QT_MACDOCKICONHANDLER_H
 
 #include <QMainWindow>
 #include <QObject>
@@ -45,4 +45,4 @@ private:
     QMainWindow *mainWindow;
 };
 
-#endif // CREDITS_QT_MACDOCKICONHANDLER_H
+#endif // BITCREDS_QT_MACDOCKICONHANDLER_H

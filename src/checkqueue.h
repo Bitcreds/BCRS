@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CHECKQUEUE_H
-#define CREDITS_CHECKQUEUE_H
+#ifndef BITCREDS_CHECKQUEUE_H
+#define BITCREDS_CHECKQUEUE_H
 
 #include <algorithm>
 #include <vector>
@@ -216,4 +216,4 @@ public:
     }
 };
 
-#endif // CREDITS_CHECKQUEUE_H
+#endif // BITCREDS_CHECKQUEUE_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_BLOOM_H
-#define CREDITS_BLOOM_H
+#ifndef BITCREDS_BLOOM_H
+#define BITCREDS_BLOOM_H
 
 #include "serialize.h"
 
@@ -139,4 +139,4 @@ private:
 };
 
 
-#endif // CREDITS_BLOOM_H
+#endif // BITCREDS_BLOOM_H

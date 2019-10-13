@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CORE_IO_H
-#define CREDITS_CORE_IO_H
+#ifndef BITCREDS_CORE_IO_H
+#define BITCREDS_CORE_IO_H
 
 #include <string>
 #include <vector>
@@ -33,4 +33,4 @@ extern std::string EncodeHexTx(const CTransaction& tx);
 extern void ScriptPubKeyToUniv(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex);
 extern void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry);
 
-#endif // CREDITS_CORE_IO_H
+#endif // BITCREDS_CORE_IO_H

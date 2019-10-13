@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_CSVMODELWRITER_H
-#define CREDITS_QT_CSVMODELWRITER_H
+#ifndef BITCREDS_QT_CSVMODELWRITER_H
+#define BITCREDS_QT_CSVMODELWRITER_H
 
 #include <QList>
 #include <QObject>
@@ -47,4 +47,4 @@ private:
     QList<Column> columns;
 };
 
-#endif // CREDITS_QT_CSVMODELWRITER_H
+#endif // BITCREDS_QT_CSVMODELWRITER_H

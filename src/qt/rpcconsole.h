@@ -5,8 +5,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_RPCCONSOLE_H
-#define CREDITS_QT_RPCCONSOLE_H
+#ifndef BITCREDS_QT_RPCCONSOLE_H
+#define BITCREDS_QT_RPCCONSOLE_H
 
 #include "guiutil.h"
 #include "peertablemodel.h"
@@ -165,4 +165,4 @@ private:
     QCompleter *autoCompleter;
 };
 
-#endif // CREDITS_QT_RPCCONSOLE_H
+#endif // BITCREDS_QT_RPCCONSOLE_H

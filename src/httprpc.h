@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_HTTPRPC_H
-#define CREDITS_HTTPRPC_H
+#ifndef BITCREDS_HTTPRPC_H
+#define BITCREDS_HTTPRPC_H
 
 #include <map>
 #include <string>
@@ -38,4 +38,4 @@ void InterruptREST();
  */
 void StopREST();
 
-#endif // CREDITS_HTTPRPC_H
+#endif // BITCREDS_HTTPRPC_H

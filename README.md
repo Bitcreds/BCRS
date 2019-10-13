@@ -1,6 +1,6 @@
 # **Bitcreds (BCRS) v1.5.0.0**
 
-![CRDS logo](https://github.com/Credits-CRDS/Credits/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/CRDS/Credits.svg?branch=master)](https://travis-ci.org/CRDS/Credits)
+![BCRS logo](https://github.com/Bitcreds/BCRS/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/Bitcreds/BCRS.svg?branch=master)](https://travis-ci.org/Bitcreds/BCRS)
 
 **Copyright (c) 2017-2019 Bitcreds Developers**
 
@@ -17,7 +17,7 @@ What are Bitcreds?
 * Masternode Min Confirmation: 16 Blocks
 * Masternode Reward: See Below
 * Total Coins (until 2 PoW / 2 MN reward): 18,987,500* (~6 Years)
-* Min TX Fee: 0.0001 CRDS
+* Min TX Fee: 0.0001 BCRS
 
 *Until block 375,000 all transaction fees get burned.
 
@@ -235,7 +235,7 @@ make
 sudo make install
 
 # Configure Bitcreds to use our own-built instance of BDB
-cd $BITCRDS_ROOT
+cd $BITBCRS_ROOT
 ./configure (other args...) LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 ```
 

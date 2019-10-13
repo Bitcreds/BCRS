@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_ALERT_H
-#define CREDITS_ALERT_H
+#ifndef BITCREDS_ALERT_H
+#define BITCREDS_ALERT_H
 
 #include "serialize.h"
 #include "sync.h"
@@ -114,4 +114,4 @@ public:
     static CAlert getAlertByHash(const uint256 &hash);
 };
 
-#endif // CREDITS_ALERT_H
+#endif // BITCREDS_ALERT_H

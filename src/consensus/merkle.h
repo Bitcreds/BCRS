@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MERKLE
-#define CREDITS_MERKLE
+#ifndef BITCREDS_MERKLE
+#define BITCREDS_MERKLE
 
 #include "primitives/block.h"
 #include "primitives/transaction.h"
@@ -29,4 +29,4 @@ uint256 BlockMerkleRoot(const CBlock& block, bool* mutated = NULL);
  */
 std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position);
 
-#endif // CREDITS_MERKLE
+#endif // BITCREDS_MERKLE

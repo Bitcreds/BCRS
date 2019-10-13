@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SCRIPT_SIGN_H
-#define CREDITS_SCRIPT_SIGN_H
+#ifndef BITCREDS_SCRIPT_SIGN_H
+#define BITCREDS_SCRIPT_SIGN_H
 
 #include "script/interpreter.h"
 #include "script/standard.h"
@@ -68,4 +68,4 @@ CScript CombineSignatures(const CScript& scriptPubKey, const CTransaction& txTo,
 bool Solver(const CKeyStore& keystore, const CScript& scriptPubKey, uint256 hash, int nHashType,
                   CScript& scriptSigRet, txnouttype& whichTypeRet);
 
-#endif // CREDITS_SCRIPT_SIGN_H
+#endif // BITCREDS_SCRIPT_SIGN_H

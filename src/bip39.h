@@ -21,8 +21,8 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef CREDITS_BIP39_H
-#define CREDITS_BIP39_H
+#ifndef BITCREDS_BIP39_H
+#define BITCREDS_BIP39_H
 
 #include "support/allocators/secure.h"
 

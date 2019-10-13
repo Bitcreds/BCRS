@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_COMPRESSOR_H
-#define CREDITS_COMPRESSOR_H
+#ifndef BITCREDS_COMPRESSOR_H
+#define BITCREDS_COMPRESSOR_H
 
 #include "script/script.h"
 #include "serialize.h"
@@ -123,4 +123,4 @@ public:
     }
 };
 
-#endif // CREDITS_COMPRESSOR_H
+#endif // BITCREDS_COMPRESSOR_H

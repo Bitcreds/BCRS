@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MASTERNODE_H
-#define CREDITS_MASTERNODE_H
+#ifndef BITCREDS_MASTERNODE_H
+#define BITCREDS_MASTERNODE_H
 
 #include "key.h"
 #include "main.h"
@@ -450,4 +450,4 @@ public:
     }
 };
 
-#endif // CREDITS_MASTERNODE_H
+#endif // BITCREDS_MASTERNODE_H

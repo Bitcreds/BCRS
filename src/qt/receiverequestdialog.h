@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_RECEIVEREQUESTDIALOG_H
-#define CREDITS_QT_RECEIVEREQUESTDIALOG_H
+#ifndef BITCREDS_QT_RECEIVEREQUESTDIALOG_H
+#define BITCREDS_QT_RECEIVEREQUESTDIALOG_H
 
 #include "walletmodel.h"
 
@@ -71,4 +71,4 @@ private:
     SendCoinsRecipient info;
 };
 
-#endif // CREDITS_QT_RECEIVEREQUESTDIALOG_H
+#endif // BITCREDS_QT_RECEIVEREQUESTDIALOG_H

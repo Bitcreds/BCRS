@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,11 +7,11 @@
 # Test PrioritiseTransaction code
 #
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 from test_framework.mininode import COIN, MAX_BLOCK_SIZE
 
-class PrioritiseTransactionTest(CreditsTestFramework):
+class PrioritiseTransactionTest(BitcredsTestFramework):
 
     def __init__(self):
         self.txouts = gen_return_txouts()

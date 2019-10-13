@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_GOVERNANCE_EXCEPTIONS_H
-#define CREDITS_GOVERNANCE_EXCEPTIONS_H
+#ifndef BITCREDS_GOVERNANCE_EXCEPTIONS_H
+#define BITCREDS_GOVERNANCE_EXCEPTIONS_H
 
 #include <exception>
 #include <iostream>
@@ -100,4 +100,4 @@ public:
     }
 };
 
-#endif // CREDITS_GOVERNANCE_EXCEPTIONS_H
+#endif // BITCREDS_GOVERNANCE_EXCEPTIONS_H

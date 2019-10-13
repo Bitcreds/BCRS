@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CHAINPARAMSBASE_H
-#define CREDITS_CHAINPARAMSBASE_H
+#ifndef BITCREDS_CHAINPARAMSBASE_H
+#define BITCREDS_CHAINPARAMSBASE_H
 
 #include <string>
 #include <vector>
@@ -63,4 +63,4 @@ std::string ChainNameFromCommandLine();
  */
 bool AreBaseParamsConfigured();
 
-#endif // CREDITS_CHAINPARAMSBASE_H
+#endif // BITCREDS_CHAINPARAMSBASE_H

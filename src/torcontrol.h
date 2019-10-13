@@ -9,8 +9,8 @@
 /**
  * Functionality for communicating with Tor.
  */
-#ifndef CREDITS_TORCONTROL_H
-#define CREDITS_TORCONTROL_H
+#ifndef BITCREDS_TORCONTROL_H
+#define BITCREDS_TORCONTROL_H
 
 #include "scheduler.h"
 
@@ -21,4 +21,4 @@ void StartTorControl(boost::thread_group& threadGroup, CScheduler& scheduler);
 void InterruptTorControl();
 void StopTorControl();
 
-#endif // CREDITS_TORCONTROL_H
+#endif // BITCREDS_TORCONTROL_H

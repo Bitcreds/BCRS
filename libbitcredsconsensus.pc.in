@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: Bitcreds consensus library
 Description: Library for the Bitcreds consensus protocol.
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lcreditsconsensus
+Libs: -L${libdir} -lbitcredsconsensus
 Cflags: -I${includedir}
 Requires.private: libcrypto

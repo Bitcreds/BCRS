@@ -106,5 +106,5 @@ int bitcredsconsensus_verify_script(const unsigned char *scriptPubKey, unsigned 
 unsigned int bitcredsconsensus_version()
 {
     // Just use the API version for now
-    return CREDITSCONSENSUS_API_VER;
+    return BITCREDSCONSENSUS_API_VER;
 }

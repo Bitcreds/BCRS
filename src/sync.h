@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SYNC_H
-#define CREDITS_SYNC_H
+#ifndef BITCREDS_SYNC_H
+#define BITCREDS_SYNC_H
 
 #include "threadsafety.h"
 
@@ -283,4 +283,4 @@ public:
     }
 };
 
-#endif // CREDITS_SYNC_H
+#endif // BITCREDS_SYNC_H

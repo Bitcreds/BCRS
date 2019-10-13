@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_PAYMENTREQUESTPLUS_H
-#define CREDITS_QT_PAYMENTREQUESTPLUS_H
+#ifndef BITCREDS_QT_PAYMENTREQUESTPLUS_H
+#define BITCREDS_QT_PAYMENTREQUESTPLUS_H
 
 #include "paymentrequest.pb.h"
 
@@ -49,4 +49,4 @@ private:
     payments::PaymentDetails details;
 };
 
-#endif // CREDITS_QT_PAYMENTREQUESTPLUS_H
+#endif // BITCREDS_QT_PAYMENTREQUESTPLUS_H

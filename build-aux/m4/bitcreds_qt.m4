@@ -3,21 +3,21 @@ dnl Distributed under the MIT software license, see the accompanying
 dnl file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 dnl Helper for cases where a qt dependency is not met.
-dnl Output: If qt version is auto, set credits_enable_qt to false. Else, exit.
-AC_DEFUN([CREDITS_QT_FAIL],[
-  if test "x$credits_qt_want_version" = "xauto" && test x$credits_qt_force != xyes; then
-    if test x$credits_enable_qt != xno; then
-      AC_MSG_WARN([$1; credits-qt frontend will not be built])
+dnl Output: If qt version is auto, set bitcreds_enable_qt to false. Else, exit.
+AC_DEFUN([BITCREDS_QT_FAIL],[
+  if test "x$bitcreds_qt_want_version" = "xauto" && test x$bitcreds_qt_force != xyes; then
+    if test x$bitcreds_enable_qt != xno; then
+      AC_MSG_WARN([$1; bitcreds-qt frontend will not be built])
     fi
-    credits_enable_qt=no
-    credits_enable_qt_test=no
+    bitcreds_enable_qt=no
+    bitcreds_enable_qt_test=no
   else
     AC_MSG_ERROR([$1])
   fi
 ])
 
-AC_DEFUN([CREDITS_QT_CHECK],[
-  if test "x$credits_enable_qt" != "xno" && test x$credits_qt_want_version != xno; then
+AC_DEFUN([BITCREDS_QT_CHECK],[
+  if test "x$bitcreds_enable_qt" != "xno" && test x$bitcreds_qt_want_version != xno; then
     true
     $1
   else
@@ -26,43 +26,43 @@ AC_DEFUN([CREDITS_QT_CHECK],[
   fi
 ])
 
-dnl CREDITS_QT_PATH_PROGS([FOO], [foo foo2], [/path/to/search/first], [continue if missing])
+dnl BITCREDS_QT_PATH_PROGS([FOO], [foo foo2], [/path/to/search/first], [continue if missing])
 dnl Helper for finding the path of programs needed for Qt.
 dnl Inputs: $1: Variable to be set
 dnl Inputs: $2: List of programs to search for
 dnl Inputs: $3: Look for $2 here before $PATH
 dnl Inputs: $4: If "yes", don't fail if $2 is not found.
 dnl Output: $1 is set to the path of $2 if found. $2 are searched in order.
-AC_DEFUN([CREDITS_QT_PATH_PROGS],[
-  CREDITS_QT_CHECK([
+AC_DEFUN([BITCREDS_QT_PATH_PROGS],[
+  BITCREDS_QT_CHECK([
     if test "x$3" != "x"; then
       AC_PATH_PROGS($1,$2,,$3)
     else
       AC_PATH_PROGS($1,$2)
     fi
     if test "x$$1" = "x" && test "x$4" != "xyes"; then
-      CREDITS_QT_FAIL([$1 not found])
+      BITCREDS_QT_FAIL([$1 not found])
     fi
   ])
 ])
 
 dnl Initialize qt input.
-dnl This must be called before any other CREDITS_QT* macros to ensure that
+dnl This must be called before any other BITCREDS_QT* macros to ensure that
 dnl input variables are set correctly.
 dnl CAUTION: Do not use this inside of a conditional.
-AC_DEFUN([CREDITS_QT_INIT],[
+AC_DEFUN([BITCREDS_QT_INIT],[
   dnl enable qt support
   AC_ARG_WITH([gui],
     [AS_HELP_STRING([--with-gui@<:@=no|qt4|qt5|auto@:>@],
-    [build credits-qt GUI (default=auto, qt5 tried first)])],
+    [build bitcreds-qt GUI (default=auto, qt5 tried first)])],
     [
-     credits_qt_want_version=$withval
-     if test x$credits_qt_want_version = xyes; then
-       credits_qt_force=yes
-       credits_qt_want_version=auto
+     bitcreds_qt_want_version=$withval
+     if test x$bitcreds_qt_want_version = xyes; then
+       bitcreds_qt_force=yes
+       bitcreds_qt_want_version=auto
      fi
     ],
-    [credits_qt_want_version=auto])
+    [bitcreds_qt_want_version=auto])
 
   AC_ARG_WITH([qt-incdir],[AS_HELP_STRING([--with-qt-incdir=INC_DIR],[specify qt include path (overridden by pkgconfig)])], [qt_include_path=$withval], [])
   AC_ARG_WITH([qt-libdir],[AS_HELP_STRING([--with-qt-libdir=LIB_DIR],[specify qt lib path (overridden by pkgconfig)])], [qt_lib_path=$withval], [])
@@ -83,10 +83,10 @@ dnl Find the appropriate version of Qt libraries and includes.
 dnl Inputs: $1: Whether or not pkg-config should be used. yes|no. Default: yes.
 dnl Inputs: $2: If $1 is "yes" and --with-gui=auto, which qt version should be
 dnl         tried first.
-dnl Outputs: See _CREDITS_QT_FIND_LIBS_*
+dnl Outputs: See _BITCREDS_QT_FIND_LIBS_*
 dnl Outputs: Sets variables for all qt-related tools.
-dnl Outputs: credits_enable_qt, credits_enable_qt_dbus, credits_enable_qt_test
-AC_DEFUN([CREDITS_QT_CONFIGURE],[
+dnl Outputs: bitcreds_enable_qt, bitcreds_enable_qt_dbus, bitcreds_enable_qt_test
+AC_DEFUN([BITCREDS_QT_CONFIGURE],[
   use_pkgconfig=$1
 
   if test x$use_pkgconfig = x; then
@@ -94,9 +94,9 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
   fi
 
   if test x$use_pkgconfig = xyes; then
-    CREDITS_QT_CHECK([_CREDITS_QT_FIND_LIBS_WITH_PKGCONFIG([$2])])
+    BITCREDS_QT_CHECK([_BITCREDS_QT_FIND_LIBS_WITH_PKGCONFIG([$2])])
   else
-    CREDITS_QT_CHECK([_CREDITS_QT_FIND_LIBS_WITHOUT_PKGCONFIG])
+    BITCREDS_QT_CHECK([_BITCREDS_QT_FIND_LIBS_WITHOUT_PKGCONFIG])
   fi
 
   dnl This is ugly and complicated. Yuck. Works as follows:
@@ -106,46 +106,46 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
   dnl Qt4 and Qt5. With Qt5, languages moved into core and the WindowsIntegration
   dnl plugin was added. Since we can't tell if Qt4 is static or not, it is
   dnl assumed for windows builds.
-  dnl _CREDITS_QT_CHECK_STATIC_PLUGINS does a quick link-check and appends the
+  dnl _BITCREDS_QT_CHECK_STATIC_PLUGINS does a quick link-check and appends the
   dnl results to QT_LIBS.
-  CREDITS_QT_CHECK([
+  BITCREDS_QT_CHECK([
   TEMP_CPPFLAGS=$CPPFLAGS
   TEMP_CXXFLAGS=$CXXFLAGS
   CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
   CXXFLAGS="$PIC_FLAGS $CXXFLAGS"
-  if test x$credits_qt_got_major_vers = x5; then
-    _CREDITS_QT_IS_STATIC
-    if test x$credits_cv_static_qt = xyes; then
-      _CREDITS_QT_FIND_STATIC_PLUGINS
+  if test x$bitcreds_qt_got_major_vers = x5; then
+    _BITCREDS_QT_IS_STATIC
+    if test x$bitcreds_cv_static_qt = xyes; then
+      _BITCREDS_QT_FIND_STATIC_PLUGINS
       AC_DEFINE(QT_STATICPLUGIN, 1, [Define this symbol if qt plugins are static])
-      AC_CACHE_CHECK(for Qt < 5.4, credits_cv_need_acc_widget,[AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+      AC_CACHE_CHECK(for Qt < 5.4, bitcreds_cv_need_acc_widget,[AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
           [[#include <QtCore>]],[[
           #if QT_VERSION >= 0x050400
           choke;
           #endif
           ]])],
-        [credits_cv_need_acc_widget=yes],
-        [credits_cv_need_acc_widget=no])
+        [bitcreds_cv_need_acc_widget=yes],
+        [bitcreds_cv_need_acc_widget=no])
       ])
-      if test "x$credits_cv_need_acc_widget" = "xyes"; then
-        _CREDITS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(AccessibleFactory)], [-lqtaccessiblewidgets])
+      if test "x$bitcreds_cv_need_acc_widget" = "xyes"; then
+        _BITCREDS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(AccessibleFactory)], [-lqtaccessiblewidgets])
       fi
       if test x$TARGET_OS = xwindows; then
-        _CREDITS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)],[-lqwindows])
+        _BITCREDS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)],[-lqwindows])
         AC_DEFINE(QT_QPA_PLATFORM_WINDOWS, 1, [Define this symbol if the qt platform is windows])
       elif test x$TARGET_OS = xlinux; then
-        _CREDITS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)],[-lqxcb -lxcb-static])
+        _BITCREDS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)],[-lqxcb -lxcb-static])
         AC_DEFINE(QT_QPA_PLATFORM_XCB, 1, [Define this symbol if the qt platform is xcb])
       elif test x$TARGET_OS = xdarwin; then
         AX_CHECK_LINK_FLAG([[-framework IOKit]],[QT_LIBS="$QT_LIBS -framework IOKit"],[AC_MSG_ERROR(could not iokit framework)])
-        _CREDITS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)],[-lqcocoa])
+        _BITCREDS_QT_CHECK_STATIC_PLUGINS([Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)],[-lqcocoa])
         AC_DEFINE(QT_QPA_PLATFORM_COCOA, 1, [Define this symbol if the qt platform is cocoa])
       fi
     fi
   else
     if test x$TARGET_OS = xwindows; then
       AC_DEFINE(QT_STATICPLUGIN, 1, [Define this symbol if qt plugins are static])
-      _CREDITS_QT_CHECK_STATIC_PLUGINS([
+      _BITCREDS_QT_CHECK_STATIC_PLUGINS([
          Q_IMPORT_PLUGIN(qcncodecs)
          Q_IMPORT_PLUGIN(qjpcodecs)
          Q_IMPORT_PLUGIN(qtwcodecs)
@@ -159,13 +159,13 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
   ])
 
   if test x$use_pkgconfig$qt_bin_path = xyes; then
-    if test x$credits_qt_got_major_vers = x5; then
+    if test x$bitcreds_qt_got_major_vers = x5; then
       qt_bin_path="`$PKG_CONFIG --variable=host_bins Qt5Core 2>/dev/null`"
     fi
   fi
 
   if test x$use_hardening != xno; then
-    CREDITS_QT_CHECK([
+    BITCREDS_QT_CHECK([
     AC_MSG_CHECKING(whether -fPIE can be used with this Qt config)
     TEMP_CPPFLAGS=$CPPFLAGS
     TEMP_CXXFLAGS=$CXXFLAGS
@@ -184,7 +184,7 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
     CXXFLAGS=$TEMP_CXXFLAGS
     ])
   else
-    CREDITS_QT_CHECK([
+    BITCREDS_QT_CHECK([
     AC_MSG_CHECKING(whether -fPIC is needed with this Qt config)
     TEMP_CPPFLAGS=$CPPFLAGS
     CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
@@ -201,23 +201,23 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
     ])
   fi
 
-  CREDITS_QT_PATH_PROGS([MOC], [moc-qt${credits_qt_got_major_vers} moc${credits_qt_got_major_vers} moc], $qt_bin_path)
-  CREDITS_QT_PATH_PROGS([UIC], [uic-qt${credits_qt_got_major_vers} uic${credits_qt_got_major_vers} uic], $qt_bin_path)
-  CREDITS_QT_PATH_PROGS([RCC], [rcc-qt${credits_qt_got_major_vers} rcc${credits_qt_got_major_vers} rcc], $qt_bin_path)
-  CREDITS_QT_PATH_PROGS([LRELEASE], [lrelease-qt${credits_qt_got_major_vers} lrelease${credits_qt_got_major_vers} lrelease], $qt_bin_path)
-  CREDITS_QT_PATH_PROGS([LUPDATE], [lupdate-qt${credits_qt_got_major_vers} lupdate${credits_qt_got_major_vers} lupdate],$qt_bin_path, yes)
+  BITCREDS_QT_PATH_PROGS([MOC], [moc-qt${bitcreds_qt_got_major_vers} moc${bitcreds_qt_got_major_vers} moc], $qt_bin_path)
+  BITCREDS_QT_PATH_PROGS([UIC], [uic-qt${bitcreds_qt_got_major_vers} uic${bitcreds_qt_got_major_vers} uic], $qt_bin_path)
+  BITCREDS_QT_PATH_PROGS([RCC], [rcc-qt${bitcreds_qt_got_major_vers} rcc${bitcreds_qt_got_major_vers} rcc], $qt_bin_path)
+  BITCREDS_QT_PATH_PROGS([LRELEASE], [lrelease-qt${bitcreds_qt_got_major_vers} lrelease${bitcreds_qt_got_major_vers} lrelease], $qt_bin_path)
+  BITCREDS_QT_PATH_PROGS([LUPDATE], [lupdate-qt${bitcreds_qt_got_major_vers} lupdate${bitcreds_qt_got_major_vers} lupdate],$qt_bin_path, yes)
 
   MOC_DEFS='-DHAVE_CONFIG_H -I$(srcdir)'
   case $host in
     *darwin*)
-     CREDITS_QT_CHECK([
+     BITCREDS_QT_CHECK([
        MOC_DEFS="${MOC_DEFS} -DQ_OS_MAC"
        base_frameworks="-framework Foundation -framework ApplicationServices -framework AppKit"
        AX_CHECK_LINK_FLAG([[$base_frameworks]],[QT_LIBS="$QT_LIBS $base_frameworks"],[AC_MSG_ERROR(could not find base frameworks)])
      ])
     ;;
     *mingw*)
-       CREDITS_QT_CHECK([
+       BITCREDS_QT_CHECK([
          AX_CHECK_LINK_FLAG([[-mwindows]],[QT_LDFLAGS="$QT_LDFLAGS -mwindows"],[AC_MSG_WARN(-mwindows linker support not detected)])
        ])
   esac
@@ -225,15 +225,15 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
 
   dnl enable qt support
   AC_MSG_CHECKING(whether to build ]AC_PACKAGE_NAME[ GUI)
-  CREDITS_QT_CHECK([
-    credits_enable_qt=yes
-    credits_enable_qt_test=yes
+  BITCREDS_QT_CHECK([
+    bitcreds_enable_qt=yes
+    bitcreds_enable_qt_test=yes
     if test x$have_qt_test = xno; then
-      credits_enable_qt_test=no
+      bitcreds_enable_qt_test=no
     fi
-    credits_enable_qt_dbus=no
+    bitcreds_enable_qt_dbus=no
     if test x$use_dbus != xno && test x$have_qt_dbus = xyes; then
-      credits_enable_qt_dbus=yes
+      bitcreds_enable_qt_dbus=yes
     fi
     if test x$use_dbus = xyes && test x$have_qt_dbus = xno; then
       AC_MSG_ERROR("libQtDBus not found. Install libQtDBus or remove --with-qtdbus.")
@@ -242,9 +242,9 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
       AC_MSG_WARN("lupdate is required to update qt translations")
     fi
   ],[
-    credits_enable_qt=no
+    bitcreds_enable_qt=no
   ])
-  AC_MSG_RESULT([$credits_enable_qt (Qt${credits_qt_got_major_vers})])
+  AC_MSG_RESULT([$bitcreds_enable_qt (Qt${bitcreds_qt_got_major_vers})])
 
   AC_SUBST(QT_PIE_FLAGS)
   AC_SUBST(QT_INCLUDES)
@@ -254,7 +254,7 @@ AC_DEFUN([CREDITS_QT_CONFIGURE],[
   AC_SUBST(QT_DBUS_LIBS)
   AC_SUBST(QT_TEST_INCLUDES)
   AC_SUBST(QT_TEST_LIBS)
-  AC_SUBST(QT_SELECT, qt${credits_qt_got_major_vers})
+  AC_SUBST(QT_SELECT, qt${bitcreds_qt_got_major_vers})
   AC_SUBST(MOC_DEFS)
 ])
 
@@ -264,9 +264,9 @@ dnl ----
 
 dnl Internal. Check if the included version of Qt is Qt5.
 dnl Requires: INCLUDES must be populated as necessary.
-dnl Output: credits_cv_qt5=yes|no
-AC_DEFUN([_CREDITS_QT_CHECK_QT5],[
-  AC_CACHE_CHECK(for Qt 5, credits_cv_qt5,[
+dnl Output: bitcreds_cv_qt5=yes|no
+AC_DEFUN([_BITCREDS_QT_CHECK_QT5],[
+  AC_CACHE_CHECK(for Qt 5, bitcreds_cv_qt5,[
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
     [[#include <QtCore>]],
     [[
@@ -276,17 +276,17 @@ AC_DEFUN([_CREDITS_QT_CHECK_QT5],[
       return 0;
       #endif
     ]])],
-    [credits_cv_qt5=yes],
-    [credits_cv_qt5=no])
+    [bitcreds_cv_qt5=yes],
+    [bitcreds_cv_qt5=no])
 ])])
 
 dnl Internal. Check if the linked version of Qt was built as static libs.
 dnl Requires: Qt5. This check cannot determine if Qt4 is static.
 dnl Requires: INCLUDES and LIBS must be populated as necessary.
-dnl Output: credits_cv_static_qt=yes|no
+dnl Output: bitcreds_cv_static_qt=yes|no
 dnl Output: Defines QT_STATICPLUGIN if plugins are static.
-AC_DEFUN([_CREDITS_QT_IS_STATIC],[
-  AC_CACHE_CHECK(for static Qt, credits_cv_static_qt,[
+AC_DEFUN([_BITCREDS_QT_IS_STATIC],[
+  AC_CACHE_CHECK(for static Qt, bitcreds_cv_static_qt,[
   AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
     [[#include <QtCore>]],
     [[
@@ -296,10 +296,10 @@ AC_DEFUN([_CREDITS_QT_IS_STATIC],[
       choke me
       #endif
     ]])],
-    [credits_cv_static_qt=yes],
-    [credits_cv_static_qt=no])
+    [bitcreds_cv_static_qt=yes],
+    [bitcreds_cv_static_qt=no])
   ])
-  if test xcredits_cv_static_qt = xyes; then
+  if test xbitcreds_cv_static_qt = xyes; then
     AC_DEFINE(QT_STATICPLUGIN, 1, [Define this symbol for static Qt plugins])
   fi
 ])
@@ -309,7 +309,7 @@ dnl Requires: INCLUDES and LIBS must be populated as necessary.
 dnl Inputs: $1: A series of Q_IMPORT_PLUGIN().
 dnl Inputs: $2: The libraries that resolve $1.
 dnl Output: QT_LIBS is prepended or configure exits.
-AC_DEFUN([_CREDITS_QT_CHECK_STATIC_PLUGINS],[
+AC_DEFUN([_BITCREDS_QT_CHECK_STATIC_PLUGINS],[
   AC_MSG_CHECKING(for static Qt plugins: $2)
   CHECK_STATIC_PLUGINS_TEMP_LIBS="$LIBS"
   LIBS="$2 $QT_LIBS $LIBS"
@@ -319,16 +319,16 @@ AC_DEFUN([_CREDITS_QT_CHECK_STATIC_PLUGINS],[
     $1]],
     [[return 0;]])],
     [AC_MSG_RESULT(yes); QT_LIBS="$2 $QT_LIBS"],
-    [AC_MSG_RESULT(no); CREDITS_QT_FAIL(Could not resolve: $2)])
+    [AC_MSG_RESULT(no); BITCREDS_QT_FAIL(Could not resolve: $2)])
   LIBS="$CHECK_STATIC_PLUGINS_TEMP_LIBS"
 ])
 
 dnl Internal. Find paths necessary for linking qt static plugins
-dnl Inputs: credits_qt_got_major_vers. 4 or 5.
+dnl Inputs: bitcreds_qt_got_major_vers. 4 or 5.
 dnl Inputs: qt_plugin_path. optional.
 dnl Outputs: QT_LIBS is appended
-AC_DEFUN([_CREDITS_QT_FIND_STATIC_PLUGINS],[
-  if test x$credits_qt_got_major_vers = x5; then
+AC_DEFUN([_BITCREDS_QT_FIND_STATIC_PLUGINS],[
+  if test x$bitcreds_qt_got_major_vers = x5; then
       if test x$qt_plugin_path != x; then
         QT_LIBS="$QT_LIBS -L$qt_plugin_path/platforms"
         if test -d "$qt_plugin_path/accessible"; then
@@ -350,17 +350,17 @@ AC_DEFUN([_CREDITS_QT_FIND_STATIC_PLUGINS],[
      ])
      else
        if test x$TARGET_OS = xwindows; then
-         AC_CACHE_CHECK(for Qt >= 5.6, credits_cv_need_platformsupport,[AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+         AC_CACHE_CHECK(for Qt >= 5.6, bitcreds_cv_need_platformsupport,[AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
              [[#include <QtCore>]],[[
              #if QT_VERSION < 0x050600
              choke;
              #endif
              ]])],
-           [credits_cv_need_platformsupport=yes],
-           [credits_cv_need_platformsupport=no])
+           [bitcreds_cv_need_platformsupport=yes],
+           [bitcreds_cv_need_platformsupport=no])
          ])
-         if test x$credits_cv_need_platformsupport = xyes; then
-           CREDITS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}PlatformSupport],[main],,CREDITS_QT_FAIL(lib$QT_LIB_PREFIXPlatformSupport not found)))
+         if test x$bitcreds_cv_need_platformsupport = xyes; then
+           BITCREDS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}PlatformSupport],[main],,BITCREDS_QT_FAIL(lib$QT_LIB_PREFIXPlatformSupport not found)))
          fi
        fi
      fi
@@ -373,49 +373,49 @@ AC_DEFUN([_CREDITS_QT_FIND_STATIC_PLUGINS],[
 ])
 
 dnl Internal. Find Qt libraries using pkg-config.
-dnl Inputs: credits_qt_want_version (from --with-gui=). The version to check
+dnl Inputs: bitcreds_qt_want_version (from --with-gui=). The version to check
 dnl         first.
-dnl Inputs: $1: If credits_qt_want_version is "auto", check for this version
+dnl Inputs: $1: If bitcreds_qt_want_version is "auto", check for this version
 dnl         first.
 dnl Outputs: All necessary QT_* variables are set.
-dnl Outputs: credits_qt_got_major_vers is set to "4" or "5".
+dnl Outputs: bitcreds_qt_got_major_vers is set to "4" or "5".
 dnl Outputs: have_qt_test and have_qt_dbus are set (if applicable) to yes|no.
-AC_DEFUN([_CREDITS_QT_FIND_LIBS_WITH_PKGCONFIG],[
+AC_DEFUN([_BITCREDS_QT_FIND_LIBS_WITH_PKGCONFIG],[
   m4_ifdef([PKG_CHECK_MODULES],[
   auto_priority_version=$1
   if test x$auto_priority_version = x; then
     auto_priority_version=qt5
   fi
-    if test x$credits_qt_want_version = xqt5 ||  ( test x$credits_qt_want_version = xauto && test x$auto_priority_version = xqt5 ); then
+    if test x$bitcreds_qt_want_version = xqt5 ||  ( test x$bitcreds_qt_want_version = xauto && test x$auto_priority_version = xqt5 ); then
       QT_LIB_PREFIX=Qt5
-      credits_qt_got_major_vers=5
+      bitcreds_qt_got_major_vers=5
     else
       QT_LIB_PREFIX=Qt
-      credits_qt_got_major_vers=4
+      bitcreds_qt_got_major_vers=4
     fi
     qt5_modules="Qt5Core Qt5Gui Qt5Network Qt5Widgets"
     qt4_modules="QtCore QtGui QtNetwork"
-    CREDITS_QT_CHECK([
-      if test x$credits_qt_want_version = xqt5 || ( test x$credits_qt_want_version = xauto && test x$auto_priority_version = xqt5 ); then
+    BITCREDS_QT_CHECK([
+      if test x$bitcreds_qt_want_version = xqt5 || ( test x$bitcreds_qt_want_version = xauto && test x$auto_priority_version = xqt5 ); then
         PKG_CHECK_MODULES([QT], [$qt5_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes],[have_qt=no])
-      elif test x$credits_qt_want_version = xqt4 || ( test x$credits_qt_want_version = xauto && test x$auto_priority_version = xqt4 ); then
+      elif test x$bitcreds_qt_want_version = xqt4 || ( test x$bitcreds_qt_want_version = xauto && test x$auto_priority_version = xqt4 ); then
         PKG_CHECK_MODULES([QT], [$qt4_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes], [have_qt=no])
       fi
 
       dnl qt version is set to 'auto' and the preferred version wasn't found. Now try the other.
-      if test x$have_qt = xno && test x$credits_qt_want_version = xauto; then
+      if test x$have_qt = xno && test x$bitcreds_qt_want_version = xauto; then
         if test x$auto_priority_version = xqt5; then
-          PKG_CHECK_MODULES([QT], [$qt4_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes; QT_LIB_PREFIX=Qt; credits_qt_got_major_vers=4], [have_qt=no])
+          PKG_CHECK_MODULES([QT], [$qt4_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes; QT_LIB_PREFIX=Qt; bitcreds_qt_got_major_vers=4], [have_qt=no])
         else
-          PKG_CHECK_MODULES([QT], [$qt5_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes; QT_LIB_PREFIX=Qt5; credits_qt_got_major_vers=5], [have_qt=no])
+          PKG_CHECK_MODULES([QT], [$qt5_modules], [QT_INCLUDES="$QT_CFLAGS"; have_qt=yes; QT_LIB_PREFIX=Qt5; bitcreds_qt_got_major_vers=5], [have_qt=no])
         fi
       fi
       if test x$have_qt != xyes; then
         have_qt=no
-        CREDITS_QT_FAIL([Qt dependencies not found])
+        BITCREDS_QT_FAIL([Qt dependencies not found])
       fi
     ])
-    CREDITS_QT_CHECK([
+    BITCREDS_QT_CHECK([
       PKG_CHECK_MODULES([QT_TEST], [${QT_LIB_PREFIX}Test], [QT_TEST_INCLUDES="$QT_TEST_CFLAGS"; have_qt_test=yes], [have_qt_test=no])
       if test x$use_dbus != xno; then
         PKG_CHECK_MODULES([QT_DBUS], [${QT_LIB_PREFIX}DBus], [QT_DBUS_INCLUDES="$QT_DBUS_CFLAGS"; have_qt_dbus=yes], [have_qt_dbus=no])
@@ -427,66 +427,66 @@ AC_DEFUN([_CREDITS_QT_FIND_LIBS_WITH_PKGCONFIG],[
 
 dnl Internal. Find Qt libraries without using pkg-config. Version is deduced
 dnl from the discovered headers.
-dnl Inputs: credits_qt_want_version (from --with-gui=). The version to use.
-dnl         If "auto", the version will be discovered by _CREDITS_QT_CHECK_QT5.
+dnl Inputs: bitcreds_qt_want_version (from --with-gui=). The version to use.
+dnl         If "auto", the version will be discovered by _BITCREDS_QT_CHECK_QT5.
 dnl Outputs: All necessary QT_* variables are set.
-dnl Outputs: credits_qt_got_major_vers is set to "4" or "5".
+dnl Outputs: bitcreds_qt_got_major_vers is set to "4" or "5".
 dnl Outputs: have_qt_test and have_qt_dbus are set (if applicable) to yes|no.
-AC_DEFUN([_CREDITS_QT_FIND_LIBS_WITHOUT_PKGCONFIG],[
+AC_DEFUN([_BITCREDS_QT_FIND_LIBS_WITHOUT_PKGCONFIG],[
   TEMP_CPPFLAGS="$CPPFLAGS"
   TEMP_CXXFLAGS="$CXXFLAGS"
   CXXFLAGS="$PIC_FLAGS $CXXFLAGS"
   TEMP_LIBS="$LIBS"
-  CREDITS_QT_CHECK([
+  BITCREDS_QT_CHECK([
     if test x$qt_include_path != x; then
       QT_INCLUDES="-I$qt_include_path -I$qt_include_path/QtCore -I$qt_include_path/QtGui -I$qt_include_path/QtWidgets -I$qt_include_path/QtNetwork -I$qt_include_path/QtTest -I$qt_include_path/QtDBus"
       CPPFLAGS="$QT_INCLUDES $CPPFLAGS"
     fi
   ])
 
-  CREDITS_QT_CHECK([AC_CHECK_HEADER([QtPlugin],,CREDITS_QT_FAIL(QtCore headers missing))])
-  CREDITS_QT_CHECK([AC_CHECK_HEADER([QApplication],, CREDITS_QT_FAIL(QtGui headers missing))])
-  CREDITS_QT_CHECK([AC_CHECK_HEADER([QLocalSocket],, CREDITS_QT_FAIL(QtNetwork headers missing))])
+  BITCREDS_QT_CHECK([AC_CHECK_HEADER([QtPlugin],,BITCREDS_QT_FAIL(QtCore headers missing))])
+  BITCREDS_QT_CHECK([AC_CHECK_HEADER([QApplication],, BITCREDS_QT_FAIL(QtGui headers missing))])
+  BITCREDS_QT_CHECK([AC_CHECK_HEADER([QLocalSocket],, BITCREDS_QT_FAIL(QtNetwork headers missing))])
 
-  CREDITS_QT_CHECK([
-    if test x$credits_qt_want_version = xauto; then
-      _CREDITS_QT_CHECK_QT5
+  BITCREDS_QT_CHECK([
+    if test x$bitcreds_qt_want_version = xauto; then
+      _BITCREDS_QT_CHECK_QT5
     fi
-    if test x$credits_cv_qt5 = xyes || test x$credits_qt_want_version = xqt5; then
+    if test x$bitcreds_cv_qt5 = xyes || test x$bitcreds_qt_want_version = xqt5; then
       QT_LIB_PREFIX=Qt5
-      credits_qt_got_major_vers=5
+      bitcreds_qt_got_major_vers=5
     else
       QT_LIB_PREFIX=Qt
-      credits_qt_got_major_vers=4
+      bitcreds_qt_got_major_vers=4
     fi
   ])
 
-  CREDITS_QT_CHECK([
+  BITCREDS_QT_CHECK([
     LIBS=
     if test x$qt_lib_path != x; then
       LIBS="$LIBS -L$qt_lib_path"
     fi
 
     if test x$TARGET_OS = xwindows; then
-      AC_CHECK_LIB([imm32],      [main],, CREDITS_QT_FAIL(libimm32 not found))
+      AC_CHECK_LIB([imm32],      [main],, BITCREDS_QT_FAIL(libimm32 not found))
     fi
   ])
 
-  CREDITS_QT_CHECK(AC_CHECK_LIB([z] ,[main],,AC_MSG_WARN([zlib not found. Assuming qt has it built-in])))
-  CREDITS_QT_CHECK(AC_SEARCH_LIBS([png_error] ,[qtpng png],,AC_MSG_WARN([libpng not found. Assuming qt has it built-in])))
-  CREDITS_QT_CHECK(AC_SEARCH_LIBS([jpeg_create_decompress] ,[qtjpeg jpeg],,AC_MSG_WARN([libjpeg not found. Assuming qt has it built-in])))
-  CREDITS_QT_CHECK(AC_SEARCH_LIBS([pcre16_exec], [qtpcre pcre16],,AC_MSG_WARN([libpcre16 not found. Assuming qt has it built-in])))
-  CREDITS_QT_CHECK(AC_SEARCH_LIBS([hb_ot_tags_from_script] ,[qtharfbuzzng harfbuzz],,AC_MSG_WARN([libharfbuzz not found. Assuming qt has it built-in or support is disabled])))
-  CREDITS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Core]   ,[main],,CREDITS_QT_FAIL(lib$QT_LIB_PREFIXCore not found)))
-  CREDITS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Gui]    ,[main],,CREDITS_QT_FAIL(lib$QT_LIB_PREFIXGui not found)))
-  CREDITS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Network],[main],,CREDITS_QT_FAIL(lib$QT_LIB_PREFIXNetwork not found)))
-  if test x$credits_qt_got_major_vers = x5; then
-    CREDITS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Widgets],[main],,CREDITS_QT_FAIL(lib$QT_LIB_PREFIXWidgets not found)))
+  BITCREDS_QT_CHECK(AC_CHECK_LIB([z] ,[main],,AC_MSG_WARN([zlib not found. Assuming qt has it built-in])))
+  BITCREDS_QT_CHECK(AC_SEARCH_LIBS([png_error] ,[qtpng png],,AC_MSG_WARN([libpng not found. Assuming qt has it built-in])))
+  BITCREDS_QT_CHECK(AC_SEARCH_LIBS([jpeg_create_decompress] ,[qtjpeg jpeg],,AC_MSG_WARN([libjpeg not found. Assuming qt has it built-in])))
+  BITCREDS_QT_CHECK(AC_SEARCH_LIBS([pcre16_exec], [qtpcre pcre16],,AC_MSG_WARN([libpcre16 not found. Assuming qt has it built-in])))
+  BITCREDS_QT_CHECK(AC_SEARCH_LIBS([hb_ot_tags_from_script] ,[qtharfbuzzng harfbuzz],,AC_MSG_WARN([libharfbuzz not found. Assuming qt has it built-in or support is disabled])))
+  BITCREDS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Core]   ,[main],,BITCREDS_QT_FAIL(lib$QT_LIB_PREFIXCore not found)))
+  BITCREDS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Gui]    ,[main],,BITCREDS_QT_FAIL(lib$QT_LIB_PREFIXGui not found)))
+  BITCREDS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Network],[main],,BITCREDS_QT_FAIL(lib$QT_LIB_PREFIXNetwork not found)))
+  if test x$bitcreds_qt_got_major_vers = x5; then
+    BITCREDS_QT_CHECK(AC_CHECK_LIB([${QT_LIB_PREFIX}Widgets],[main],,BITCREDS_QT_FAIL(lib$QT_LIB_PREFIXWidgets not found)))
   fi
   QT_LIBS="$LIBS"
   LIBS="$TEMP_LIBS"
 
-  CREDITS_QT_CHECK([
+  BITCREDS_QT_CHECK([
     LIBS=
     if test x$qt_lib_path != x; then
       LIBS="-L$qt_lib_path"

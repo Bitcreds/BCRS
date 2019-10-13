@@ -14,8 +14,8 @@
  * - E-mail usually won't line-break if there's no punctuation to break at.
  * - Double-clicking selects the whole string as one word if it's all alphanumeric.
  */
-#ifndef CREDITS_BASE58_H
-#define CREDITS_BASE58_H
+#ifndef BITCREDS_BASE58_H
+#define BITCREDS_BASE58_H
 
 #include "chainparams.h"
 #include "key.h"
@@ -171,4 +171,4 @@ public:
 typedef CBitcredsExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRET_KEY> CBitcredsExtKey;
 typedef CBitcredsExtKeyBase<CExtPubKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CBitcredsExtPubKey;
 
-#endif // CREDITS_BASE58_H
+#endif // BITCREDS_BASE58_H

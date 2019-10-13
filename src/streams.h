@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_STREAMS_H
-#define CREDITS_STREAMS_H
+#ifndef BITCREDS_STREAMS_H
+#define BITCREDS_STREAMS_H
 
 #include "serialize.h"
 #include "support/allocators/zeroafterfree.h"
@@ -595,4 +595,4 @@ public:
     }
 };
 
-#endif // CREDITS_STREAMS_H
+#endif // BITCREDS_STREAMS_H

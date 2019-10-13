@@ -2907,7 +2907,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         return state.DoS(0, error("ConnectBlock(BCRS): couldn't find Masternode or Superblock payments"),
                                 REJECT_INVALID, "bad-cb-payee");
     }
-    // END CREDITS
+    // END BITCREDS
 
     if (!control.Wait())
         return state.DoS(100, false);
@@ -3884,7 +3884,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                              REJECT_INVALID, "bad-cb-multiple");
 
 
-    // CREDITS : CHECK TRANSACTIONS FOR INSTANTSEND
+    // BITCREDS : CHECK TRANSACTIONS FOR INSTANTSEND
 
     if(sporkManager.IsSporkActive(SPORK_3_INSTANTSEND_BLOCK_FILTERING)) {
         // We should never accept block which conflicts with completed transaction lock,
@@ -3914,7 +3914,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
         LogPrintf("CheckBlock(BCRS): spork is off, skipping transaction locking checks\n");
     }
 
-    // END CREDITS
+    // END BITCREDS
 
     // Check transactions
     BOOST_FOREACH(const CTransaction& tx, block.vtx)

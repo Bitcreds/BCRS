@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MASTERNODECONFIG_H
-#define CREDITS_MASTERNODECONFIG_H
+#ifndef BITCREDS_MASTERNODECONFIG_H
+#define BITCREDS_MASTERNODECONFIG_H
 
 #include "chainparams.h"
 #include "netbase.h"
@@ -101,4 +101,4 @@ private:
 };
 
 
-#endif // CREDITS_MASTERNODECONFIG_H
+#endif // BITCREDS_MASTERNODECONFIG_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CLIENTVERSION_H
-#define CREDITS_CLIENTVERSION_H
+#ifndef BITCREDS_CLIENTVERSION_H
+#define BITCREDS_CLIENTVERSION_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -66,4 +66,4 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
 
 #endif // WINDRES_PREPROC
 
-#endif // CREDITS_CLIENTVERSION_H
+#endif // BITCREDS_CLIENTVERSION_H

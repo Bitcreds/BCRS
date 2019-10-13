@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_COINCONTROL_H
-#define CREDITS_COINCONTROL_H
+#ifndef BITCREDS_COINCONTROL_H
+#define BITCREDS_COINCONTROL_H
 
 #include "primitives/transaction.h"
 
@@ -76,4 +76,4 @@ private:
     std::set<COutPoint> setSelected;
 };
 
-#endif // CREDITS_COINCONTROL_H
+#endif // BITCREDS_COINCONTROL_H

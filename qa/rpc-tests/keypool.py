@@ -1,16 +1,16 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 # Exercise the wallet keypool, and interaction with wallet encryption/locking
 
-# Add python-creditsrpc to module search path:
+# Add python-bitcredsrpc to module search path:
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 
-class KeyPoolTest(CreditsTestFramework):
+class KeyPoolTest(BitcredsTestFramework):
 
     def run_test(self):
         nodes = self.nodes
@@ -21,7 +21,7 @@ class KeyPoolTest(CreditsTestFramework):
 
         # Encrypt wallet and wait to terminate
         nodes[0].encryptwallet('test')
-        creditsd_processes[0].wait()
+        bitcredsd_processes[0].wait()
         # Restart node 0
         nodes[0] = start_node(0, self.options.tmpdir)
         # Keep creating keys

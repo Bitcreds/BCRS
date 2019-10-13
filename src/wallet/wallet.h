@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_WALLET_WALLET_H
-#define CREDITS_WALLET_WALLET_H
+#ifndef BITCREDS_WALLET_WALLET_H
+#define BITCREDS_WALLET_WALLET_H
 
 #include "amount.h"
 #include "base58.h"
@@ -1107,4 +1107,4 @@ private:
     std::vector<char> _ssExtra;
 };
 
-#endif // CREDITS_WALLET_WALLET_H
+#endif // BITCREDS_WALLET_WALLET_H

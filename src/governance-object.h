@@ -4,10 +4,10 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_GOVERNANCE_OBJECT_H
-#define CREDITS_GOVERNANCE_OBJECT_H
+#ifndef BITCREDS_GOVERNANCE_OBJECT_H
+#define BITCREDS_GOVERNANCE_OBJECT_H
 
-//#define ENABLE_CREDITS_DEBUG
+//#define ENABLE_BITCREDS_DEBUG
 
 #include "cachemultimap.h"
 #include "governance-exceptions.h"
@@ -355,4 +355,4 @@ private:
 };
 
 
-#endif // CREDITS_GOVERNANCE_OBJECT_H
+#endif // BITCREDS_GOVERNANCE_OBJECT_H

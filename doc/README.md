@@ -1,40 +1,40 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-[![Build Status](https://travis-ci.org/Credits-CRDS/Credits.png?branch=master)](https://travis-ci.org/Credits-CRDS/Credits)
-[![Stories in Ready](https://badge.waffle.io/Credits-CRDS/Credits.png?label=ready&title=Ready)](https://waffle.io/Credits-CRDS/Credits)
+[![Build Status](https://travis-ci.org/Bitcreds/BCRS.png?branch=master)](https://travis-ci.org/Bitcreds/BCRS)
+[![Stories in Ready](https://badge.waffle.io/Bitcreds-BCRS/Bitcreds.png?label=ready&title=Ready)](https://waffle.io/Bitcreds-BCRS/Bitcreds)
 
 Graph on Pull Request History
 ====================================
 
-[![Throughput Graph](https://graphs.waffle.io/Credits-CRDS/Credits/throughput.svg)](https://waffle.io/Credits-CRDS/Credits/metrics/throughput)  
+[![Throughput Graph](https://graphs.waffle.io/Bitcreds-BCRS/Bitcreds/throughput.svg)](https://waffle.io/Bitcreds-BCRS/Bitcreds/metrics/throughput)  
 
-# **Credits (CRDS) v1.0.0.0**
+# **Bitcreds (BCRS) v1.0.0.0**
 
-![CRDS logo](https://github.com/Credits-CRDS/Credits/blob/master/src/qt/res/icons/light/about.png)
+![BCRS logo](https://github.com/Bitcreds/BCRS/blob/master/src/qt/res/icons/light/about.png)
 
-**Copyright (c) 2017 Credits Developers**
+**Copyright (c) 2017 Bitcreds Developers**
 
-What is Credits?
+What is Bitcreds?
 ----------------
-* Coin Suffix: CRDS
+* Coin Suffix: BCRS
 * PoW Mining Algorithm: Argon2d
 * PoW Difficulty Algorithm: DELTA
 * PoW Period: ~36 years
 * PoW Target Spacing: 128 Seconds
-* PoW Reward per Block: 1 CRDS
+* PoW Reward per Block: 1 BCRS
 * Maturity: 10 Blocks
 * PoW Blocks: ~675 per day
-* Masternode Collateral Amount: 500 CRDS
+* Masternode Collateral Amount: 500 BCRS
 * Masternode Min Confirmation: 10 Blocks
 * Masternode Reward: See Below
 * Total Coins: 95,000,000 (~36 Years)
-* Min TX Fee: 0.0001 CRDS
+* Min TX Fee: 0.0001 BCRS
 
-Credits uses peer-to-peer technology to operate securly with no central authority (decentralisation): managing transactions and issuing currency (CRDS) are carried out collectively by the Credits network. Credits is the name of open source software which enables the use of the currency CRDS.
+Bitcreds uses peer-to-peer technology to operate securly with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
-Credits utilises Masternodes, Privatesend and InstantSend to provide anonymous and near instant transaction confirmations.
+Bitcreds utilises Masternodes, Privatesend and InstantSend to provide anonymous and near instant transaction confirmations.
 
-Credits implements Gavin Andresens signature cache optimisation from Bitcoin for significantly faster transaction validation.
+Bitcreds implements Gavin Andresens signature cache optimisation from Bitcoin for significantly faster transaction validation.
 
 
 **Masternode/Privatesend Network Information**
@@ -62,49 +62,49 @@ Magic Bytes = 0x1f 0x22 0x05 0x2f
 
  Years|      Blocks        |   PoW  | Masternodes |
 ------|--------------------|--------|-------------|
- 0-1  |       0 -  246544  | 10CRDS |    1CRDS    |
- 1-2  |  246545 -  493088  | 10CRDS |    1CRDS    |
- 2-3  |  493089 -  739631  |  9CRDS |    2CRDS    |
- 3-4  |  739632 -  986175  |  9CRDS |    2CRDS    |
- 4-5  |  986176 - 1232719  |  8CRDS |    3CRDS    |
- 5-6  | 1232720 - 1479263  |  8CRDS |    3CRDS    |
- 6-7  | 1479264 - 1725806  |  7CRDS |    4CRDS    |
- 7-8  | 1725807 - 1972350  |  7CRDS |    4CRDS    |
- 8-9  | 1972351 - 2218894  |  6CRDS |    5CRDS    |
- 9-10 | 2218895 - 2465438  |  6CRDS |    5CRDS    |
-10-11 | 2465439 - 2711981  |  5CRDS |    6CRDS    |
-11-12 | 2711982 - 2958525  |  5CRDS |    6CRDS    |
-12-13 | 2958526 - 3205069  |  4CRDS |    7CRDS    |
-13-14 | 3205070 - 3451613  |  3CRDS |    7CRDS    |
-14-15 | 3451614 - 3698156  |  3CRDS |    8CRDS    |
-15-16 | 3698156 - 3944700  |  2CRDS |    8CRDS    |
-16-17 | 3944701 - 4191244  |  2CRDS |    9CRDS    |
-17-18 | 4191245 - 4437788  |  1CRDS |    9CRDS    |
-18-19 | 4437789 - 4684331  |  1CRDS |   10CRDS    |
-19-20 | 4684332 - 4930875  |  1CRDS |   10CRDS    |
-20-21 | 4930876 - 5177419  |  1CRDS |   10CRDS    |
-21-22 | 5177420 - 5423963  |  1CRDS |   10CRDS    |
-22-23 | 5423964 - 5670506  |  1CRDS |   10CRDS    |
-23-24 | 5670507 - 5917050  |  1CRDS |   10CRDS    |
-24-25 | 5917051 - 6163594  |  1CRDS |   10CRDS    |
-25-26 | 6163595 - 6410138  |  1CRDS |   10CRDS    |
-26-27 | 6410139 - 6656681  |  1CRDS |   10CRDS    |
-27-28 | 6656682 - 6903225  |  1CRDS |   10CRDS    |
-28-30 | 6903226 - 7149769  |  1CRDS |   10CRDS    |   
-30-31 | 7149770 - 7396313  |  1CRDS |   10CRDS    |
-31-32 | 7396314 - 7642856  |  1CRDS |   10CRDS    |
-32-33 | 7642857 - 7889400  |  1CRDS |   10CRDS    |
-33-34 | 7889401 - 8135944  |  1CRDS |   10CRDS    |
-34-35 | 8135945 - 8382488  |  1CRDS |   10CRDS    |
-35-36 | 8382489 - 8629031  |  1CRDS |   10CRDS    |
+ 0-1  |       0 -  246544  | 10BCRS |    1BCRS    |
+ 1-2  |  246545 -  493088  | 10BCRS |    1BCRS    |
+ 2-3  |  493089 -  739631  |  9BCRS |    2BCRS    |
+ 3-4  |  739632 -  986175  |  9BCRS |    2BCRS    |
+ 4-5  |  986176 - 1232719  |  8BCRS |    3BCRS    |
+ 5-6  | 1232720 - 1479263  |  8BCRS |    3BCRS    |
+ 6-7  | 1479264 - 1725806  |  7BCRS |    4BCRS    |
+ 7-8  | 1725807 - 1972350  |  7BCRS |    4BCRS    |
+ 8-9  | 1972351 - 2218894  |  6BCRS |    5BCRS    |
+ 9-10 | 2218895 - 2465438  |  6BCRS |    5BCRS    |
+10-11 | 2465439 - 2711981  |  5BCRS |    6BCRS    |
+11-12 | 2711982 - 2958525  |  5BCRS |    6BCRS    |
+12-13 | 2958526 - 3205069  |  4BCRS |    7BCRS    |
+13-14 | 3205070 - 3451613  |  3BCRS |    7BCRS    |
+14-15 | 3451614 - 3698156  |  3BCRS |    8BCRS    |
+15-16 | 3698156 - 3944700  |  2BCRS |    8BCRS    |
+16-17 | 3944701 - 4191244  |  2BCRS |    9BCRS    |
+17-18 | 4191245 - 4437788  |  1BCRS |    9BCRS    |
+18-19 | 4437789 - 4684331  |  1BCRS |   10BCRS    |
+19-20 | 4684332 - 4930875  |  1BCRS |   10BCRS    |
+20-21 | 4930876 - 5177419  |  1BCRS |   10BCRS    |
+21-22 | 5177420 - 5423963  |  1BCRS |   10BCRS    |
+22-23 | 5423964 - 5670506  |  1BCRS |   10BCRS    |
+23-24 | 5670507 - 5917050  |  1BCRS |   10BCRS    |
+24-25 | 5917051 - 6163594  |  1BCRS |   10BCRS    |
+25-26 | 6163595 - 6410138  |  1BCRS |   10BCRS    |
+26-27 | 6410139 - 6656681  |  1BCRS |   10BCRS    |
+27-28 | 6656682 - 6903225  |  1BCRS |   10BCRS    |
+28-30 | 6903226 - 7149769  |  1BCRS |   10BCRS    |   
+30-31 | 7149770 - 7396313  |  1BCRS |   10BCRS    |
+31-32 | 7396314 - 7642856  |  1BCRS |   10BCRS    |
+32-33 | 7642857 - 7889400  |  1BCRS |   10BCRS    |
+33-34 | 7889401 - 8135944  |  1BCRS |   10BCRS    |
+34-35 | 8135945 - 8382488  |  1BCRS |   10BCRS    |
+35-36 | 8382489 - 8629031  |  1BCRS |   10BCRS    |
 
 UNIX BUILD NOTES
 ====================
-Some notes on how to build Credits in Unix. 
+Some notes on how to build Bitcreds in Unix. 
 
 Note
 ---------------------
-Always use absolute paths to configure and compile Credits and the dependencies,
+Always use absolute paths to configure and compile Bitcreds and the dependencies,
 for example, when specifying the the path of the dependency:
 
     ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
@@ -122,7 +122,7 @@ make
 make install # optional
 ```
 
-This will build credits-qt as well if the dependencies are met.
+This will build bitcreds-qt as well if the dependencies are met.
 
 Dependencies
 ---------------------
@@ -152,7 +152,7 @@ System requirements
 --------------------
 
 C++ compilers are memory-hungry. It is recommended to have at least 3 GB of
-memory available when compiling Credits.
+memory available when compiling Bitcreds.
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
@@ -199,7 +199,7 @@ ZMQ dependencies (provides ZMQ API 4.x):
 Dependencies for the GUI: Ubuntu & Debian
 -----------------------------------------
 
-If you want to build Credits-Qt, make sure that the required packages for Qt development
+If you want to build Bitcreds-Qt, make sure that the required packages for Qt development
 are installed. Qt 5 is necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 5 will be used. Pass `--with-gui=qt5` to configure to choose Qt5.
 To build without GUI pass `--without-gui`.
@@ -212,12 +212,12 @@ libqrencode (optional) can be installed with:
 
     sudo apt-get install libqrencode-dev
     
-Once these are installed, they will be found by configure and a credits-qt executable will be
+Once these are installed, they will be found by configure and a bitcreds-qt executable will be
 built by default.
 
 Notes
 -----
-The release is built with GCC and then "strip creditsd" to strip the debug
+The release is built with GCC and then "strip bitcredsd" to strip the debug
 symbols, which reduces the executable size by about 90%.
 
 miniupnpc
@@ -244,10 +244,10 @@ Berkeley DB
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 
 ```bash
-CREDITS_ROOT=$(pwd)
+BITCREDS_ROOT=$(pwd)
 
-# Pick some path to install BDB to, here we create a directory within the credits directory
-BDB_PREFIX="${CREDITS_ROOT}/db4"
+# Pick some path to install BDB to, here we create a directory within the bitcreds directory
+BDB_PREFIX="${BITCREDS_ROOT}/db4"
 mkdir -p $BDB_PREFIX
 
 # Fetch the source and verify that it is not tampered with
@@ -263,8 +263,8 @@ cd db-4.8.30.NC/build_unix/
 make 
 sudo make install
 
-# Configure Credits to use our own-built instance of BDB
-cd $CREDITS_ROOT
+# Configure Bitcreds to use our own-built instance of BDB
+cd $BITCREDS_ROOT
 ./configure (other args...) LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 ```
 
@@ -281,7 +281,7 @@ If you need to build Boost yourself:
 
 Security
 --------
-To help make your Credits installation more secure by making certain attacks impossible to
+To help make your Bitcreds installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 
@@ -305,7 +305,7 @@ Hardening enables the following features:
 
     To test that you have built PIE executable, install scanelf, part of paxutils, and use:
 
-        scanelf -e ./creditsd
+        scanelf -e ./bitcredsd
 
     The output should contain:
      TYPE
@@ -313,13 +313,13 @@ Hardening enables the following features:
 
 * Non-executable Stack
     If the stack is executable then trivial stack based buffer overflow exploits are possible if
-    vulnerable buffers are found. By default, credits should be built with a non-executable stack
+    vulnerable buffers are found. By default, bitcreds should be built with a non-executable stack
     but if one of the libraries it uses asks for an executable stack or someone makes a mistake
     and uses a compiler extension which requires an executable stack, it will silently build an
     executable without the non-executable stack protection.
 
     To verify that the stack is non-executable after compiling use:
-    `scanelf -e ./creditsd`
+    `scanelf -e ./bitcredsd`
 
     the output should contain:
     STK/REL/PTL
@@ -329,7 +329,7 @@ Hardening enables the following features:
 
 Disable-wallet mode
 --------------------
-When the intention is to run only a P2P node without a wallet, credits may be compiled in
+When the intention is to run only a P2P node without a wallet, bitcreds may be compiled in
 disable-wallet mode with:
 
     ./configure --disable-wallet

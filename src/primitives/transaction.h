@@ -7,8 +7,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_PRIMITIVES_TRANSACTION_H
-#define CREDITS_PRIMITIVES_TRANSACTION_H
+#ifndef BITCREDS_PRIMITIVES_TRANSACTION_H
+#define BITCREDS_PRIMITIVES_TRANSACTION_H
 
 #include "amount.h"
 #include "script/script.h"
@@ -368,4 +368,4 @@ struct CMutableTransaction
 
 };
 
-#endif // CREDITS_PRIMITIVES_TRANSACTION_H
+#endif // BITCREDS_PRIMITIVES_TRANSACTION_H

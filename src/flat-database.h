@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_FLAT_DATABASE_H
-#define CREDITS_FLAT_DATABASE_H
+#ifndef BITCREDS_FLAT_DATABASE_H
+#define BITCREDS_FLAT_DATABASE_H
 
 #include "chainparams.h"
 #include "clientversion.h"
@@ -230,4 +230,4 @@ public:
 };
 
 
-#endif // CREDITS_FLAT_DATABASE_H
+#endif // BITCREDS_FLAT_DATABASE_H

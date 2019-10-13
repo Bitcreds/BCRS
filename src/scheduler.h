@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SCHEDULER_H
-#define CREDITS_SCHEDULER_H
+#ifndef BITCREDS_SCHEDULER_H
+#define BITCREDS_SCHEDULER_H
 
 #include <map>
 
@@ -86,4 +86,4 @@ private:
     bool shouldStop() { return stopRequested || (stopWhenEmpty && taskQueue.empty()); }
 };
 
-#endif // CREDITS_SCHEDULER_H
+#endif // BITCREDS_SCHEDULER_H

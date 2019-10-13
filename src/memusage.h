@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MEMUSAGE_H
-#define CREDITS_MEMUSAGE_H
+#ifndef BITCREDS_MEMUSAGE_H
+#define BITCREDS_MEMUSAGE_H
 
 #include "indirectmap.h"
 
@@ -187,4 +187,4 @@ static inline size_t BitcredsUsage(const std::unordered_map<X, Y, Z>& m)
 
 }
 
-#endif // CREDITS_MEMUSAGE_H
+#endif // BITCREDS_MEMUSAGE_H

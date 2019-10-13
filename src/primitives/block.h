@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_PRIMITIVES_BLOCK_H
-#define CREDITS_PRIMITIVES_BLOCK_H
+#ifndef BITCREDS_PRIMITIVES_BLOCK_H
+#define BITCREDS_PRIMITIVES_BLOCK_H
 
 #include "hash.h"
 #include "serialize.h"
@@ -165,4 +165,4 @@ struct CBlockLocator
     }
 };
 
-#endif // CREDITS_PRIMITIVES_BLOCK_H
+#endif // BITCREDS_PRIMITIVES_BLOCK_H

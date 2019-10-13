@@ -7,8 +7,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_ADDRESSINDEX_H
-#define CREDITS_ADDRESSINDEX_H
+#ifndef BITCREDS_ADDRESSINDEX_H
+#define BITCREDS_ADDRESSINDEX_H
 
 #include "amount.h"
 #include "uint256.h"
@@ -83,4 +83,4 @@ struct CMempoolAddressDeltaKeyCompare
     }
 };
 
-#endif // CREDITS_ADDRESSINDEX_H
+#endif // BITCREDS_ADDRESSINDEX_H

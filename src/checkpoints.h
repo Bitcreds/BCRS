@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_CHECKPOINTS_H
-#define CREDITS_CHECKPOINTS_H
+#ifndef BITCREDS_CHECKPOINTS_H
+#define BITCREDS_CHECKPOINTS_H
 
 #include "uint256.h"
 
@@ -34,4 +34,4 @@ double GuessVerificationProgress(const CCheckpointData& data, CBlockIndex* pinde
 
 } //namespace Checkpoints
 
-#endif // CREDITS_CHECKPOINTS_H
+#endif // BITCREDS_CHECKPOINTS_H

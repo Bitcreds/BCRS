@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_TRANSACTIONVIEW_H
-#define CREDITS_QT_TRANSACTIONVIEW_H
+#ifndef BITCREDS_QT_TRANSACTIONVIEW_H
+#define BITCREDS_QT_TRANSACTIONVIEW_H
 
 #include "guiutil.h"
 
@@ -121,4 +121,4 @@ public Q_SLOTS:
     void computeSum();
 };
 
-#endif // CREDITS_QT_TRANSACTIONVIEW_H
+#endif // BITCREDS_QT_TRANSACTIONVIEW_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SPENTINDEX_H
-#define CREDITS_SPENTINDEX_H
+#ifndef BITCREDS_SPENTINDEX_H
+#define BITCREDS_SPENTINDEX_H
 
 #include "amount.h"
 #include "uint256.h"
@@ -98,4 +98,4 @@ struct CSpentIndexKeyCompare
     }
 };
 
-#endif // CREDITS_SPENTINDEX_H
+#endif // BITCREDS_SPENTINDEX_H

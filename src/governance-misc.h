@@ -6,8 +6,8 @@
 
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef CREDITS_GOVERNANCE_MISC_H
-#define CREDITS_GOVERNANCE_MISC_H
+#ifndef BITCREDS_GOVERNANCE_MISC_H
+#define BITCREDS_GOVERNANCE_MISC_H
 
 #include "governance.h"
 #include "init.h"
@@ -53,4 +53,4 @@ class CGovernanceVote;
 // 	}
 // };
 
-#endif // CREDITS_GOVERNANCE_MISC_H
+#endif // BITCREDS_GOVERNANCE_MISC_H

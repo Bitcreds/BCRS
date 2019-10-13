@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_WALLET_WALLET_ISMINE_H
-#define CREDITS_WALLET_WALLET_ISMINE_H
+#ifndef BITCREDS_WALLET_WALLET_ISMINE_H
+#define BITCREDS_WALLET_WALLET_ISMINE_H
 
 #include "script/standard.h"
 
@@ -34,4 +34,4 @@ typedef uint8_t isminefilter;
 isminetype IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);
 isminetype IsMine(const CKeyStore& keystore, const CTxDestination& dest);
 
-#endif // CREDITS_WALLET_WALLET_ISMINE_H
+#endif // BITCREDS_WALLET_WALLET_ISMINE_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_COINCONTROLTREEDIALOG_H
-#define CREDITS_QT_COINCONTROLTREEDIALOG_H
+#ifndef BITCREDS_QT_COINCONTROLTREEDIALOG_H
+#define BITCREDS_QT_COINCONTROLTREEDIALOG_H
 
 #include <QKeyEvent>
 #include <QTreeWidget>
@@ -23,4 +23,4 @@ protected:
     virtual void keyPressEvent(QKeyEvent *event);
 };
 
-#endif // CREDITS_QT_COINCONTROLTREEDIALOG_H
+#endif // BITCREDS_QT_COINCONTROLTREEDIALOG_H

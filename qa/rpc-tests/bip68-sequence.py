@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,7 +7,7 @@
 # Test BIP68 implementation
 #
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.mininode import *
@@ -21,7 +21,7 @@ SEQUENCE_LOCKTIME_MASK = 0x0000ffff
 # RPC error for non-BIP68 final transactions
 NOT_FINAL_ERROR = "64: non-BIP68-final"
 
-class BIP68Test(CreditsTestFramework):
+class BIP68Test(BitcredsTestFramework):
 
     def setup_network(self):
         self.nodes = []
@@ -63,7 +63,7 @@ class BIP68Test(CreditsTestFramework):
     def test_disable_flag(self):
         # Create some unconfirmed inputs
         new_addr = self.nodes[0].getnewaddress()
-        self.nodes[0].sendtoaddress(new_addr, 2) # send 2 CRDS
+        self.nodes[0].sendtoaddress(new_addr, 2) # send 2 BCRS
 
         utxos = self.nodes[0].listunspent(0, 0)
         assert(len(utxos) > 0)

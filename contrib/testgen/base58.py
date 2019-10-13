@@ -1,5 +1,5 @@
 '''
-Credits base58 encoding and decoding.
+Bitcreds base58 encoding and decoding.
 
 '''
 import hashlib
@@ -33,7 +33,7 @@ def b58encode(v):
         long_value = div
     result = __b58chars[long_value] + result
 
-    # Credits does a little leading-zero-compression:
+    # Bitcreds does a little leading-zero-compression:
     # leading 0-bytes in the input become leading-1s
     nPad = 0
     for c in v:

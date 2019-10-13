@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_NETBASE_H
-#define CREDITS_NETBASE_H
+#ifndef BITCREDS_NETBASE_H
+#define BITCREDS_NETBASE_H
 
 #if defined(HAVE_CONFIG_H)
 #include "config/bitcreds-config.h"
@@ -226,4 +226,4 @@ bool SetSocketNonBlocking(SOCKET& hSocket, bool fNonBlocking);
  */
 struct timeval MillisToTimeval(int64_t nTimeout);
 
-#endif // CREDITS_NETBASE_H
+#endif // BITCREDS_NETBASE_H

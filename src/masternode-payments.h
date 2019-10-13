@@ -4,8 +4,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MASTERNODE_PAYMENTS_H
-#define CREDITS_MASTERNODE_PAYMENTS_H
+#ifndef BITCREDS_MASTERNODE_PAYMENTS_H
+#define BITCREDS_MASTERNODE_PAYMENTS_H
 
 #include "core_io.h"
 #include "masternode.h"
@@ -220,4 +220,4 @@ public:
     void UpdatedBlockTip(const CBlockIndex *pindex);
 };
 
-#endif // CREDITS_MASTERNODE_PAYMENTS_H
+#endif // BITCREDS_MASTERNODE_PAYMENTS_H

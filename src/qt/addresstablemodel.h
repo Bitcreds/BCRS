@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_ADDRESSTABLEMODEL_H
-#define CREDITS_QT_ADDRESSTABLEMODEL_H
+#ifndef BITCREDS_QT_ADDRESSTABLEMODEL_H
+#define BITCREDS_QT_ADDRESSTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QStringList>
@@ -96,4 +96,4 @@ public Q_SLOTS:
     friend class AddressTablePriv;
 };
 
-#endif // CREDITS_QT_ADDRESSTABLEMODEL_H
+#endif // BITCREDS_QT_ADDRESSTABLEMODEL_H

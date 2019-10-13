@@ -1,5 +1,5 @@
-#ifndef CREDITS_TEST_TEST_CREDITS_H
-#define CREDITS_TEST_TEST_CREDITS_H
+#ifndef BITCREDS_TEST_TEST_BITCREDS_H
+#define BITCREDS_TEST_TEST_BITCREDS_H
 
 #include "chainparamsbase.h"
 #include "key.h"
@@ -85,4 +85,4 @@ struct TestMemPoolEntryHelper
     TestMemPoolEntryHelper &SpendsCoinbase(bool _flag) { spendsCoinbase = _flag; return *this; }
     TestMemPoolEntryHelper &SigOps(unsigned int _sigops) { sigOpCount = _sigops; return *this; }
 };
-#endif // CREDITS_TEST_TEST_CREDITS_H
+#endif // BITCREDS_TEST_TEST_BITCREDS_H

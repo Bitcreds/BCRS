@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SERIALIZE_H
-#define CREDITS_SERIALIZE_H
+#ifndef BITCREDS_SERIALIZE_H
+#define BITCREDS_SERIALIZE_H
 
 #include "compat/endian.h"
 #include "prevector.h"
@@ -956,4 +956,4 @@ public:
     }
 };
 
-#endif // CREDITS_SERIALIZE_H
+#endif // BITCREDS_SERIALIZE_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MINER_H
-#define CREDITS_MINER_H
+#ifndef BITCREDS_MINER_H
+#define BITCREDS_MINER_H
 
 #include "primitives/block.h"
 
@@ -55,4 +55,4 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
 extern double dHashesPerSec;
 extern int64_t nHPSTimerStart;
 
-#endif // CREDITS_MINER_H
+#endif // BITCREDS_MINER_H

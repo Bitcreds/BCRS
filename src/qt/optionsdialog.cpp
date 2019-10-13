@@ -92,7 +92,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     }
     
     /* Theme selector */
-    ui->theme->addItem(QString("CREDITS-light"), QVariant("light"));
+    ui->theme->addItem(QString("BITCREDS-light"), QVariant("light"));
     
     /* Language selector */
     QDir translations(":translations");

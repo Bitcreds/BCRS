@@ -2,41 +2,41 @@
 
 # backward compatibility for existing gentoo layout 
 #
-if [ -d "/var/lib/credits/.credits" ]; then
-	CREDITSD_DEFAULT_DATADIR="/var/lib/credits/.credits"
+if [ -d "/var/lib/bitcreds/.bitcreds" ]; then
+	BITCREDSD_DEFAULT_DATADIR="/var/lib/bitcreds/.bitcreds"
 else
-	CREDITSD_DEFAULT_DATADIR="/var/lib/creditsd"
+	BITCREDSD_DEFAULT_DATADIR="/var/lib/bitcredsd"
 fi
 
-CREDITSD_CONFIGFILE=${CREDITSD_CONFIGFILE:-/etc/credits/credits.conf}
-CREDITSD_PIDDIR=${CREDITSD_PIDDIR:-/var/run/creditsd}
-CREDITSD_PIDFILE=${CREDITSD_PIDFILE:-${CREDITSD_PIDDIR}/creditsd.pid}
-CREDITSD_DATADIR=${CREDITSD_DATADIR:-${CREDITSD_DEFAULT_DATADIR}}
-CREDITSD_USER=${CREDITSD_USER:-${CREDITS_USER:-credits}}
-CREDITSD_GROUP=${CREDITSD_GROUP:-credits}
-CREDITSD_BIN=${CREDITSD_BIN:-/usr/bin/creditsd}
-CREDITSD_NICE=${CREDITSD_NICE:-${NICELEVEL:-0}}
-CREDITSD_OPTS="${CREDITSD_OPTS:-${CREDITS_OPTS}}"
+BITCREDSD_CONFIGFILE=${BITCREDSD_CONFIGFILE:-/etc/bitcreds/bitcreds.conf}
+BITCREDSD_PIDDIR=${BITCREDSD_PIDDIR:-/var/run/bitcredsd}
+BITCREDSD_PIDFILE=${BITCREDSD_PIDFILE:-${BITCREDSD_PIDDIR}/bitcredsd.pid}
+BITCREDSD_DATADIR=${BITCREDSD_DATADIR:-${BITCREDSD_DEFAULT_DATADIR}}
+BITCREDSD_USER=${BITCREDSD_USER:-${BITCREDS_USER:-bitcreds}}
+BITCREDSD_GROUP=${BITCREDSD_GROUP:-bitcreds}
+BITCREDSD_BIN=${BITCREDSD_BIN:-/usr/bin/bitcredsd}
+BITCREDSD_NICE=${BITCREDSD_NICE:-${NICELEVEL:-0}}
+BITCREDSD_OPTS="${BITCREDSD_OPTS:-${BITCREDS_OPTS}}"
 
-name="Credits Daemon"
-description="Credits cryptocurrency P2P network daemon"
+name="Bitcreds Daemon"
+description="Bitcreds cryptocurrency P2P network daemon"
 
-command="/usr/bin/creditsd"
-command_args="-pid=\"${CREDITSD_PIDFILE}\" \
-		-conf=\"${CREDITSD_CONFIGFILE}\" \
-		-datadir=\"${CREDITSD_DATADIR}\" \
+command="/usr/bin/bitcredsd"
+command_args="-pid=\"${BITCREDSD_PIDFILE}\" \
+		-conf=\"${BITCREDSD_CONFIGFILE}\" \
+		-datadir=\"${BITCREDSD_DATADIR}\" \
 		-daemon \
-		${CREDITSD_OPTS}"
+		${BITCREDSD_OPTS}"
 
-required_files="${CREDITSD_CONFIGFILE}"
-start_stop_daemon_args="-u ${CREDITSD_USER} \
-			-N ${CREDITSD_NICE} -w 2000"
-pidfile="${CREDITSD_PIDFILE}"
+required_files="${BITCREDSD_CONFIGFILE}"
+start_stop_daemon_args="-u ${BITCREDSD_USER} \
+			-N ${BITCREDSD_NICE} -w 2000"
+pidfile="${BITCREDSD_PIDFILE}"
 
 # The retry schedule to use when stopping the daemon. Could be either
 # a timeout in seconds or multiple signal/timeout pairs (like
 # "SIGKILL/180 SIGTERM/300")
-retry="${CREDITSD_SIGTERM_TIMEOUT}"
+retry="${BITCREDSD_SIGTERM_TIMEOUT}"
 
 depend() {
 	need localmount net
@@ -50,29 +50,29 @@ start_pre() {
 	checkpath \
 	-d \
 	--mode 0750 \
-	--owner "${CREDITSD_USER}:${CREDITSD_GROUP}" \
-	"${CREDITSD_DATADIR}"
+	--owner "${BITCREDSD_USER}:${BITCREDSD_GROUP}" \
+	"${BITCREDSD_DATADIR}"
 
 	checkpath \
 	-d \
 	--mode 0755 \
-	--owner "${CREDITSD_USER}:${CREDITSD_GROUP}" \
-	"${CREDITSD_PIDDIR}"
+	--owner "${BITCREDSD_USER}:${BITCREDSD_GROUP}" \
+	"${BITCREDSD_PIDDIR}"
 
 	checkpath -f \
-	-o ${CREDITSD_USER}:${CREDITSD_GROUP} \
+	-o ${BITCREDSD_USER}:${BITCREDSD_GROUP} \
 	-m 0660 \
-	${CREDITSD_CONFIGFILE}
+	${BITCREDSD_CONFIGFILE}
 
 	checkconfig || return 1
 }
 
 checkconfig()
 {
-	if ! grep -qs '^rpcpassword=' "${CREDITSD_CONFIGFILE}" ; then
+	if ! grep -qs '^rpcpassword=' "${BITCREDSD_CONFIGFILE}" ; then
 		eerror ""
-		eerror "ERROR: You must set a secure rpcpassword to run creditsd."
-		eerror "The setting must appear in ${CREDITSD_CONFIGFILE}"
+		eerror "ERROR: You must set a secure rpcpassword to run bitcredsd."
+		eerror "The setting must appear in ${BITCREDSD_CONFIGFILE}"
 		eerror ""
 		eerror "This password is security critical to securing wallets "
 		eerror "and must not be the same as the rpcuser setting."
@@ -84,7 +84,7 @@ checkconfig()
 		eerror "It is also recommended that you also set alertnotify so you are "
 		eerror "notified of problems:"
 		eerror ""
-		eerror "ie: alertnotify=echo %%s | mail -s \"Credits Alert\"" \
+		eerror "ie: alertnotify=echo %%s | mail -s \"Bitcreds Alert\"" \
 			"admin@foo.com"
 		eerror ""
 		return 1

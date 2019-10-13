@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_HTTPSERVER_H
-#define CREDITS_HTTPSERVER_H
+#ifndef BITCREDS_HTTPSERVER_H
+#define BITCREDS_HTTPSERVER_H
 
 #include <string>
 #include <stdint.h>
@@ -149,4 +149,4 @@ private:
     struct event* ev;
 };
 
-#endif // CREDITS_HTTPSERVER_H
+#endif // BITCREDS_HTTPSERVER_H

@@ -90,7 +90,7 @@ bool AppInit(int argc, char* argv[])
             strUsage += "\n" + _("Usage:") + "\n" +
                   "  bitcredsd [options]                     " + _("Start Bitcreds Daemon") + "\n";
 
-            strUsage += "\n" + HelpMessage(HMM_CREDITSD);
+            strUsage += "\n" + HelpMessage(HMM_BITCREDSD);
         }
 
         fprintf(stdout, "%s", strUsage.c_str());

@@ -1,6 +1,6 @@
 // Automatically generated file. Do not modify.
-#ifndef CREDITS_UNIVALUE_UNIVALUE_ESCAPES_H
-#define CREDITS_UNIVALUE_UNIVALUE_ESCAPES_H
+#ifndef BITCREDS_UNIVALUE_UNIVALUE_ESCAPES_H
+#define BITCREDS_UNIVALUE_UNIVALUE_ESCAPES_H
 static const char *escapes[256] = {
 	"\\u0000",
 	"\\u0001",
@@ -259,4 +259,4 @@ static const char *escapes[256] = {
 	NULL,
 	NULL,
 };
-#endif // CREDITS_UNIVALUE_UNIVALUE_ESCAPES_H
+#endif // BITCREDS_UNIVALUE_UNIVALUE_ESCAPES_H

@@ -6,8 +6,8 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_TXDB_H
-#define CREDITS_TXDB_H
+#ifndef BITCREDS_TXDB_H
+#define BITCREDS_TXDB_H
 
 #include "coins.h"
 #include "dbwrapper.h"
@@ -95,4 +95,4 @@ public:
     bool LoadBlockIndexGuts();
 };
 
-#endif // CREDITS_TXDB_H
+#endif // BITCREDS_TXDB_H
