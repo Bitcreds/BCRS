@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -437,7 +437,7 @@ void CSuperblockManager::CreateSuperblock(CMutableTransaction& txNewRet, int nBl
 
             CTxDestination address1;
             ExtractDestination(payment.script, address1);
-            CCreditsAddress address2(address1);
+            CBitcredsAddress address2(address1);
 
             // TODO: PRINT NICE N.N CREDITS OUTPUT
 
@@ -579,10 +579,10 @@ void CSuperblock::ParsePaymentSchedule(std::string& strPaymentAddresses, std::st
     DBG( cout << "CSuperblock::ParsePaymentSchedule vecParsed1.size() = " << vecParsed1.size() << endl; );
 
     for (int i = 0; i < (int)vecParsed1.size(); i++) {
-        CCreditsAddress address(vecParsed1[i]);
+        CBitcredsAddress address(vecParsed1[i]);
         if (!address.IsValid()) {
             std::ostringstream ostr;
-            ostr << "CSuperblock::ParsePaymentSchedule -- Invalid Credits Address : " <<  vecParsed1[i];
+            ostr << "CSuperblock::ParsePaymentSchedule -- Invalid Bitcreds Address : " <<  vecParsed1[i];
             LogPrintf("%s\n", ostr.str());
             throw std::runtime_error(ostr.str());
         }
@@ -718,7 +718,7 @@ bool CSuperblock::IsValid(const CTransaction& txNew, int nBlockHeight, CAmount b
 
             CTxDestination address1;
             ExtractDestination(payment.script, address1);
-            CCreditsAddress address2(address1);
+            CBitcredsAddress address2(address1);
             LogPrintf("CSuperblock::IsValid -- ERROR: Block invalid: %d payment %d to %s not found\n", i, payment.nAmount, address2.ToString());
 
             return false;
@@ -756,7 +756,7 @@ std::string CSuperblockManager::GetRequiredPaymentsString(int nBlockHeight)
 
             CTxDestination address1;
             ExtractDestination(payment.script, address1);
-            CCreditsAddress address2(address1);
+            CBitcredsAddress address2(address1);
 
             // RETURN NICE OUTPUT FOR CONSOLE
 

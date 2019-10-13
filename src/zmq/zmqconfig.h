@@ -6,7 +6,7 @@
 #define CREDITS_ZMQ_ZMQCONFIG_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "primitives/block.h"

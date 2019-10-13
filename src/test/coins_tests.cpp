@@ -5,7 +5,7 @@
 #include "coins.h"
 #include "test_random.h"
 #include "uint256.h"
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 #include "main.h"
 #include "consensus/validation.h"
 
@@ -72,12 +72,12 @@ public:
 
     void SelfTest() const
     {
-        // Manually recompute the credits usage of the whole data, and compare it.
-        size_t ret = memusage::CreditsUsage(cacheCoins);
+        // Manually recompute the bitcreds usage of the whole data, and compare it.
+        size_t ret = memusage::BitcredsUsage(cacheCoins);
         for (CCoinsMap::iterator it = cacheCoins.begin(); it != cacheCoins.end(); it++) {
-            ret += it->second.coins.CreditsMemoryUsage();
+            ret += it->second.coins.BitcredsMemoryUsage();
         }
-        BOOST_CHECK_EQUAL(CreditsMemoryUsage(), ret);
+        BOOST_CHECK_EQUAL(BitcredsMemoryUsage(), ret);
     }
 
 };

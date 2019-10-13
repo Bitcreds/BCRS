@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -236,7 +236,7 @@ unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char
 void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
 
 
-    /* ----------- Credits Hash ------------------------------------------------ */
+    /* ----------- Bitcreds Hash ------------------------------------------------ */
     /// Argon2i, Argon2d, and Argon2id are parametrized by:
     /// A time cost, which defines the amount of computation realized and therefore the execution time, given in number of iterations
     /// A memory cost, which defines the memory usage, given in kibibytes (1 kibibytes = kilobytes 1.024)

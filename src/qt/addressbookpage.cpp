@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "addressbookpage.h"
@@ -15,7 +15,7 @@
 
 #include "addresstablemodel.h"
 #include "csvmodelwriter.h"
-#include "creditsgui.h"
+#include "bitcredsgui.h"
 #include "editaddressdialog.h"
 #include "guiutil.h"
 #include "platformstyle.h"
@@ -67,11 +67,11 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
     switch(tab)
     {
     case SendingTab:
-        ui->labelExplanation->setText(tr("These are your Credits addresses for sending payments. Always check the amount and the receiving address before sending coins."));
+        ui->labelExplanation->setText(tr("These are your Bitcreds addresses for sending payments. Always check the amount and the receiving address before sending coins."));
         ui->deleteAddress->setVisible(true);
         break;
     case ReceivingTab:
-        ui->labelExplanation->setText(tr("These are your Credits addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
+        ui->labelExplanation->setText(tr("These are your Bitcreds addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
         ui->deleteAddress->setVisible(false);
         break;
     }

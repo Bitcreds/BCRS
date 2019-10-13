@@ -16,14 +16,14 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Credits"
-            VALUE "FileDescription",    "creditsd (Credits node with a JSON-RPC server)"
+            VALUE "CompanyName",        "Bitcreds"
+            VALUE "FileDescription",    "bitcreds-tx (CLI Bitcreds transaction editor utility)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
-            VALUE "InternalName",       "creditsd"
+            VALUE "InternalName",       "bitcreds-tx"
             VALUE "LegalCopyright",     COPYRIGHT_STR
             VALUE "LegalTrademarks1",   "Distributed under the MIT software license, see the accompanying file COPYING or http://www.opensource.org/licenses/mit-license.php."
-            VALUE "OriginalFilename",   "creditsd.exe"
-            VALUE "ProductName",        "creditsd"
+            VALUE "OriginalFilename",   "bitcreds-tx.exe"
+            VALUE "ProductName",        "bitcreds-tx"
             VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
         END
     END

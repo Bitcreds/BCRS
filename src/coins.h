@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -258,10 +258,10 @@ public:
         return true;
     }
 
-    size_t CreditsMemoryUsage() const {
-        size_t ret = memusage::CreditsUsage(vout);
+    size_t BitcredsMemoryUsage() const {
+        size_t ret = memusage::BitcredsUsage(vout);
         BOOST_FOREACH(const CTxOut &out, vout) {
-            ret += RecursiveCreditsUsage(out.scriptPubKey);
+            ret += RecursiveBitcredsUsage(out.scriptPubKey);
         }
         return ret;
     }
@@ -394,7 +394,7 @@ protected:
     mutable uint256 hashBlock;
     mutable CCoinsMap cacheCoins;
 
-    /* Cached credits memory usage for the inner CCoins objects. */
+    /* Cached bitcreds memory usage for the inner CCoins objects. */
     mutable size_t cachedCoinsUsage;
 
 public:
@@ -457,10 +457,10 @@ public:
     unsigned int GetCacheSize() const;
 
     //! Calculate the size of the cache (in bytes)
-    size_t CreditsMemoryUsage() const;
+    size_t BitcredsMemoryUsage() const;
 
     /** 
-     * Amount of credits coming in to a transaction
+     * Amount of bitcreds coming in to a transaction
      * Note that lightweight clients may not know anything besides the hash of previous transactions,
      * so may not be able to calculate this.
      *

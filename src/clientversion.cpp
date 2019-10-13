@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,10 +14,10 @@
 
 /**
  * Name of client reported in the 'version' message. Report the same name
- * for both creditsd and credits-qt, to make it harder for attackers to
+ * for both bitcredsd and bitcreds-qt, to make it harder for attackers to
  * target servers or GUI users specifically.
  */
-const std::string CLIENT_NAME("Credits");
+const std::string CLIENT_NAME("Bitcreds");
 
 /**
  * Client version number

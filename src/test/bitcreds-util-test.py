@@ -9,5 +9,5 @@ import buildenv
 
 if __name__ == '__main__':
 	bctest.bctester(os.environ["srcdir"] + "/test/data",
-			"credits-util-test.json",buildenv)
+			"bitcreds-util-test.json",buildenv)
 

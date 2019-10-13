@@ -2,16 +2,16 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "clientmodel.h"
-#include "creditsgui.h"
+#include "bitcredsgui.h"
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "intro.h"
@@ -95,7 +95,7 @@ static void InitMessage(const std::string &message)
  */
 static std::string Translate(const char* psz)
 {
-    return QCoreApplication::translate("credits", psz).toStdString();
+    return QCoreApplication::translate("bitcreds", psz).toStdString();
 }
 
 static QString GetLangTerritory()
@@ -142,11 +142,11 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
     if (qtTranslator.load("qt_" + lang_territory, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
         QApplication::installTranslator(&qtTranslator);
 
-    // Load e.g. credits_de.qm (shortcut "de" needs to be defined in credits.qrc)
+    // Load e.g. bitcreds_de.qm (shortcut "de" needs to be defined in bitcreds.qrc)
     if (translatorBase.load(lang, ":/translations/"))
         QApplication::installTranslator(&translatorBase);
 
-    // Load e.g. credits_de_DE.qm (shortcut "de_DE" needs to be defined in credits.qrc)
+    // Load e.g. bitcreds_de_DE.qm (shortcut "de_DE" needs to be defined in bitcreds.qrc)
     if (translator.load(lang_territory, ":/translations/"))
         QApplication::installTranslator(&translator);
 }
@@ -167,14 +167,14 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 }
 #endif
 
-/** Class encapsulating Credits startup and shutdown.
+/** Class encapsulating Bitcreds startup and shutdown.
  * Allows running startup and shutdown in a different thread from the UI thread.
  */
-class CreditsCore: public QObject
+class BitcredsCore: public QObject
 {
     Q_OBJECT
 public:
-    explicit CreditsCore();
+    explicit BitcredsCore();
 
 public Q_SLOTS:
     void initialize();
@@ -197,13 +197,13 @@ private:
     void handleRunawayException(const std::exception *e);
 };
 
-/** Main Credits application object */
-class CreditsApplication: public QApplication
+/** Main Bitcreds application object */
+class BitcredsApplication: public QApplication
 {
     Q_OBJECT
 public:
-    explicit CreditsApplication(int &argc, char **argv);
-    ~CreditsApplication();
+    explicit BitcredsApplication(int &argc, char **argv);
+    ~BitcredsApplication();
 
 #ifdef ENABLE_WALLET
     /// Create payment server
@@ -226,7 +226,7 @@ public:
     /// Get process return value
     int getReturnValue() { return returnValue; }
 
-    /// Get window identifier of QMainWindow (CreditsGUI)
+    /// Get window identifier of QMainWindow (BitcredsGUI)
     WId getMainWinId() const;
 
 public Q_SLOTS:
@@ -246,7 +246,7 @@ private:
     QThread *coreThread;
     OptionsModel *optionsModel;
     ClientModel *clientModel;
-    CreditsGUI *window;
+    BitcredsGUI *window;
     QTimer *pollShutdownTimer;
 #ifdef ENABLE_WALLET
     PaymentServer* paymentServer;
@@ -258,20 +258,20 @@ private:
     void startThread();
 };
 
-#include "credits.moc"
+#include "bitcreds.moc"
 
-CreditsCore::CreditsCore():
+BitcredsCore::BitcredsCore():
     QObject()
 {
 }
 
-void CreditsCore::handleRunawayException(const std::exception *e)
+void BitcredsCore::handleRunawayException(const std::exception *e)
 {
     PrintExceptionContinue(e, "Runaway exception");
     Q_EMIT runawayException(QString::fromStdString(strMiscWarning));
 }
 
-void CreditsCore::initialize()
+void BitcredsCore::initialize()
 {
     execute_restart = true;
 
@@ -287,7 +287,7 @@ void CreditsCore::initialize()
     }
 }
 
-void CreditsCore::restart(QStringList args)
+void BitcredsCore::restart(QStringList args)
 {
     if(execute_restart) { // Only restart 1x, no matter how often a user clicks on a restart-button
         execute_restart = false;
@@ -311,7 +311,7 @@ void CreditsCore::restart(QStringList args)
     }
 }
 
-void CreditsCore::shutdown()
+void BitcredsCore::shutdown()
 {
     try
     {
@@ -328,7 +328,7 @@ void CreditsCore::shutdown()
     }
 }
 
-CreditsApplication::CreditsApplication(int &argc, char **argv):
+BitcredsApplication::BitcredsApplication(int &argc, char **argv):
     QApplication(argc, argv),
     coreThread(0),
     optionsModel(0),
@@ -344,17 +344,17 @@ CreditsApplication::CreditsApplication(int &argc, char **argv):
     setQuitOnLastWindowClosed(false);
 
     // UI per-platform customization
-    // This must be done inside the CreditsApplication constructor, or after it, because
+    // This must be done inside the BitcredsApplication constructor, or after it, because
     // PlatformStyle::instantiate requires a QApplication
     std::string platformName;
-    platformName = GetArg("-uiplatform", CreditsGUI::DEFAULT_UIPLATFORM);
+    platformName = GetArg("-uiplatform", BitcredsGUI::DEFAULT_UIPLATFORM);
     platformStyle = PlatformStyle::instantiate(QString::fromStdString(platformName));
     if (!platformStyle) // Fall back to "other" if specified name not found
         platformStyle = PlatformStyle::instantiate("other");
     assert(platformStyle);
 }
 
-CreditsApplication::~CreditsApplication()
+BitcredsApplication::~BitcredsApplication()
 {
     if(coreThread)
     {
@@ -383,27 +383,27 @@ CreditsApplication::~CreditsApplication()
 }
 
 #ifdef ENABLE_WALLET
-void CreditsApplication::createPaymentServer()
+void BitcredsApplication::createPaymentServer()
 {
     paymentServer = new PaymentServer(this);
 }
 #endif
 
-void CreditsApplication::createOptionsModel(bool resetSettings)
+void BitcredsApplication::createOptionsModel(bool resetSettings)
 {
     optionsModel = new OptionsModel(NULL, resetSettings);
 }
 
-void CreditsApplication::createWindow(const NetworkStyle *networkStyle)
+void BitcredsApplication::createWindow(const NetworkStyle *networkStyle)
 {
-    window = new CreditsGUI(platformStyle, networkStyle, 0);
+    window = new BitcredsGUI(platformStyle, networkStyle, 0);
 
     pollShutdownTimer = new QTimer(window);
     connect(pollShutdownTimer, SIGNAL(timeout()), window, SLOT(detectShutdown()));
     pollShutdownTimer->start(200);
 }
 
-void CreditsApplication::createSplashScreen(const NetworkStyle *networkStyle)
+void BitcredsApplication::createSplashScreen(const NetworkStyle *networkStyle)
 {
     SplashScreen *splash = new SplashScreen(0, networkStyle);
     // We don't hold a direct pointer to the splash screen after creation, so use
@@ -414,12 +414,12 @@ void CreditsApplication::createSplashScreen(const NetworkStyle *networkStyle)
     connect(this, SIGNAL(requestedShutdown()), splash, SLOT(close()));
 }
 
-void CreditsApplication::startThread()
+void BitcredsApplication::startThread()
 {
     if(coreThread)
         return;
     coreThread = new QThread(this);
-    CreditsCore *executor = new CreditsCore();
+    BitcredsCore *executor = new BitcredsCore();
     executor->moveToThread(coreThread);
 
     /*  communication to and from thread */
@@ -436,20 +436,20 @@ void CreditsApplication::startThread()
     coreThread->start();
 }
 
-void CreditsApplication::parameterSetup()
+void BitcredsApplication::parameterSetup()
 {
     InitLogging();
     InitParameterInteraction();
 }
 
-void CreditsApplication::requestInitialize()
+void BitcredsApplication::requestInitialize()
 {
     qDebug() << __func__ << ": Requesting initialize";
     startThread();
     Q_EMIT requestedInitialize();
 }
 
-void CreditsApplication::requestShutdown()
+void BitcredsApplication::requestShutdown()
 {
     qDebug() << __func__ << ": Requesting shutdown";
     startThread();
@@ -472,7 +472,7 @@ void CreditsApplication::requestShutdown()
     Q_EMIT requestedShutdown();
 }
 
-void CreditsApplication::initializeResult(int retval)
+void BitcredsApplication::initializeResult(int retval)
 {
     qDebug() << __func__ << ": Initialization result: " << retval;
     // Set exit result: 0 if successful, 1 if failure
@@ -494,8 +494,8 @@ void CreditsApplication::initializeResult(int retval)
         {
             walletModel = new WalletModel(platformStyle, pwalletMain, optionsModel);
 
-            window->addWallet(CreditsGUI::DEFAULT_WALLET, walletModel);
-            window->setCurrentWallet(CreditsGUI::DEFAULT_WALLET);
+            window->addWallet(BitcredsGUI::DEFAULT_WALLET, walletModel);
+            window->setCurrentWallet(BitcredsGUI::DEFAULT_WALLET);
 
             connect(walletModel, SIGNAL(coinsSent(CWallet*,SendCoinsRecipient,QByteArray)),
                              paymentServer, SLOT(fetchPaymentACK(CWallet*,const SendCoinsRecipient&,QByteArray)));
@@ -515,7 +515,7 @@ void CreditsApplication::initializeResult(int retval)
 
 #ifdef ENABLE_WALLET
         // Now that initialization/startup is done, process any command-line
-        // credits: URIs or payment requests:
+        // bitcreds: URIs or payment requests:
         connect(paymentServer, SIGNAL(receivedPaymentRequest(SendCoinsRecipient)),
                          window, SLOT(handlePaymentRequest(SendCoinsRecipient)));
         connect(window, SIGNAL(receivedURI(QString)),
@@ -529,19 +529,19 @@ void CreditsApplication::initializeResult(int retval)
     }
 }
 
-void CreditsApplication::shutdownResult(int retval)
+void BitcredsApplication::shutdownResult(int retval)
 {
     qDebug() << __func__ << ": Shutdown result: " << retval;
     quit(); // Exit main loop after shutdown finished
 }
 
-void CreditsApplication::handleRunawayException(const QString &message)
+void BitcredsApplication::handleRunawayException(const QString &message)
 {
-    QMessageBox::critical(0, "Runaway exception", CreditsGUI::tr("A fatal error occurred. Credits can no longer continue safely and will quit.") + QString("\n\n") + message);
+    QMessageBox::critical(0, "Runaway exception", BitcredsGUI::tr("A fatal error occurred. Bitcreds can no longer continue safely and will quit.") + QString("\n\n") + message);
     ::exit(EXIT_FAILURE);
 }
 
-WId CreditsApplication::getMainWinId() const
+WId BitcredsApplication::getMainWinId() const
 {
     if (!window)
         return 0;
@@ -567,10 +567,10 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
 #endif
 
-    Q_INIT_RESOURCE(credits);
-    Q_INIT_RESOURCE(credits_locale);
+    Q_INIT_RESOURCE(bitcreds);
+    Q_INIT_RESOURCE(bitcreds_locale);
 
-    CreditsApplication app(argc, argv);
+    BitcredsApplication app(argc, argv);
 #if QT_VERSION > 0x050100
     // Generate high-dpi pixmaps
     QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -620,18 +620,18 @@ int main(int argc, char *argv[])
     if (!Intro::pickDataDirectory())
         return 0;
 
-    /// 6. Determine availability of data directory and parse credits.conf
+    /// 6. Determine availability of data directory and parse bitcreds.conf
     /// - Do not call GetDataDir(true) before this step finishes
     if (!boost::filesystem::is_directory(GetDataDir(false)))
     {
-        QMessageBox::critical(0, QObject::tr("Credits"),
+        QMessageBox::critical(0, QObject::tr("Bitcreds"),
                               QObject::tr("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return EXIT_FAILURE;
     }
     try {
         ReadConfigFile(mapArgs, mapMultiArgs);
     } catch (const std::exception& e) {
-        QMessageBox::critical(0, QObject::tr("Credits"),
+        QMessageBox::critical(0, QObject::tr("Bitcreds"),
                               QObject::tr("Error: Cannot parse configuration file: %1. Only use key=value syntax.").arg(e.what()));
         return EXIT_FAILURE;
     }
@@ -646,7 +646,7 @@ int main(int argc, char *argv[])
     try {
         SelectParams(ChainNameFromCommandLine());
     } catch(std::exception &e) {
-        QMessageBox::critical(0, QObject::tr("Credits"), QObject::tr("Error: %1").arg(e.what()));
+        QMessageBox::critical(0, QObject::tr("Bitcreds"), QObject::tr("Error: %1").arg(e.what()));
         return EXIT_FAILURE;
     }
 #ifdef ENABLE_WALLET
@@ -665,7 +665,7 @@ int main(int argc, char *argv[])
     /// 7a. parse masternode.conf
     std::string strErr;
     if(!masternodeConfig.read(strErr)) {
-        QMessageBox::critical(0, QObject::tr("Credits"),
+        QMessageBox::critical(0, QObject::tr("Bitcreds"),
                               QObject::tr("Error reading Masternode configuration file: %1").arg(strErr.c_str()));
         return EXIT_FAILURE;
     }
@@ -680,7 +680,7 @@ int main(int argc, char *argv[])
         exit(EXIT_SUCCESS);
 
     // Start up the payment server early, too, so impatient users that click on
-    // credits: links repeatedly have their payment requests routed to this process:
+    // bitcreds: links repeatedly have their payment requests routed to this process:
     app.createPaymentServer();
 #endif
 
@@ -714,7 +714,7 @@ int main(int argc, char *argv[])
         app.createWindow(networkStyle.data());
         app.requestInitialize();
 #if defined(Q_OS_WIN) && QT_VERSION >= 0x050000
-        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("Credits didn't yet exit safely..."), (HWND)app.getMainWinId());
+        WinShutdownMonitor::registerShutdownBlockReason(QObject::tr("Bitcreds didn't yet exit safely..."), (HWND)app.getMainWinId());
 #endif
         app.exec();
         app.requestShutdown();

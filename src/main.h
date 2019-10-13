@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@
 #define CREDITS_MAIN_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "amount.h"
@@ -137,7 +137,7 @@ static const unsigned int MAX_BLOCKS_TO_ANNOUNCE = 12;
 /** Maximum number of unconnecting headers announcements before DoS score */
 static const int MAX_UNCONNECTING_HEADERS = 10;
 
-// Credits Constants
+// Bitcreds Constants
 static const CAmount MIN_TXOUT_AMOUNT = MIN_TX_FEE;
 
 struct BlockHasher

@@ -62,12 +62,12 @@
         <translation>Адреса получения</translation>
     </message>
     <message>
-        <source>These are your Credits addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Это ваши адреса Credits для отправки платежей. Всегда проверяйте количество и адрес получателя перед отправкой перевода.</translation>
+        <source>These are your Bitcreds addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Это ваши адреса Bitcreds для отправки платежей. Всегда проверяйте количество и адрес получателя перед отправкой перевода.</translation>
     </message>
     <message>
-        <source>These are your Credits addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>Это ваши адреса Credits для приёма платежей. Рекомендуется использовать новый адрес получения для каждой транзакции.</translation>
+        <source>These are your Bitcreds addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>Это ваши адреса Bitcreds для приёма платежей. Рекомендуется использовать новый адрес получения для каждой транзакции.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -176,8 +176,8 @@
         <translation>Подтвердите шифрование кошелька</translation>
     </message>
     <message>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR CRDS&lt;/b&gt;!</source>
-        <translation>Внимание: если Вы зашифруете кошелёк и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ CRDS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BCRS&lt;/b&gt;!</source>
+        <translation>Внимание: если Вы зашифруете кошелёк и потеряете пароль, вы &lt;b&gt;ПОТЕРЯЕТЕ ВСЕ ВАШИ BCRS&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -188,7 +188,7 @@
         <translation>Кошелёк зашифрован</translation>
     </message>
     <message>
-        <source>Credits will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Credits from being stolen by malware infecting your computer.</source>
+        <source>Bitcreds will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Bitcreds from being stolen by malware infecting your computer.</source>
         <translation>Сейчас программа закроется для завершения процесса шифрования. Помните, что шифрование вашего кошелька не может полностью защитить ваши даши от кражи с помощью инфицирования вашего компьютера вредоносным ПО.</translation>
     </message>
     <message>
@@ -229,10 +229,10 @@
     </message>
 </context>
 <context>
-    <name>CreditsGUI</name>
+    <name>BitcredsGUI</name>
     <message>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -255,16 +255,16 @@
         <translation>&amp;Отправить</translation>
     </message>
     <message>
-        <source>Send coins to a Credits address</source>
-        <translation>Отправить монеты на указанный адрес Credits</translation>
+        <source>Send coins to a Bitcreds address</source>
+        <translation>Отправить монеты на указанный адрес Bitcreds</translation>
     </message>
     <message>
         <source>&amp;Receive</source>
         <translation>&amp;Получить</translation>
     </message>
     <message>
-        <source>Request payments (generates QR codes and credits: URIs)</source>
-        <translation>Запросить платежи (создать QR-коды и credits: URI)</translation>
+        <source>Request payments (generates QR codes and bitcreds: URIs)</source>
+        <translation>Запросить платежи (создать QR-коды и bitcreds: URI)</translation>
     </message>
     <message>
         <source>&amp;Transactions</source>
@@ -283,12 +283,12 @@
         <translation>Закрыть приложение</translation>
     </message>
     <message>
-        <source>&amp;About Credits</source>
-        <translation>О &amp;Credits</translation>
+        <source>&amp;About Bitcreds</source>
+        <translation>О &amp;Bitcreds</translation>
     </message>
     <message>
-        <source>Show information about Credits</source>
-        <translation>Показать информацию о Credits</translation>
+        <source>Show information about Bitcreds</source>
+        <translation>Показать информацию о Bitcreds</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
@@ -303,8 +303,8 @@
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <source>Modify configuration options for Credits</source>
-        <translation>Изменить параметры конфигурации Credits</translation>
+        <source>Modify configuration options for Bitcreds</source>
+        <translation>Изменить параметры конфигурации Bitcreds</translation>
     </message>
     <message>
         <source>&amp;Show / Hide</source>
@@ -355,16 +355,16 @@
         <translation>П&amp;одписать сообщение...</translation>
     </message>
     <message>
-        <source>Sign messages with your Credits addresses to prove you own them</source>
-        <translation>Подписать сообщения вашими адресами Credits, чтобы доказать, что вы ими владеете</translation>
+        <source>Sign messages with your Bitcreds addresses to prove you own them</source>
+        <translation>Подписать сообщения вашими адресами Bitcreds, чтобы доказать, что вы ими владеете</translation>
     </message>
     <message>
         <source>&amp;Verify message...</source>
         <translation>П&amp;роверить сообщение...</translation>
     </message>
     <message>
-        <source>Verify messages to ensure they were signed with specified Credits addresses</source>
-        <translation>Проверить сообщения, чтобы удостовериться, что они были подписаны определёнными адресами Credits</translation>
+        <source>Verify messages to ensure they were signed with specified Bitcreds addresses</source>
+        <translation>Проверить сообщения, чтобы удостовериться, что они были подписаны определёнными адресами Bitcreds</translation>
     </message>
     <message>
         <source>&amp;Information</source>
@@ -443,16 +443,16 @@
         <translation>Открыть &amp;URI...</translation>
     </message>
     <message>
-        <source>Open a credits: URI or payment request</source>
-        <translation>Открыть credits: URI или запрос платежа</translation>
+        <source>Open a bitcreds: URI or payment request</source>
+        <translation>Открыть bitcreds: URI или запрос платежа</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
         <translation>&amp;Параметры командной строки</translation>
     </message>
     <message>
-        <source>Credits client</source>
-        <translation>Клиент Credits</translation>
+        <source>Bitcreds client</source>
+        <translation>Клиент Bitcreds</translation>
     </message>
     <message numerus="yes">
         <source>Processed %n blocks of transaction history.</source>
@@ -463,8 +463,8 @@
         <translation>Синхронизация дополнительных данных: %p%</translation>
     </message>
     <message>
-        <source>Show the Credits help message to get a list with possible Credits command-line options</source>
-        <translation>Показать помощь о Credits со списком возможных параметров командной строки</translation>
+        <source>Show the Bitcreds help message to get a list with possible Bitcreds command-line options</source>
+        <translation>Показать помощь о Bitcreds со списком возможных параметров командной строки</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -487,8 +487,8 @@
         <translation>Панель вкладок</translation>
     </message>
     <message numerus="yes">
-        <source>%n active connection(s) to Credits network</source>
-        <translation><numerusform>%n активное соединение с сетью Credits</numerusform><numerusform>%n активных соединения с сетью Credits</numerusform><numerusform>%n активных соединений с сетью Credits</numerusform><numerusform>%n активных соединений с сетью Credits</numerusform></translation>
+        <source>%n active connection(s) to Bitcreds network</source>
+        <translation><numerusform>%n активное соединение с сетью Bitcreds</numerusform><numerusform>%n активных соединения с сетью Bitcreds</numerusform><numerusform>%n активных соединений с сетью Bitcreds</numerusform><numerusform>%n активных соединений с сетью Bitcreds</numerusform></translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
@@ -864,28 +864,28 @@ Address: %4
         <translation>Пожалуйста, выберите уровень приватности.</translation>
     </message>
     <message>
-        <source>Use 2 separate masternodes to mix funds up to 1000 CRDS</source>
-        <translation>Использовать 2 отдельные мастерноды для перемешивания до 1000 CRDS</translation>
+        <source>Use 2 separate masternodes to mix funds up to 1000 BCRS</source>
+        <translation>Использовать 2 отдельные мастерноды для перемешивания до 1000 BCRS</translation>
     </message>
     <message>
-        <source>Use 8 separate masternodes to mix funds up to 1000 CRDS</source>
-        <translation>Использовать 8 отдельных мастернод для перемешивания до 1000 CRDS</translation>
+        <source>Use 8 separate masternodes to mix funds up to 1000 BCRS</source>
+        <translation>Использовать 8 отдельных мастернод для перемешивания до 1000 BCRS</translation>
     </message>
     <message>
         <source>Use 16 separate masternodes</source>
         <translation>Использовать 16 отдельных мастернод</translation>
     </message>
     <message>
-        <source>This option is the quickest and will cost about ~0.025 CRDS to anonymize 1000 CRDS</source>
-        <translation>Это самый быстрый вариант, анонимизация 1000 CRDS будет стоить вам примерно 0.025 CRDS</translation>
+        <source>This option is the quickest and will cost about ~0.025 BCRS to anonymize 1000 BCRS</source>
+        <translation>Это самый быстрый вариант, анонимизация 1000 BCRS будет стоить вам примерно 0.025 BCRS</translation>
     </message>
     <message>
-        <source>This option is moderately fast and will cost about 0.05 CRDS to anonymize 1000 CRDS</source>
-        <translation>Это относительно быстрый вариант, анонимизация 1000 CRDS будет стоить вам примерно 0.05 CRDS</translation>
+        <source>This option is moderately fast and will cost about 0.05 BCRS to anonymize 1000 BCRS</source>
+        <translation>Это относительно быстрый вариант, анонимизация 1000 BCRS будет стоить вам примерно 0.05 BCRS</translation>
     </message>
     <message>
-        <source>0.1 CRDS per 1000 CRDS you anonymize.</source>
-        <translation>0.1 CRDS за каждые анонимизированные 1000 CRDS.</translation>
+        <source>0.1 BCRS per 1000 BCRS you anonymize.</source>
+        <translation>0.1 BCRS за каждые анонимизированные 1000 BCRS.</translation>
     </message>
     <message>
         <source>This is the slowest and most secure option. Using maximum anonymity will cost</source>
@@ -896,15 +896,15 @@ Address: %4
         <translation>Настройки Privatesend</translation>
     </message>
     <message>
-        <source>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Credits's configuration screen.</source>
+        <source>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Bitcreds's configuration screen.</source>
         <translation>Privatesend успешно установлен в режим обычной приватности (%1 и 2 раунда). Вы можете изменить это в любое время, используя окно настроек.</translation>
     </message>
     <message>
-        <source>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Credits's configuration screen.</source>
+        <source>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Bitcreds's configuration screen.</source>
         <translation>Privatesend успешно установлен в режим высокой приватности (%1 и 8 раундов). Вы можете изменить это в любое время, используя окно настроек.</translation>
     </message>
     <message>
-        <source>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Credits's configuration screen.</source>
+        <source>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Bitcreds's configuration screen.</source>
         <translation>Privatesend успешно установлен в режим максимально приватности (%1 и 16 раундов). Вы можете изменить это в любое время, используя окно настроек.</translation>
     </message>
 </context>
@@ -947,8 +947,8 @@ Address: %4
         <translation>Изменение адреса для отправки</translation>
     </message>
     <message>
-        <source>The entered address "%1" is not a valid Credits address.</source>
-        <translation>Введённый адрес "%1" не является правильным адресом Credits.</translation>
+        <source>The entered address "%1" is not a valid Bitcreds address.</source>
+        <translation>Введённый адрес "%1" не является правильным адресом Bitcreds.</translation>
     </message>
     <message>
         <source>The entered address "%1" is already in the address book.</source>
@@ -989,8 +989,8 @@ Address: %4
 <context>
     <name>HelpMessageDialog</name>
     <message>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <source>version</source>
@@ -1001,8 +1001,8 @@ Address: %4
         <translation>(%1-бит)</translation>
     </message>
     <message>
-        <source>About Credits</source>
-        <translation>О Credits</translation>
+        <source>About Bitcreds</source>
+        <translation>О Bitcreds</translation>
     </message>
     <message>
         <source>Command-line options</source>
@@ -1048,16 +1048,16 @@ Address: %4
         <translation>Добро пожаловать</translation>
     </message>
     <message>
-        <source>Welcome to Credits.</source>
-        <translation>Добро пожаловать в Credits.</translation>
+        <source>Welcome to Bitcreds.</source>
+        <translation>Добро пожаловать в Bitcreds.</translation>
     </message>
     <message>
-        <source>As this is the first time the program is launched, you can choose where Credits will store its data.</source>
-        <translation>Так как вы впервые запустили программу, вы можете выбрать, где Credits будет хранить данные.</translation>
+        <source>As this is the first time the program is launched, you can choose where Bitcreds will store its data.</source>
+        <translation>Так как вы впервые запустили программу, вы можете выбрать, где Bitcreds будет хранить данные.</translation>
     </message>
     <message>
-        <source>Credits will download and store a copy of the Credits block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Credits скачает и сохранит копию цепочки блоков. Как минимум %1ГБ данных будет храниться в этом каталоге и размер данных будет со временем расти. В этом же каталоге будет сохранён кошелёк.</translation>
+        <source>Bitcreds will download and store a copy of the Bitcreds block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Bitcreds скачает и сохранит копию цепочки блоков. Как минимум %1ГБ данных будет храниться в этом каталоге и размер данных будет со временем расти. В этом же каталоге будет сохранён кошелёк.</translation>
     </message>
     <message>
         <source>Use the default data directory</source>
@@ -1068,8 +1068,8 @@ Address: %4
         <translation>Использовать другой каталог данных:</translation>
     </message>
     <message>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <source>Error: Specified data directory "%1" cannot be created.</source>
@@ -1122,12 +1122,12 @@ Address: %4
         <translation>&amp;Главная</translation>
     </message>
     <message>
-        <source>Automatically start Credits after logging in to the system.</source>
-        <translation>Автоматически запускать Credits после входа в систему.</translation>
+        <source>Automatically start Bitcreds after logging in to the system.</source>
+        <translation>Автоматически запускать Bitcreds после входа в систему.</translation>
     </message>
     <message>
-        <source>&amp;Start Credits on system login</source>
-        <translation>&amp;Запускать Credits при входе в систему</translation>
+        <source>&amp;Start Bitcreds on system login</source>
+        <translation>&amp;Запускать Bitcreds при входе в систему</translation>
     </message>
     <message>
         <source>Size of &amp;database cache</source>
@@ -1154,8 +1154,8 @@ Address: %4
         <translation>Это пороговое значение, при достижении которого автоматическое перемешивание отключается.</translation>
     </message>
     <message>
-        <source>Amount of Credits to keep anonymized</source>
-        <translation>Сумма постоянно анонимизированных Credits</translation>
+        <source>Amount of Bitcreds to keep anonymized</source>
+        <translation>Сумма постоянно анонимизированных Bitcreds</translation>
     </message>
     <message>
         <source>W&amp;allet</source>
@@ -1174,8 +1174,8 @@ Address: %4
         <translation>Принимать входящие подключения</translation>
     </message>
     <message>
-        <source>Connect to the Credits network through a SOCKS5 proxy.</source>
-        <translation>Подключаться к сети Credits через прокси SOCKS5.</translation>
+        <source>Connect to the Bitcreds network through a SOCKS5 proxy.</source>
+        <translation>Подключаться к сети Bitcreds через прокси SOCKS5.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1206,8 +1206,8 @@ Address: %4
         <translation>&amp;Сеть</translation>
     </message>
     <message>
-        <source>Automatically open the Credits client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Автоматически открыть порт для клиента Credits на роутере. Работает только в том случае, если Ваш роутер поддерживает UPnP и данная функция включена.</translation>
+        <source>Automatically open the Bitcreds client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Автоматически открыть порт для клиента Bitcreds на роутере. Работает только в том случае, если Ваш роутер поддерживает UPnP и данная функция включена.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1258,14 +1258,14 @@ Address: %4
         <translation>&amp;Язык интерфейса:</translation>
     </message>
     <message>
-        <source>The user interface language can be set here. This setting will take effect after restarting Credits.</source>
-        <translation>Здесь можно выбрать язык интерфейса. Настройки вступят в силу после перезапуска Credits.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Bitcreds.</source>
+        <translation>Здесь можно выбрать язык интерфейса. Настройки вступят в силу после перезапуска Bitcreds.</translation>
     </message>
     <message>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/credits/</source>
+https://www.transifex.com/projects/p/bitcreds/</source>
         <translation>Нет Вашего языка или перевод неполон? Помогите нам сделать перевод лучше:
-https://www.transifex.com/projects/p/credits/</translation>
+https://www.transifex.com/projects/p/bitcreds/</translation>
     </message>
     <message>
         <source>User Interface Theme:</source>
@@ -1347,8 +1347,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Форма</translation>
     </message>
     <message>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Credits network after a connection is established, but this process has not completed yet.</source>
-        <translation>Отображаемая информация может быть устаревшей. Ваш кошелёк автоматически синхронизируется с сетью Credits после подключения, но этот процесс пока не завершён.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcreds network after a connection is established, but this process has not completed yet.</source>
+        <translation>Отображаемая информация может быть устаревшей. Ваш кошелёк автоматически синхронизируется с сетью Bitcreds после подключения, но этот процесс пока не завершён.</translation>
     </message>
     <message>
         <source>Available:</source>
@@ -1431,8 +1431,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Сумма и раунды:</translation>
     </message>
     <message>
-        <source>0 CRDS / 0 Rounds</source>
-        <translation>0 CRDS / 0 раундов</translation>
+        <source>0 BCRS / 0 Rounds</source>
+        <translation>0 BCRS / 0 раундов</translation>
     </message>
     <message>
         <source>Submitted Denom:</source>
@@ -1568,8 +1568,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Ошибка запроса платежа</translation>
     </message>
     <message>
-        <source>Cannot start credits: click-to-pay handler</source>
-        <translation>Не удаётся запустить обработчик credits: click-to-pay</translation>
+        <source>Cannot start bitcreds: click-to-pay handler</source>
+        <translation>Не удаётся запустить обработчик bitcreds: click-to-pay</translation>
     </message>
     <message>
         <source>URI handling</source>
@@ -1588,8 +1588,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Неверный адрес платежа %1</translation>
     </message>
     <message>
-        <source>URI cannot be parsed! This can be caused by an invalid Credits address or malformed URI parameters.</source>
-        <translation>Не удалось разобрать URI! Возможно указан некорректный адрес Credits либо параметры URI сформированы неверно.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Bitcreds address or malformed URI parameters.</source>
+        <translation>Не удалось разобрать URI! Возможно указан некорректный адрес Bitcreds либо параметры URI сформированы неверно.</translation>
     </message>
     <message>
         <source>Payment request file cannot be read! This can be caused by an invalid payment request file.</source>
@@ -1674,8 +1674,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Сумма</translation>
     </message>
     <message>
-        <source>Enter a Credits address (e.g. %1)</source>
-        <translation>Введите адрес Credits (например, %1)</translation>
+        <source>Enter a Bitcreds address (e.g. %1)</source>
+        <translation>Введите адрес Bitcreds (например, %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -1764,8 +1764,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Число подключений</translation>
     </message>
     <message>
-        <source>Open the Credits debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Открыть отладочный лог-файл Credits из текущего каталога данных. Для больших лог-файлов эта операция может занять несколько секунд.</translation>
+        <source>Open the Bitcreds debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Открыть отладочный лог-файл Bitcreds из текущего каталога данных. Для больших лог-файлов эта операция может занять несколько секунд.</translation>
     </message>
     <message>
         <source>&amp;Open</source>
@@ -1972,8 +1972,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Выход:</translation>
     </message>
     <message>
-        <source>Welcome to the Credits RPC console.</source>
-        <translation>Добро пожаловать в RPC-консоль Credits.</translation>
+        <source>Welcome to the Bitcreds RPC console.</source>
+        <translation>Добро пожаловать в RPC-консоль Bitcreds.</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
@@ -2039,8 +2039,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>&amp;Повторно использовать существующий адрес получения (не рекомендуется)</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Credits network.</source>
-        <translation>Необязательное сообщение для запроса платежа, которое будет показано при открытии запроса. Обратите внимание: сообщение не будет отправлено вместе с платежом через сеть Credits.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcreds network.</source>
+        <translation>Необязательное сообщение для запроса платежа, которое будет показано при открытии запроса. Обратите внимание: сообщение не будет отправлено вместе с платежом через сеть Bitcreds.</translation>
     </message>
     <message>
         <source>&amp;Message:</source>
@@ -2051,8 +2051,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Необязательная метка для нового адреса получения.</translation>
     </message>
     <message>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Credits network.</source>
-        <translation>Необязательное сообщение для запроса платежа, которое будет показано при открытии запроса.&lt;br&gt;Обратите внимание: сообщение не будет отправлено вместе с платежом через сеть Credits.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Bitcreds network.</source>
+        <translation>Необязательное сообщение для запроса платежа, которое будет показано при открытии запроса.&lt;br&gt;Обратите внимание: сообщение не будет отправлено вместе с платежом через сеть Bitcreds.</translation>
     </message>
     <message>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
@@ -2296,7 +2296,7 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Если ручная комиссия  установлена в 1000 duff, а транзакция по размеру только 250 байт, то плата "за килобайт" составит лишь 250 duff,&lt;br&gt;в то время как "итого минимум" будет равна 1000 duff. Для тразакций больше килобайта в любом случае идет расчет "за килобайт".</translation>
     </message>
     <message>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for credits transactions than the network can process.</source>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for bitcreds transactions than the network can process.</source>
         <translation>Оплаты только минимальной комиссии должно быть достаточно во всех случаях, пока в блоках достаточно места.&lt;br&gt;Однако, будьте готовы к тому, что транзакция может вовсе не получить подтверждения,&lt;br&gt;если количество транзакций будет стабильно больше, чем сеть способна обработать.</translation>
     </message>
     <message>
@@ -2500,8 +2500,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Заплатить только минимальную комиссию %1</translation>
     </message>
     <message>
-        <source>Warning: Invalid Credits address</source>
-        <translation>Внимание: неверный адрес Credits</translation>
+        <source>Warning: Invalid Bitcreds address</source>
+        <translation>Внимание: неверный адрес Bitcreds</translation>
     </message>
     <message>
         <source>Warning: Unknown change address</source>
@@ -2523,8 +2523,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Полу&amp;чатель:</translation>
     </message>
     <message>
-        <source>The Credits address to send the payment to</source>
-        <translation>Адрес Credits для отправки на него монет</translation>
+        <source>The Bitcreds address to send the payment to</source>
+        <translation>Адрес Bitcreds для отправки на него монет</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -2563,8 +2563,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Сообщение:</translation>
     </message>
     <message>
-        <source>A message that was attached to the credits: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Credits network.</source>
-        <translation>К credits: URI было прикреплено сообщение, которое будет сохранено вместе с транзакцией для вашего сведения. Обратите внимание: сообщение не будет отправлено через сеть Credits.</translation>
+        <source>A message that was attached to the bitcreds: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcreds network.</source>
+        <translation>К bitcreds: URI было прикреплено сообщение, которое будет сохранено вместе с транзакцией для вашего сведения. Обратите внимание: сообщение не будет отправлено через сеть Bitcreds.</translation>
     </message>
     <message>
         <source>This is an unverified payment request.</source>
@@ -2590,8 +2590,8 @@ https://www.transifex.com/projects/p/credits/</translation>
 <context>
     <name>ShutdownWindow</name>
     <message>
-        <source>Credits is shutting down...</source>
-        <translation>Credits выключается...</translation>
+        <source>Bitcreds is shutting down...</source>
+        <translation>Bitcreds выключается...</translation>
     </message>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -2613,8 +2613,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Вы можете подписывать сообщения своими адресами, чтобы доказать владение ими. Будьте осторожны, не подписывайте что-то неопределённое, так как фишинговые атаки могут обманным путём заставить вас подписать нежелательные сообщения. Подписывайте только те сообщения, с которыми вы согласны вплоть до мелочей.</translation>
     </message>
     <message>
-        <source>The Credits address to sign the message with</source>
-        <translation>Адрес Credits, которым Вы хотите подписать сообщение</translation>
+        <source>The Bitcreds address to sign the message with</source>
+        <translation>Адрес Bitcreds, которым Вы хотите подписать сообщение</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -2645,8 +2645,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Скопировать текущую подпись в системный буфер обмена</translation>
     </message>
     <message>
-        <source>Sign the message to prove you own this Credits address</source>
-        <translation>Подписать сообщение, чтобы доказать владение этим адресом Credits</translation>
+        <source>Sign the message to prove you own this Bitcreds address</source>
+        <translation>Подписать сообщение, чтобы доказать владение этим адресом Bitcreds</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -2669,12 +2669,12 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Введите ниже адрес для подписи, сообщение (убедитесь, что переводы строк, пробелы, табы и т.п. в точности скопированы) и подпись, чтобы проверить сообщение. Убедитесь, что не скопировали лишнего в подпись, по сравнению с самим подписываемым сообщением, чтобы не стать жертвой атаки "man-in-the-middle".</translation>
     </message>
     <message>
-        <source>The Credits address the message was signed with</source>
-        <translation>Адрес Credits, которым было подписано сообщение</translation>
+        <source>The Bitcreds address the message was signed with</source>
+        <translation>Адрес Bitcreds, которым было подписано сообщение</translation>
     </message>
     <message>
-        <source>Verify the message to ensure it was signed with the specified Credits address</source>
-        <translation>Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом Credits</translation>
+        <source>Verify the message to ensure it was signed with the specified Bitcreds address</source>
+        <translation>Проверить сообщение, чтобы убедиться, что оно было подписано указанным адресом Bitcreds</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>
@@ -2740,8 +2740,8 @@ https://www.transifex.com/projects/p/credits/</translation>
 <context>
     <name>SplashScreen</name>
     <message>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -2752,8 +2752,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Разработчики Bitcoin Core</translation>
     </message>
     <message>
-        <source>The Credits developers</source>
-        <translation>Разработчики Credits</translation>
+        <source>The Bitcreds developers</source>
+        <translation>Разработчики Bitcreds</translation>
     </message>
     <message>
         <source>[testnet]</source>
@@ -3280,8 +3280,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Отправка</translation>
     </message>
     <message>
-        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 CRDS.</source>
-        <translation>InstantSend пока что не поддерживает такие большие суммы. На данный момент транзакции ограничены суммами до %1 CRDS.</translation>
+        <source>InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 BCRS.</source>
+        <translation>InstantSend пока что не поддерживает такие большие суммы. На данный момент транзакции ограничены суммами до %1 BCRS.</translation>
     </message>
 </context>
 <context>
@@ -3324,14 +3324,14 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
 </context>
 <context>
-    <name>credits</name>
+    <name>bitcreds</name>
     <message>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Привязаться к указанному адресу и всегда прослушивать только его. Используйте [хост]:порт для IPv6</translation>
     </message>
     <message>
-        <source>Cannot obtain a lock on data directory %s. Credits is probably already running.</source>
-        <translation>Не удалось установить блокировку на каталог данных %s. Возможно, Credits уже запущен.</translation>
+        <source>Cannot obtain a lock on data directory %s. Bitcreds is probably already running.</source>
+        <translation>Не удалось установить блокировку на каталог данных %s. Возможно, Bitcreds уже запущен.</translation>
     </message>
     <message>
         <source>Privatesend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.</source>
@@ -3386,16 +3386,16 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Это пре-релизная тестовая сборка - используйте на свой страх и риск - не используйте для добычи или торговых приложений</translation>
     </message>
     <message>
-        <source>Unable to bind to %s on this computer. Credits is probably already running.</source>
-        <translation>Не удалось привязаться к %s на этом компьютере. Возможно, Credits уже запущен.</translation>
+        <source>Unable to bind to %s on this computer. Bitcreds is probably already running.</source>
+        <translation>Не удалось привязаться к %s на этом компьютере. Возможно, Bitcreds уже запущен.</translation>
     </message>
     <message>
         <source>Unable to locate enough Privatesend denominated funds for this transaction.</source>
         <translation>Не удалось обнаружить достаточных для выполнения этой транзакции номиналов Privatesend.</translation>
     </message>
     <message>
-        <source>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 CRDS.</source>
-        <translation>Не удалось обнаружить достаточных для выполнения этой транзакции неденоминированных средств, отличающихся от 1000 CRDS.</translation>
+        <source>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 BCRS.</source>
+        <translation>Не удалось обнаружить достаточных для выполнения этой транзакции неденоминированных средств, отличающихся от 1000 BCRS.</translation>
     </message>
     <message>
         <source>Warning: -paytxfee is set very high! This is the transaction fee you will pay if you send a transaction.</source>
@@ -3618,8 +3618,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Удалить все трансакции из кошелька и при рестарте с помощью -rescan восстановить только те, которые есть в цепочке блоков</translation>
     </message>
     <message>
-        <source>Disable all Credits specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</source>
-        <translation>Отключить всю функциональность, относящуюся к  Credits (Мастерноды, Privatesend, InstantSend, бюджеты) (0-1, по умолчанию: %u)</translation>
+        <source>Disable all Bitcreds specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</source>
+        <translation>Отключить всю функциональность, относящуюся к  Bitcreds (Мастерноды, Privatesend, InstantSend, бюджеты) (0-1, по умолчанию: %u)</translation>
     </message>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file COPYING or &lt;http://www.opensource.org/licenses/mit-license.php&gt;.</source>
@@ -3638,12 +3638,12 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Ошибка: Обнаружен неподдерживаемый аргумент -socks. Выбор версии SOCKS больше невозможен, поддерживаются только прокси версии SOCKS5.</translation>
     </message>
     <message>
-        <source>Fees (in CRDS/Kb) smaller than this are considered zero fee for relaying (default: %s)</source>
-        <translation>Комиссии (в CRDS/Kb) меньше этого значения считаются нулевой для ретранслирования транзакции (по умолчанию: %s)</translation>
+        <source>Fees (in BCRS/Kb) smaller than this are considered zero fee for relaying (default: %s)</source>
+        <translation>Комиссии (в BCRS/Kb) меньше этого значения считаются нулевой для ретранслирования транзакции (по умолчанию: %s)</translation>
     </message>
     <message>
-        <source>Fees (in CRDS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</source>
-        <translation>Комиссии (в CRDS/Kb) меньше этого значения считаются нулевой (для создания транзакции) (по умолчанию: %s)</translation>
+        <source>Fees (in BCRS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</source>
+        <translation>Комиссии (в BCRS/Kb) меньше этого значения считаются нулевой (для создания транзакции) (по умолчанию: %s)</translation>
     </message>
     <message>
         <source>Flush database activity from memory pool to disk log every &lt;n&gt; megabytes (default: %u)</source>
@@ -3714,32 +3714,32 @@ https://www.transifex.com/projects/p/credits/</translation>
         <translation>Этот продукт включает ПО, разработанное проектом OpenSSL Project для использования в OpenSSL Toolkit &lt;https://www.openssl.org/&gt;, криптографическое ПО, написанное Eric Young и ПО для работы с UPnP, написанное Thomas Bernard.</translation>
     </message>
     <message>
-        <source>To use creditsd, or the -server option to credits-qt, you must set an rpcpassword in the configuration file:
+        <source>To use bitcredsd, or the -server option to bitcreds-qt, you must set an rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=creditsrpc
+rpcuser=bitcredsrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s "Credits Alert" admin@foo.com
+for example: alertnotify=echo %%s | mail -s "Bitcreds Alert" admin@foo.com
 </source>
-        <translation>Для использования creditsd или опции -server с credits-qt, вы должны установить опцию rpcpassword в конфигурационном файле:
+        <translation>Для использования bitcredsd или опции -server с bitcreds-qt, вы должны установить опцию rpcpassword в конфигурационном файле:
 %s
 Рекомендуется использовать следующий случайный пароль:
-rpcuser=creditsrpc
+rpcuser=bitcredsrpc
 rpcpassword=%s
 (вам не нужно запоминать этот пароль)
 Имя и пароль ДОЛЖНЫ различаться.
 Если файл не существует, то создайте его и оставьте права на чтение только для владельца.
 Также рекомендуется включить alertnotify для оповещения о проблемах;
-Например: alertnotify=echo %%s | mail -s "Credits Alert" admin@foo.com
+Например: alertnotify=echo %%s | mail -s "Bitcreds Alert" admin@foo.com
 </translation>
     </message>
     <message>
-        <source>Unable to locate enough funds for this transaction that are not equal 1000 CRDS.</source>
-        <translation>Не удалось обнаружить достаточных для выполнения этой транзакции средств, отличающихся от 1000 CRDS.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 1000 BCRS.</source>
+        <translation>Не удалось обнаружить достаточных для выполнения этой транзакции средств, отличающихся от 1000 BCRS.</translation>
     </message>
     <message>
         <source>Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: %s)</source>
@@ -3750,8 +3750,8 @@ rpcpassword=%s
         <translation>Внимание: установлено очень большое значение -paytxfee! Комиссия такого размера может быть уплачена при проведении одельной транзакции.</translation>
     </message>
     <message>
-        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Credits will not work properly.</source>
-        <translation>Внимание: пожалуйста, убедитесь что дата и время на Вашем компьютере выставлены правильно! Credits не сможет работать корректно, если часы настроены неверно.</translation>
+        <source>Warning: Please check that your computer's date and time are correct! If your clock is wrong Bitcreds will not work properly.</source>
+        <translation>Внимание: пожалуйста, убедитесь что дата и время на Вашем компьютере выставлены правильно! Bitcreds не сможет работать корректно, если часы настроены неверно.</translation>
     </message>
     <message>
         <source>Whitelist peers connecting from the given netmask or IP address. Can be specified multiple times.</source>
@@ -3804,8 +3804,8 @@ rpcpassword=%s
         <translation>Copyright (C) 2009-%i The Bitcoin Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2014-%i The Credits Developers</source>
-        <translation>Copyright (C) 2014-%i The Credits Developers</translation>
+        <source>Copyright (C) 2014-%i The Bitcreds Developers</source>
+        <translation>Copyright (C) 2014-%i The Bitcreds Developers</translation>
     </message>
     <message>
         <source>Could not parse -rpcbind value %s as network address</source>
@@ -3836,8 +3836,8 @@ rpcpassword=%s
         <translation>Ошибка соединения с мастернодой.</translation>
     </message>
     <message>
-        <source>Error loading wallet.dat: Wallet requires newer version of Credits</source>
-        <translation>Ошибка загрузки wallet.dat: кошелёк требует более новой версии Credits</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Bitcreds</source>
+        <translation>Ошибка загрузки wallet.dat: кошелёк требует более новой версии Bitcreds</translation>
     </message>
     <message>
         <source>Error: A fatal internal error occured, see debug.log for details</source>
@@ -3852,8 +3852,8 @@ rpcpassword=%s
         <translation>Ошибка: Обнаружен неподдерживаемый параметр -tor, используйте -onion вместо него.</translation>
     </message>
     <message>
-        <source>Fee (in CRDS/kB) to add to transactions you send (default: %s)</source>
-        <translation>Комиссии (в CRDS/kB), добавляемая к отправляемым Вами транзакциям (по умолчанию: %s)</translation>
+        <source>Fee (in BCRS/kB) to add to transactions you send (default: %s)</source>
+        <translation>Комиссии (в BCRS/kB), добавляемая к отправляемым Вами транзакциям (по умолчанию: %s)</translation>
     </message>
     <message>
         <source>Finalizing transaction.</source>
@@ -3908,8 +3908,8 @@ rpcpassword=%s
         <translation>Информация</translation>
     </message>
     <message>
-        <source>Initialization sanity check failed. Credits is shutting down.</source>
-        <translation>Проверка на непротиворечивость закончилась неудачно. Credits выключается.</translation>
+        <source>Initialization sanity check failed. Bitcreds is shutting down.</source>
+        <translation>Проверка на непротиворечивость закончилась неудачно. Bitcreds выключается.</translation>
     </message>
     <message>
         <source>Input is not valid.</source>
@@ -4160,8 +4160,8 @@ rpcpassword=%s
         <translation>Использовать UPnP для проброса порта (по умолчанию: %u)</translation>
     </message>
     <message>
-        <source>Wallet needed to be rewritten: restart Credits to complete</source>
-        <translation>Необходимо перезаписать кошелёк: перезапустите Credits для завершения операции</translation>
+        <source>Wallet needed to be rewritten: restart Bitcreds to complete</source>
+        <translation>Необходимо перезаписать кошелёк: перезапустите Bitcreds для завершения операции</translation>
     </message>
     <message>
         <source>Warning: Unsupported argument -benchmark ignored, use -debug=bench.</source>
@@ -4220,8 +4220,8 @@ rpcpassword=%s
         <translation>Ключ KeePassHttp для зашифрованной коммуникации с KeePass</translation>
     </message>
     <message>
-        <source>Keep N CRDS anonymized (default: %u)</source>
-        <translation>Держать N CRDS анонимизированными (по умолчанию: %u)</translation>
+        <source>Keep N BCRS anonymized (default: %u)</source>
+        <translation>Держать N BCRS анонимизированными (по умолчанию: %u)</translation>
     </message>
     <message>
         <source>Keep at most &lt;n&gt; unconnectable transactions in memory (default: %u)</source>

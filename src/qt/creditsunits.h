@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -45,24 +45,24 @@
 #define THIN_SP_UTF8 REAL_THIN_SP_UTF8
 #define THIN_SP_HTML HTML_HACK_SP
 
-/** Credits unit definitions. Encapsulates parsing and formatting
+/** Bitcreds unit definitions. Encapsulates parsing and formatting
    and serves as list model for drop-down selection boxes.
 */
-class CreditsUnits: public QAbstractListModel
+class BitcredsUnits: public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit CreditsUnits(QObject *parent);
+    explicit BitcredsUnits(QObject *parent);
 
-    /** Credits units.
+    /** Bitcreds units.
       @note Source: https://en.bitcoin.it/wiki/Units . Please add only sensible ones
      */
     enum Unit
     {
-        CRDS,
-        mCRDS,
-        uCRDS,
+        BCRS,
+        mBCRS,
+        uBCRS,
         satoshis
     };
 
@@ -132,8 +132,8 @@ public:
     static CAmount maxMoney();
 
 private:
-    QList<CreditsUnits::Unit> unitlist;
+    QList<BitcredsUnits::Unit> unitlist;
 };
-typedef CreditsUnits::Unit CreditsUnit;
+typedef BitcredsUnits::Unit BitcredsUnit;
 
 #endif // CREDITS_QT_CREDITSUNITS_H

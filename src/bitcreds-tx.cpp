@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -55,10 +55,10 @@ static int AppInitRawTx(int argc, char* argv[])
     if (argc<2 || mapArgs.count("-?") || mapArgs.count("-h") || mapArgs.count("-help"))
     {
         // First part of help message is specific to this utility
-        std::string strUsage = _("Credits credits-tx utility version") + " " + FormatFullVersion() + "\n\n" +
+        std::string strUsage = _("Bitcreds bitcreds-tx utility version") + " " + FormatFullVersion() + "\n\n" +
             _("Usage:") + "\n" +
-              "  credits-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded credits transaction") + "\n" +
-              "  credits-tx [options] -create [commands]   " + _("Create hex-encoded credits transaction") + "\n" +
+              "  bitcreds-tx [options] <hex-tx> [commands]  " + _("Update hex-encoded bitcreds transaction") + "\n" +
+              "  bitcreds-tx [options] -create [commands]   " + _("Create hex-encoded bitcreds transaction") + "\n" +
               "\n";
 
         fprintf(stdout, "%s", strUsage.c_str());
@@ -233,7 +233,7 @@ static void MutateTxAddOutAddr(CMutableTransaction& tx, const std::string& strIn
 
     // extract and validate ADDRESS
     std::string strAddr = strInput.substr(pos + 1, std::string::npos);
-    CCreditsAddress addr(strAddr);
+    CBitcredsAddress addr(strAddr);
     if (!addr.IsValid())
         throw std::runtime_error("invalid TX output address");
 
@@ -378,7 +378,7 @@ static void MutateTxSign(CMutableTransaction& tx, const std::string& flagStr)
     for (unsigned int kidx = 0; kidx < keysObj.size(); kidx++) {
         if (!keysObj[kidx].isStr())
             throw std::runtime_error("privatekey not a string");
-        CCreditsSecret vchSecret;
+        CBitcredsSecret vchSecret;
         bool fGood = vchSecret.SetString(keysObj[kidx].getValStr());
         if (!fGood)
             throw std::runtime_error("privatekey not valid");
@@ -596,7 +596,7 @@ static int CommandLineRawTx(int argc, char* argv[])
             if (argc < 2)
                 throw std::runtime_error("too few parameters");
 
-            // param: hex-encoded credits transaction
+            // param: hex-encoded bitcreds transaction
             std::string strHexTx(argv[1]);
             if (strHexTx == "-")                 // "-" implies standard input
                 strHexTx = readStdin();

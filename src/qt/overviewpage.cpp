@@ -2,14 +2,14 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "overviewpage.h"
 #include "ui_overviewpage.h"
 
-#include "creditsunits.h"
+#include "bitcredsunits.h"
 #include "clientmodel.h"
 #include "guiconstants.h"
 #include "guiutil.h"
@@ -41,7 +41,7 @@ class TxViewDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     TxViewDelegate(const PlatformStyle *_platformStyle):
-        QAbstractItemDelegate(), unit(CreditsUnits::CRDS),
+        QAbstractItemDelegate(), unit(BitcredsUnits::BCRS),
         platformStyle(_platformStyle)
     {
 
@@ -100,7 +100,7 @@ public:
             foreground = option.palette.color(QPalette::Text);
         }
         painter->setPen(foreground);
-        QString amountText = CreditsUnits::floorWithUnit(unit, amount, true, CreditsUnits::separatorAlways);
+        QString amountText = BitcredsUnits::floorWithUnit(unit, amount, true, BitcredsUnits::separatorAlways);
         if(!confirmed)
         {
             amountText = QString("[") + amountText + QString("]");
@@ -212,15 +212,15 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchOnlyBalance = watchOnlyBalance;
     currentWatchUnconfBalance = watchUnconfBalance;
     currentWatchImmatureBalance = watchImmatureBalance;
-    ui->labelBalance->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, balance, false, CreditsUnits::separatorAlways));
-    ui->labelUnconfirmed->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, unconfirmedBalance, false, CreditsUnits::separatorAlways));
-    ui->labelImmature->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, immatureBalance, false, CreditsUnits::separatorAlways));
-    ui->labelAnonymized->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, anonymizedBalance, false, CreditsUnits::separatorAlways));
-    ui->labelTotal->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, balance + unconfirmedBalance + immatureBalance, false, CreditsUnits::separatorAlways));
-    ui->labelWatchAvailable->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, watchOnlyBalance, false, CreditsUnits::separatorAlways));
-    ui->labelWatchPending->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, watchUnconfBalance, false, CreditsUnits::separatorAlways));
-    ui->labelWatchImmature->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, watchImmatureBalance, false, CreditsUnits::separatorAlways));
-    ui->labelWatchTotal->setText(CreditsUnits::floorHtmlWithUnit(nDisplayUnit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, CreditsUnits::separatorAlways));
+    ui->labelBalance->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, balance, false, BitcredsUnits::separatorAlways));
+    ui->labelUnconfirmed->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, unconfirmedBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelImmature->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, immatureBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelAnonymized->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, anonymizedBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelTotal->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, balance + unconfirmedBalance + immatureBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelWatchAvailable->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, watchOnlyBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelWatchPending->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, watchUnconfBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelWatchImmature->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, watchImmatureBalance, false, BitcredsUnits::separatorAlways));
+    ui->labelWatchTotal->setText(BitcredsUnits::floorHtmlWithUnit(nDisplayUnit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, BitcredsUnits::separatorAlways));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users
@@ -279,7 +279,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
     this->walletModel = model;
     if(model && model->getOptionsModel())
     {
-        // update the display unit, to not use the default ("CRDS")
+        // update the display unit, to not use the default ("BCRS")
         updateDisplayUnit();
         // Keep up to date with wallet
         setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance(), model->getAnonymizedBalance(),
@@ -338,7 +338,7 @@ void OverviewPage::updatePrivateSendProgress()
     if(!pwalletMain) return;
 
     QString strAmountAndRounds;
-    QString strPrivateSendAmount = CreditsUnits::formatHtmlWithUnit(nDisplayUnit, nPrivateSendAmount * COIN, false, CreditsUnits::separatorAlways);
+    QString strPrivateSendAmount = BitcredsUnits::formatHtmlWithUnit(nDisplayUnit, nPrivateSendAmount * COIN, false, BitcredsUnits::separatorAlways);
 
     if(currentBalance == 0)
     {
@@ -346,7 +346,7 @@ void OverviewPage::updatePrivateSendProgress()
         ui->privateSendProgress->setToolTip(tr("No inputs detected"));
 
         // when balance is zero just show info from settings
-        strPrivateSendAmount = strPrivateSendAmount.remove(strPrivateSendAmount.indexOf("."), CreditsUnits::decimals(nDisplayUnit) + 1);
+        strPrivateSendAmount = strPrivateSendAmount.remove(strPrivateSendAmount.indexOf("."), BitcredsUnits::decimals(nDisplayUnit) + 1);
         strAmountAndRounds = strPrivateSendAmount + " / " + tr("%n Rounds", "", nPrivateSendRounds);
 
         ui->labelAmountRounds->setToolTip(tr("No inputs detected"));
@@ -378,17 +378,17 @@ void OverviewPage::updatePrivateSendProgress()
     if(nMaxToAnonymize >= nPrivateSendAmount * COIN) {
         ui->labelAmountRounds->setToolTip(tr("Found enough compatible inputs to anonymize %1")
                                           .arg(strPrivateSendAmount));
-        strPrivateSendAmount = strPrivateSendAmount.remove(strPrivateSendAmount.indexOf("."), CreditsUnits::decimals(nDisplayUnit) + 1);
+        strPrivateSendAmount = strPrivateSendAmount.remove(strPrivateSendAmount.indexOf("."), BitcredsUnits::decimals(nDisplayUnit) + 1);
         strAmountAndRounds = strPrivateSendAmount + " / " + tr("%n Rounds", "", nPrivateSendRounds);
     } else {
-        QString strMaxToAnonymize = CreditsUnits::formatHtmlWithUnit(nDisplayUnit, nMaxToAnonymize, false, CreditsUnits::separatorAlways);
+        QString strMaxToAnonymize = BitcredsUnits::formatHtmlWithUnit(nDisplayUnit, nMaxToAnonymize, false, BitcredsUnits::separatorAlways);
         ui->labelAmountRounds->setToolTip(tr("Not enough compatible inputs to anonymize <span style='color:red;'>%1</span>,<br>"
                                              "will anonymize <span style='color:red;'>%2</span> instead")
                                           .arg(strPrivateSendAmount)
                                           .arg(strMaxToAnonymize));
-        strMaxToAnonymize = strMaxToAnonymize.remove(strMaxToAnonymize.indexOf("."), CreditsUnits::decimals(nDisplayUnit) + 1);
+        strMaxToAnonymize = strMaxToAnonymize.remove(strMaxToAnonymize.indexOf("."), BitcredsUnits::decimals(nDisplayUnit) + 1);
         strAmountAndRounds = "<span style='color:red;'>" +
-                QString(CreditsUnits::factor(nDisplayUnit) == 1 ? "" : "~") + strMaxToAnonymize +
+                QString(BitcredsUnits::factor(nDisplayUnit) == 1 ? "" : "~") + strMaxToAnonymize +
                 " / " + tr("%n Rounds", "", nPrivateSendRounds) + "</span>";
     }
     ui->labelAmountRounds->setText(strAmountAndRounds);
@@ -607,7 +607,7 @@ void OverviewPage::togglePrivateSend(){
     if(!fEnablePrivateSend){
         CAmount nMinAmount = vecPrivateSendDenominations.back() + PRIVATESEND_COLLATERAL*4;
         if(currentBalance < nMinAmount){
-            QString strMinAmount(CreditsUnits::formatWithUnit(nDisplayUnit, nMinAmount));
+            QString strMinAmount(BitcredsUnits::formatWithUnit(nDisplayUnit, nMinAmount));
             QMessageBox::warning(this, tr("PrivateSend"),
                 tr("PrivateSend requires at least %1 to use.").arg(strMinAmount),
                 QMessageBox::Ok, QMessageBox::Ok);

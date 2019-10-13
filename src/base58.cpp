@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -217,13 +217,13 @@ int CBase58Data::CompareTo(const CBase58Data& b58) const
 
 namespace
 {
-class CCreditsAddressVisitor : public boost::static_visitor<bool>
+class CBitcredsAddressVisitor : public boost::static_visitor<bool>
 {
 private:
-    CCreditsAddress* addr;
+    CBitcredsAddress* addr;
 
 public:
-    CCreditsAddressVisitor(CCreditsAddress* addrIn) : addr(addrIn) {}
+    CBitcredsAddressVisitor(CBitcredsAddress* addrIn) : addr(addrIn) {}
 
     bool operator()(const CKeyID& id) const { return addr->Set(id); }
     bool operator()(const CScriptID& id) const { return addr->Set(id); }
@@ -232,29 +232,29 @@ public:
 
 } // anon namespace
 
-bool CCreditsAddress::Set(const CKeyID& id)
+bool CBitcredsAddress::Set(const CKeyID& id)
 {
     SetData(Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS), &id, 20);
     return true;
 }
 
-bool CCreditsAddress::Set(const CScriptID& id)
+bool CBitcredsAddress::Set(const CScriptID& id)
 {
     SetData(Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS), &id, 20);
     return true;
 }
 
-bool CCreditsAddress::Set(const CTxDestination& dest)
+bool CBitcredsAddress::Set(const CTxDestination& dest)
 {
-    return boost::apply_visitor(CCreditsAddressVisitor(this), dest);
+    return boost::apply_visitor(CBitcredsAddressVisitor(this), dest);
 }
 
-bool CCreditsAddress::IsValid() const
+bool CBitcredsAddress::IsValid() const
 {
     return IsValid(Params());
 }
 
-bool CCreditsAddress::IsValid(const CChainParams& params) const
+bool CBitcredsAddress::IsValid(const CChainParams& params) const
 {
     bool fCorrectSize = vchData.size() == 20;
     bool fKnownVersion = vchVersion == params.Base58Prefix(CChainParams::PUBKEY_ADDRESS) ||
@@ -262,7 +262,7 @@ bool CCreditsAddress::IsValid(const CChainParams& params) const
     return fCorrectSize && fKnownVersion;
 }
 
-CTxDestination CCreditsAddress::Get() const
+CTxDestination CBitcredsAddress::Get() const
 {
     if (!IsValid())
         return CNoDestination();
@@ -276,7 +276,7 @@ CTxDestination CCreditsAddress::Get() const
         return CNoDestination();
 }
 
-bool CCreditsAddress::GetIndexKey(uint160& hashBytes, int& type) const
+bool CBitcredsAddress::GetIndexKey(uint160& hashBytes, int& type) const
 {
     if (!IsValid()) {
         return false;
@@ -293,7 +293,7 @@ bool CCreditsAddress::GetIndexKey(uint160& hashBytes, int& type) const
     return false;
 }
 
-bool CCreditsAddress::GetKeyID(CKeyID& keyID) const
+bool CBitcredsAddress::GetKeyID(CKeyID& keyID) const
 {
     if (!IsValid() || vchVersion != Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS))
         return false;
@@ -303,12 +303,12 @@ bool CCreditsAddress::GetKeyID(CKeyID& keyID) const
     return true;
 }
 
-bool CCreditsAddress::IsScript() const
+bool CBitcredsAddress::IsScript() const
 {
     return IsValid() && vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS);
 }
 
-void CCreditsSecret::SetKey(const CKey& vchSecret)
+void CBitcredsSecret::SetKey(const CKey& vchSecret)
 {
     assert(vchSecret.IsValid());
     SetData(Params().Base58Prefix(CChainParams::SECRET_KEY), vchSecret.begin(), vchSecret.size());
@@ -316,7 +316,7 @@ void CCreditsSecret::SetKey(const CKey& vchSecret)
         vchData.push_back(1);
 }
 
-CKey CCreditsSecret::GetKey()
+CKey CBitcredsSecret::GetKey()
 {
     CKey ret;
     assert(vchData.size() >= 32);
@@ -324,19 +324,19 @@ CKey CCreditsSecret::GetKey()
     return ret;
 }
 
-bool CCreditsSecret::IsValid() const
+bool CBitcredsSecret::IsValid() const
 {
     bool fExpectedFormat = vchData.size() == 32 || (vchData.size() == 33 && vchData[32] == 1);
     bool fCorrectVersion = vchVersion == Params().Base58Prefix(CChainParams::SECRET_KEY);
     return fExpectedFormat && fCorrectVersion;
 }
 
-bool CCreditsSecret::SetString(const char* pszSecret)
+bool CBitcredsSecret::SetString(const char* pszSecret)
 {
     return CBase58Data::SetString(pszSecret) && IsValid();
 }
 
-bool CCreditsSecret::SetString(const std::string& strSecret)
+bool CBitcredsSecret::SetString(const std::string& strSecret)
 {
     return SetString(strSecret.c_str());
 }

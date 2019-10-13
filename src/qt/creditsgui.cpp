@@ -2,14 +2,14 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "creditsgui.h"
+#include "bitcredsgui.h"
 
 #include "clientmodel.h"
-#include "creditsunits.h"
+#include "bitcredsunits.h"
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "modaloverlay.h"
@@ -67,7 +67,7 @@
 #include <QUrlQuery>
 #endif
 
-const std::string CreditsGUI::DEFAULT_UIPLATFORM =
+const std::string BitcredsGUI::DEFAULT_UIPLATFORM =
 #if defined(Q_OS_MAC)
         "macosx"
 #elif defined(Q_OS_WIN)
@@ -77,9 +77,9 @@ const std::string CreditsGUI::DEFAULT_UIPLATFORM =
 #endif
         ;
 
-const QString CreditsGUI::DEFAULT_WALLET = "~Default";
+const QString BitcredsGUI::DEFAULT_WALLET = "~Default";
 
-CreditsGUI::CreditsGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
+BitcredsGUI::BitcredsGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
     QMainWindow(parent),
     enableWallet(false),
     labelWalletEncryptionIcon(0),
@@ -132,7 +132,7 @@ CreditsGUI::CreditsGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
 
     GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
 
-    QString windowTitle = tr("Credits") + " - ";
+    QString windowTitle = tr("Bitcreds") + " - ";
 #ifdef ENABLE_WALLET
     /* if compiled with wallet support, -disablewallet can still disable the wallet */
     enableWallet = !GetBoolArg("-disablewallet", false);
@@ -271,7 +271,7 @@ CreditsGUI::CreditsGUI(const PlatformStyle *_platformStyle, const NetworkStyle *
 #endif
 }
 
-CreditsGUI::~CreditsGUI()
+BitcredsGUI::~BitcredsGUI()
 {
     // Unsubscribe from notifications from core
     unsubscribeFromCoreSignals();
@@ -287,7 +287,7 @@ CreditsGUI::~CreditsGUI()
     delete rpcConsole;
 }
 
-void CreditsGUI::createActions()
+void BitcredsGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
@@ -304,7 +304,7 @@ void CreditsGUI::createActions()
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/" + theme + "/send"), tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a Credits address"));
+    sendCoinsAction->setStatusTip(tr("Send coins to a Bitcreds address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -319,7 +319,7 @@ void CreditsGUI::createActions()
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
     receiveCoinsAction = new QAction(QIcon(":/icons/" + theme + "/receiving_addresses"), tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and credits: URIs)"));
+    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and bitcreds: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -379,15 +379,15 @@ void CreditsGUI::createActions()
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&About Credits"), this);
-    aboutAction->setStatusTip(tr("Show information about Credits"));
+    aboutAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&About Bitcreds"), this);
+    aboutAction->setStatusTip(tr("Show information about Bitcreds"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
     aboutQtAction = new QAction(QIcon(":/icons/" + theme + "/about_qt"), tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/" + theme + "/options"), tr("&Options..."), this);
-    optionsAction->setStatusTip(tr("Modify configuration options for Credits"));
+    optionsAction->setStatusTip(tr("Modify configuration options for Bitcreds"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     optionsAction->setEnabled(false);
     toggleHideAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&Show / Hide"), this);
@@ -404,9 +404,9 @@ void CreditsGUI::createActions()
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
     lockWalletAction = new QAction(tr("&Lock Wallet"), this);
     signMessageAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your Credits addresses to prove you own them"));
+    signMessageAction->setStatusTip(tr("Sign messages with your Bitcreds addresses to prove you own them"));
     verifyMessageAction = new QAction(QIcon(":/icons/" + theme + "/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Credits addresses"));
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Bitcreds addresses"));
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -437,11 +437,11 @@ void CreditsGUI::createActions()
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
     openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon), tr("Open &URI..."), this);
-    openAction->setStatusTip(tr("Open a credits: URI or payment request"));
+    openAction->setStatusTip(tr("Open a bitcreds: URI or payment request"));
 
     showHelpMessageAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
-    showHelpMessageAction->setStatusTip(tr("Show the Credits help message to get a list with possible Credits command-line options"));
+    showHelpMessageAction->setStatusTip(tr("Show the Bitcreds help message to get a list with possible Bitcreds command-line options"));
 
     showPrivateSendHelpAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&PrivateSend information"), this);
     showPrivateSendHelpAction->setMenuRole(QAction::NoRole);
@@ -496,7 +496,7 @@ void CreditsGUI::createActions()
     new QShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_R), this, SLOT(showRepair()));
 }
 
-void CreditsGUI::createMenuBar()
+void BitcredsGUI::createMenuBar()
 {
 #ifdef Q_OS_MAC
     // Create a decoupled menu bar on Mac which stays even if the window is closed
@@ -554,7 +554,7 @@ void CreditsGUI::createMenuBar()
     help->addAction(aboutQtAction);
 }
 
-void CreditsGUI::createToolBars()
+void BitcredsGUI::createToolBars()
 {
     if(walletFrame)
     {
@@ -580,7 +580,7 @@ void CreditsGUI::createToolBars()
     }
 }
 
-void CreditsGUI::setClientModel(ClientModel *_clientModel)
+void BitcredsGUI::setClientModel(ClientModel *_clientModel)
 {
     this->clientModel = _clientModel;
     if(_clientModel)
@@ -652,7 +652,7 @@ void CreditsGUI::setClientModel(ClientModel *_clientModel)
 }
 
 #ifdef ENABLE_WALLET
-bool CreditsGUI::addWallet(const QString& name, WalletModel *walletModel)
+bool BitcredsGUI::addWallet(const QString& name, WalletModel *walletModel)
 {
     if(!walletFrame)
         return false;
@@ -660,14 +660,14 @@ bool CreditsGUI::addWallet(const QString& name, WalletModel *walletModel)
     return walletFrame->addWallet(name, walletModel);
 }
 
-bool CreditsGUI::setCurrentWallet(const QString& name)
+bool BitcredsGUI::setCurrentWallet(const QString& name)
 {
     if(!walletFrame)
         return false;
     return walletFrame->setCurrentWallet(name);
 }
 
-void CreditsGUI::removeAllWallets()
+void BitcredsGUI::removeAllWallets()
 {
     if(!walletFrame)
         return;
@@ -676,7 +676,7 @@ void CreditsGUI::removeAllWallets()
 }
 #endif // ENABLE_WALLET
 
-void CreditsGUI::setWalletActionsEnabled(bool enabled)
+void BitcredsGUI::setWalletActionsEnabled(bool enabled)
 {
     overviewAction->setEnabled(enabled);
     sendCoinsAction->setEnabled(enabled);
@@ -695,17 +695,17 @@ void CreditsGUI::setWalletActionsEnabled(bool enabled)
     openAction->setEnabled(enabled);
 }
 
-void CreditsGUI::createTrayIcon(const NetworkStyle *networkStyle)
+void BitcredsGUI::createTrayIcon(const NetworkStyle *networkStyle)
 {
     trayIcon = new QSystemTrayIcon(this);
-    QString toolTip = tr("Credits client") + " " + networkStyle->getTitleAddText();
+    QString toolTip = tr("Bitcreds client") + " " + networkStyle->getTitleAddText();
     trayIcon->setToolTip(toolTip);
     trayIcon->setIcon(networkStyle->getTrayAndWindowIcon());
     trayIcon->show();
     notificator = new Notificator(QApplication::applicationName(), trayIcon, this);
 }
 
-void CreditsGUI::createIconMenu(QMenu *pmenu)
+void BitcredsGUI::createIconMenu(QMenu *pmenu)
 {
     // Configuration of the tray icon (or dock icon) icon menu
     pmenu->addAction(toggleHideAction);
@@ -739,7 +739,7 @@ void CreditsGUI::createIconMenu(QMenu *pmenu)
 }
 
 #ifndef Q_OS_MAC
-void CreditsGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+void BitcredsGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
@@ -749,7 +749,7 @@ void CreditsGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 #endif
 
-void CreditsGUI::optionsClicked()
+void BitcredsGUI::optionsClicked()
 {
     if(!clientModel || !clientModel->getOptionsModel())
         return;
@@ -759,7 +759,7 @@ void CreditsGUI::optionsClicked()
     dlg.exec();
 }
 
-void CreditsGUI::aboutClicked()
+void BitcredsGUI::aboutClicked()
 {
     if(!clientModel)
         return;
@@ -768,7 +768,7 @@ void CreditsGUI::aboutClicked()
     dlg.exec();
 }
 
-void CreditsGUI::showRPCConsole()
+void BitcredsGUI::showRPCConsole()
 {
     rpcConsole->showNormal();
     rpcConsole->show();
@@ -776,57 +776,57 @@ void CreditsGUI::showRPCConsole()
     rpcConsole->activateWindow();
 }
 
-void CreditsGUI::showInfo()
+void BitcredsGUI::showInfo()
 {
     rpcConsole->setTabFocus(RPCConsole::TAB_INFO);
     showRPCConsole();
 }
 
-void CreditsGUI::showConsole()
+void BitcredsGUI::showConsole()
 {
     rpcConsole->setTabFocus(RPCConsole::TAB_CONSOLE);
     showRPCConsole();
 }
 
-void CreditsGUI::showGraph()
+void BitcredsGUI::showGraph()
 {
     rpcConsole->setTabFocus(RPCConsole::TAB_GRAPH);
     showRPCConsole();
 }
 
-void CreditsGUI::showPeers()
+void BitcredsGUI::showPeers()
 {
     rpcConsole->setTabFocus(RPCConsole::TAB_PEERS);
     showRPCConsole();
 }
 
-void CreditsGUI::showRepair()
+void BitcredsGUI::showRepair()
 {
     rpcConsole->setTabFocus(RPCConsole::TAB_REPAIR);
     showRPCConsole();
 }
 
-void CreditsGUI::showConfEditor()
+void BitcredsGUI::showConfEditor()
 {
     GUIUtil::openConfigfile();
 }
 
-void CreditsGUI::showSNConfEditor()
+void BitcredsGUI::showSNConfEditor()
 {
     GUIUtil::openSNConfigfile();
 }
 
-void CreditsGUI::showBackups()
+void BitcredsGUI::showBackups()
 {
     GUIUtil::showBackups();
 }
 
-void CreditsGUI::showHelpMessageClicked()
+void BitcredsGUI::showHelpMessageClicked()
 {
     helpMessageDialog->show();
 }
 
-void CreditsGUI::showPrivateSendHelpClicked()
+void BitcredsGUI::showPrivateSendHelpClicked()
 {
     if(!clientModel)
         return;
@@ -836,7 +836,7 @@ void CreditsGUI::showPrivateSendHelpClicked()
 }
 
 #ifdef ENABLE_WALLET
-void CreditsGUI::openClicked()
+void BitcredsGUI::openClicked()
 {
     OpenURIDialog dlg(this);
     if(dlg.exec())
@@ -845,48 +845,48 @@ void CreditsGUI::openClicked()
     }
 }
 
-void CreditsGUI::gotoOverviewPage()
+void BitcredsGUI::gotoOverviewPage()
 {
     overviewAction->setChecked(true);
     if (walletFrame) walletFrame->gotoOverviewPage();
 }
 
-void CreditsGUI::gotoSendCoinsPage(QString addr)
+void BitcredsGUI::gotoSendCoinsPage(QString addr)
 {
     sendCoinsAction->setChecked(true);
     if (walletFrame) walletFrame->gotoSendCoinsPage(addr);
 }
 
-void CreditsGUI::gotoReceiveCoinsPage()
+void BitcredsGUI::gotoReceiveCoinsPage()
 {
     receiveCoinsAction->setChecked(true);
     if (walletFrame) walletFrame->gotoReceiveCoinsPage();
 }
 
-void CreditsGUI::gotoHistoryPage()
+void BitcredsGUI::gotoHistoryPage()
 {
     historyAction->setChecked(true);
     if (walletFrame) walletFrame->gotoHistoryPage();
 }
 
-void CreditsGUI::gotoMasternodePage()
+void BitcredsGUI::gotoMasternodePage()
 {
     masternodeAction->setChecked(true);
     if (walletFrame) walletFrame->gotoMasternodePage();
 }
 
-void CreditsGUI::gotoSignMessageTab(QString addr)
+void BitcredsGUI::gotoSignMessageTab(QString addr)
 {
     if (walletFrame) walletFrame->gotoSignMessageTab(addr);
 }
 
-void CreditsGUI::gotoVerifyMessageTab(QString addr)
+void BitcredsGUI::gotoVerifyMessageTab(QString addr)
 {
     if (walletFrame) walletFrame->gotoVerifyMessageTab(addr);
 }
 #endif // ENABLE_WALLET
 
-void CreditsGUI::setNumConnections(int count)
+void BitcredsGUI::setNumConnections(int count)
 {
     QString icon;
     QString theme = GUIUtil::getThemeName();
@@ -900,10 +900,10 @@ void CreditsGUI::setNumConnections(int count)
     }
     QIcon connectionItem = QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE);
     labelConnectionsIcon->setIcon(connectionItem);
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Credits network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Bitcreds network", "", count));
 }
 
-void CreditsGUI::updateHeadersSyncProgressLabel()
+void BitcredsGUI::updateHeadersSyncProgressLabel()
 {
     int64_t headersTipTime = clientModel->getHeaderTipTime();
     int headersTipHeight = clientModel->getHeaderTipHeight();
@@ -912,7 +912,7 @@ void CreditsGUI::updateHeadersSyncProgressLabel()
         progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight+estHeadersLeft)*headersTipHeight, 'f', 1)));
 }
 
-void CreditsGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool header)
+void BitcredsGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool header)
 {
     if (modalOverlay)
     {
@@ -1026,7 +1026,7 @@ void CreditsGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVer
     progressBar->setToolTip(tooltip);
 }
 
-void CreditsGUI::setAdditionalDataSyncProgress(double nSyncProgress)
+void BitcredsGUI::setAdditionalDataSyncProgress(double nSyncProgress)
 {
     if(!clientModel)
         return;
@@ -1081,9 +1081,9 @@ void CreditsGUI::setAdditionalDataSyncProgress(double nSyncProgress)
     progressBar->setToolTip(tooltip);
 }
 
-void CreditsGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
+void BitcredsGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
 {
-    QString strTitle = tr("Credits"); // default title
+    QString strTitle = tr("Bitcreds"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -1109,7 +1109,7 @@ void CreditsGUI::message(const QString &title, const QString &message, unsigned 
             break;
         }
     }
-    // Append title to "Credits - "
+    // Append title to "Bitcreds - "
     if (!msgType.isEmpty())
         strTitle += " - " + msgType;
 
@@ -1140,7 +1140,7 @@ void CreditsGUI::message(const QString &title, const QString &message, unsigned 
         notificator->notify((Notificator::Class)nNotifyIcon, strTitle, message);
 }
 
-void CreditsGUI::changeEvent(QEvent *e)
+void BitcredsGUI::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
 #ifndef Q_OS_MAC // Ignored on Mac
@@ -1159,7 +1159,7 @@ void CreditsGUI::changeEvent(QEvent *e)
 #endif
 }
 
-void CreditsGUI::closeEvent(QCloseEvent *event)
+void BitcredsGUI::closeEvent(QCloseEvent *event)
 {
 #ifndef Q_OS_MAC // Ignored on Mac
     if(clientModel && clientModel->getOptionsModel())
@@ -1176,7 +1176,7 @@ void CreditsGUI::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void CreditsGUI::showEvent(QShowEvent *event)
+void BitcredsGUI::showEvent(QShowEvent *event)
 {
     // enable the debug window when the main window shows up
     openInfoAction->setEnabled(true);
@@ -1189,11 +1189,11 @@ void CreditsGUI::showEvent(QShowEvent *event)
 }
 
 #ifdef ENABLE_WALLET
-void CreditsGUI::incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address, const QString& label)
+void BitcredsGUI::incomingTransaction(const QString& date, int unit, const CAmount& amount, const QString& type, const QString& address, const QString& label)
 {
     // On new transaction, make an info balloon
     QString msg = tr("Date: %1\n").arg(date) +
-                  tr("Amount: %1\n").arg(CreditsUnits::formatWithUnit(unit, amount, true)) +
+                  tr("Amount: %1\n").arg(BitcredsUnits::formatWithUnit(unit, amount, true)) +
                   tr("Type: %1\n").arg(type);
     if (!label.isEmpty())
         msg += tr("Label: %1\n").arg(label);
@@ -1204,14 +1204,14 @@ void CreditsGUI::incomingTransaction(const QString& date, int unit, const CAmoun
 }
 #endif // ENABLE_WALLET
 
-void CreditsGUI::dragEnterEvent(QDragEnterEvent *event)
+void BitcredsGUI::dragEnterEvent(QDragEnterEvent *event)
 {
     // Accept only URIs
     if(event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void CreditsGUI::dropEvent(QDropEvent *event)
+void BitcredsGUI::dropEvent(QDropEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
@@ -1223,7 +1223,7 @@ void CreditsGUI::dropEvent(QDropEvent *event)
     event->acceptProposedAction();
 }
 
-bool CreditsGUI::eventFilter(QObject *object, QEvent *event)
+bool BitcredsGUI::eventFilter(QObject *object, QEvent *event)
 {
     // Catch status tip events
     if (event->type() == QEvent::StatusTip)
@@ -1236,7 +1236,7 @@ bool CreditsGUI::eventFilter(QObject *object, QEvent *event)
 }
 
 #ifdef ENABLE_WALLET
-bool CreditsGUI::handlePaymentRequest(const SendCoinsRecipient& recipient)
+bool BitcredsGUI::handlePaymentRequest(const SendCoinsRecipient& recipient)
 {
     // URI has to be valid
     if (walletFrame && walletFrame->handlePaymentRequest(recipient))
@@ -1249,7 +1249,7 @@ bool CreditsGUI::handlePaymentRequest(const SendCoinsRecipient& recipient)
 }
 
  
-void CreditsGUI::setHDStatus(int hdEnabled)
+void BitcredsGUI::setHDStatus(int hdEnabled)
 {
     QString theme = GUIUtil::getThemeName();
 
@@ -1260,7 +1260,7 @@ void CreditsGUI::setHDStatus(int hdEnabled)
     labelWalletHDStatusIcon->setEnabled(hdEnabled);
 }
 
-void CreditsGUI::setEncryptionStatus(int status)
+void BitcredsGUI::setEncryptionStatus(int status)
 {
     QString theme = GUIUtil::getThemeName();
     switch(status)
@@ -1307,7 +1307,7 @@ void CreditsGUI::setEncryptionStatus(int status)
 }
 #endif // ENABLE_WALLET
 
-void CreditsGUI::showNormalIfMinimized(bool fToggleHidden)
+void BitcredsGUI::showNormalIfMinimized(bool fToggleHidden)
 {
     if(!clientModel)
         return;
@@ -1332,12 +1332,12 @@ void CreditsGUI::showNormalIfMinimized(bool fToggleHidden)
         hide();
 }
 
-void CreditsGUI::toggleHidden()
+void BitcredsGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
 }
 
-void CreditsGUI::detectShutdown()
+void BitcredsGUI::detectShutdown()
 {
     if (ShutdownRequested())
     {
@@ -1347,7 +1347,7 @@ void CreditsGUI::detectShutdown()
     }
 }
 
-void CreditsGUI::showProgress(const QString &title, int nProgress)
+void BitcredsGUI::showProgress(const QString &title, int nProgress)
 {
     if (nProgress == 0)
     {
@@ -1370,13 +1370,13 @@ void CreditsGUI::showProgress(const QString &title, int nProgress)
         progressDialog->setValue(nProgress);
 }
 
-void CreditsGUI::showModalOverlay()
+void BitcredsGUI::showModalOverlay()
 {
     if (modalOverlay)
         modalOverlay->showHide(false, true);
 }
 
-static bool ThreadSafeMessageBox(CreditsGUI *gui, const std::string& message, const std::string& caption, unsigned int style)
+static bool ThreadSafeMessageBox(BitcredsGUI *gui, const std::string& message, const std::string& caption, unsigned int style)
 {
     bool modal = (style & CClientUIInterface::MODAL);
     // The SECURE flag has no effect in the Qt GUI.
@@ -1393,20 +1393,20 @@ static bool ThreadSafeMessageBox(CreditsGUI *gui, const std::string& message, co
     return ret;
 }
 
-void CreditsGUI::subscribeToCoreSignals()
+void BitcredsGUI::subscribeToCoreSignals()
 {
     // Connect signals to client
     uiInterface.ThreadSafeMessageBox.connect(boost::bind(ThreadSafeMessageBox, this, _1, _2, _3));
 }
 
-void CreditsGUI::unsubscribeFromCoreSignals()
+void BitcredsGUI::unsubscribeFromCoreSignals()
 {
     // Disconnect signals from client
     uiInterface.ThreadSafeMessageBox.disconnect(boost::bind(ThreadSafeMessageBox, this, _1, _2, _3));
 }
 
 /** Get restart command-line parameters and request restart */
-void CreditsGUI::handleRestart(QStringList args)
+void BitcredsGUI::handleRestart(QStringList args)
 {
     if (!ShutdownRequested())
         Q_EMIT requestedRestart(args);
@@ -1418,12 +1418,12 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
 {
     createContextMenu();
     setToolTip(tr("Unit to show amounts in. Click to select another unit."));
-    QList<CreditsUnits::Unit> units = CreditsUnits::availableUnits();
+    QList<BitcredsUnits::Unit> units = BitcredsUnits::availableUnits();
     int max_width = 0;
     const QFontMetrics fm(font());
-    Q_FOREACH (const CreditsUnits::Unit unit, units)
+    Q_FOREACH (const BitcredsUnits::Unit unit, units)
     {
-        max_width = qMax(max_width, fm.width(CreditsUnits::name(unit)));
+        max_width = qMax(max_width, fm.width(BitcredsUnits::name(unit)));
     }
     setMinimumSize(max_width, 0);
     setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -1440,9 +1440,9 @@ void UnitDisplayStatusBarControl::mousePressEvent(QMouseEvent *event)
 void UnitDisplayStatusBarControl::createContextMenu()
 {
     menu = new QMenu();
-    Q_FOREACH(CreditsUnits::Unit u, CreditsUnits::availableUnits())
+    Q_FOREACH(BitcredsUnits::Unit u, BitcredsUnits::availableUnits())
     {
-        QAction *menuAction = new QAction(QString(CreditsUnits::name(u)), this);
+        QAction *menuAction = new QAction(QString(BitcredsUnits::name(u)), this);
         menuAction->setData(QVariant(u));
         menu->addAction(menuAction);
     }
@@ -1467,7 +1467,7 @@ void UnitDisplayStatusBarControl::setOptionsModel(OptionsModel *_optionsModel)
 /** When Display Units are changed on OptionsModel it will refresh the display text of the control on the status bar */
 void UnitDisplayStatusBarControl::updateDisplayUnit(int newUnits)
 {
-    setPixmap(QIcon(":/icons/light/unit_" + CreditsUnits::id(newUnits)).pixmap(33,STATUSBAR_ICONSIZE));
+    setPixmap(QIcon(":/icons/light/unit_" + BitcredsUnits::id(newUnits)).pixmap(33,STATUSBAR_ICONSIZE));
 }
 
 /** Shows context menu with Display Unit options by the mouse coordinates */

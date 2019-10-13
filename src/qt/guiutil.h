@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,15 +34,15 @@ class QUrl;
 class QWidget;
 QT_END_NAMESPACE
 
-/** Utility functions used by the Credits Qt UI.
+/** Utility functions used by the Bitcreds Qt UI.
  */
 namespace GUIUtil
 {
     // Create human-readable string from date
     QString dateTimeStr(const QDateTime &datetime);
     QString dateTimeStr(qint64 nTime);
-    // Render Credits addresses in monospace font
-    QFont CreditsAddressFont();
+    // Render Bitcreds addresses in monospace font
+    QFont BitcredsAddressFont();
     // Return a monospace font
     QFont fixedPitchFont();
 
@@ -50,10 +50,10 @@ namespace GUIUtil
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
     void setupAmountWidget(QLineEdit *widget, QWidget *parent);
 
-    // Parse "credits:" URI into recipient object, return true on successful parsing
-    bool parseCreditsURI(const QUrl &uri, SendCoinsRecipient *out);
-    bool parseCreditsURI(QString uri, SendCoinsRecipient *out);
-    QString formatCreditsURI(const SendCoinsRecipient &info);
+    // Parse "bitcreds:" URI into recipient object, return true on successful parsing
+    bool parseBitcredsURI(const QUrl &uri, SendCoinsRecipient *out);
+    bool parseBitcredsURI(QString uri, SendCoinsRecipient *out);
+    QString formatBitcredsURI(const SendCoinsRecipient &info);
 
     // Returns true if given address+amount meets "dust" definition
     bool isDust(const QString& address, const CAmount& amount);
@@ -120,7 +120,7 @@ namespace GUIUtil
     // Open debug.log
     void openDebugLogfile();
 	
-    // Open credits.conf
+    // Open bitcreds.conf
     void openConfigfile();	
 
     // Open masternode.conf

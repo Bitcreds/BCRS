@@ -2,13 +2,13 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "creditsamountfield.h"
+#include "bitcredsamountfield.h"
 
-#include "creditsunits.h"
+#include "bitcredsunits.h"
 #include "guiconstants.h"
 #include "qvaluecombobox.h"
 
@@ -28,7 +28,7 @@ class AmountSpinBox: public QAbstractSpinBox
 public:
     explicit AmountSpinBox(QWidget *parent):
         QAbstractSpinBox(parent),
-        currentUnit(CreditsUnits::CRDS),
+        currentUnit(BitcredsUnits::BCRS),
         singleStep(100000) // satoshis
     {
         setAlignment(Qt::AlignRight);
@@ -52,7 +52,7 @@ public:
         CAmount val = parse(input, &valid);
         if(valid)
         {
-            input = CreditsUnits::format(currentUnit, val, false, CreditsUnits::separatorAlways);
+            input = BitcredsUnits::format(currentUnit, val, false, BitcredsUnits::separatorAlways);
             lineEdit()->setText(input);
         }
     }
@@ -64,7 +64,7 @@ public:
 
     void setValue(const CAmount& value)
     {
-        lineEdit()->setText(CreditsUnits::format(currentUnit, value, false, CreditsUnits::separatorAlways));
+        lineEdit()->setText(BitcredsUnits::format(currentUnit, value, false, BitcredsUnits::separatorAlways));
         Q_EMIT valueChanged();
     }
 
@@ -73,7 +73,7 @@ public:
         bool valid = false;
         CAmount val = value(&valid);
         val = val + steps * singleStep;
-        val = qMin(qMax(val, CAmount(0)), CreditsUnits::maxMoney());
+        val = qMin(qMax(val, CAmount(0)), BitcredsUnits::maxMoney());
         setValue(val);
     }
 
@@ -103,7 +103,7 @@ public:
 
             const QFontMetrics fm(fontMetrics());
             int h = lineEdit()->minimumSizeHint().height();
-            int w = fm.width(CreditsUnits::format(CreditsUnits::CRDS, CreditsUnits::maxMoney(), false, CreditsUnits::separatorAlways));
+            int w = fm.width(BitcredsUnits::format(BitcredsUnits::BCRS, BitcredsUnits::maxMoney(), false, BitcredsUnits::separatorAlways));
             w += 2; // cursor blinking space
 
             QStyleOptionSpinBox opt;
@@ -141,10 +141,10 @@ private:
     CAmount parse(const QString &text, bool *valid_out=0) const
     {
         CAmount val = 0;
-        bool valid = CreditsUnits::parse(currentUnit, text, &val);
+        bool valid = BitcredsUnits::parse(currentUnit, text, &val);
         if(valid)
         {
-            if(val < 0 || val > CreditsUnits::maxMoney())
+            if(val < 0 || val > BitcredsUnits::maxMoney())
                 valid = false;
         }
         if(valid_out)
@@ -182,7 +182,7 @@ protected:
         {
             if(val > 0)
                 rv |= StepDownEnabled;
-            if(val < CreditsUnits::maxMoney())
+            if(val < BitcredsUnits::maxMoney())
                 rv |= StepUpEnabled;
         }
         return rv;
@@ -192,9 +192,9 @@ Q_SIGNALS:
     void valueChanged();
 };
 
-#include "creditsamountfield.moc"
+#include "bitcredsamountfield.moc"
 
-CreditsAmountField::CreditsAmountField(QWidget *parent) :
+BitcredsAmountField::BitcredsAmountField(QWidget *parent) :
     QWidget(parent),
     amount(0)
 {
@@ -206,7 +206,7 @@ CreditsAmountField::CreditsAmountField(QWidget *parent) :
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(amount);
     unit = new QValueComboBox(this);
-    unit->setModel(new CreditsUnits(this));
+    unit->setModel(new BitcredsUnits(this));
     layout->addWidget(unit);
     layout->addStretch(1);
     layout->setContentsMargins(0,0,0,0);
@@ -224,19 +224,19 @@ CreditsAmountField::CreditsAmountField(QWidget *parent) :
     unitChanged(unit->currentIndex());
 }
 
-void CreditsAmountField::clear()
+void BitcredsAmountField::clear()
 {
     amount->clear();
     unit->setCurrentIndex(0);
 }
 
-void CreditsAmountField::setEnabled(bool fEnabled)
+void BitcredsAmountField::setEnabled(bool fEnabled)
 {
     amount->setEnabled(fEnabled);
     unit->setEnabled(fEnabled);
 }
 
-bool CreditsAmountField::validate()
+bool BitcredsAmountField::validate()
 {
     bool valid = false;
     value(&valid);
@@ -244,7 +244,7 @@ bool CreditsAmountField::validate()
     return valid;
 }
 
-void CreditsAmountField::setValid(bool valid)
+void BitcredsAmountField::setValid(bool valid)
 {
     if (valid)
         amount->setStyleSheet("");
@@ -252,7 +252,7 @@ void CreditsAmountField::setValid(bool valid)
         amount->setStyleSheet(STYLE_INVALID);
 }
 
-bool CreditsAmountField::eventFilter(QObject *object, QEvent *event)
+bool BitcredsAmountField::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn)
     {
@@ -262,45 +262,45 @@ bool CreditsAmountField::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-QWidget *CreditsAmountField::setupTabChain(QWidget *prev)
+QWidget *BitcredsAmountField::setupTabChain(QWidget *prev)
 {
     QWidget::setTabOrder(prev, amount);
     QWidget::setTabOrder(amount, unit);
     return unit;
 }
 
-CAmount CreditsAmountField::value(bool *valid_out) const
+CAmount BitcredsAmountField::value(bool *valid_out) const
 {
     return amount->value(valid_out);
 }
 
-void CreditsAmountField::setValue(const CAmount& value)
+void BitcredsAmountField::setValue(const CAmount& value)
 {
     amount->setValue(value);
 }
 
-void CreditsAmountField::setReadOnly(bool fReadOnly)
+void BitcredsAmountField::setReadOnly(bool fReadOnly)
 {
     amount->setReadOnly(fReadOnly);
 }
 
-void CreditsAmountField::unitChanged(int idx)
+void BitcredsAmountField::unitChanged(int idx)
 {
     // Use description tooltip for current unit for the combobox
     unit->setToolTip(unit->itemData(idx, Qt::ToolTipRole).toString());
 
     // Determine new unit ID
-    int newUnit = unit->itemData(idx, CreditsUnits::UnitRole).toInt();
+    int newUnit = unit->itemData(idx, BitcredsUnits::UnitRole).toInt();
 
     amount->setDisplayUnit(newUnit);
 }
 
-void CreditsAmountField::setDisplayUnit(int newUnit)
+void BitcredsAmountField::setDisplayUnit(int newUnit)
 {
     unit->setValue(newUnit);
 }
 
-void CreditsAmountField::setSingleStep(const CAmount& step)
+void BitcredsAmountField::setSingleStep(const CAmount& step)
 {
     amount->setSingleStep(step);
 }

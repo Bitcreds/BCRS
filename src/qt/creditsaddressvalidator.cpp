@@ -2,11 +2,11 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "creditsaddressvalidator.h"
+#include "bitcredsaddressvalidator.h"
 
 #include "base58.h"
 
@@ -19,12 +19,12 @@
   - All lower-case letters except for 'l'
 */
 
-CreditsAddressEntryValidator::CreditsAddressEntryValidator(QObject *parent) :
+BitcredsAddressEntryValidator::BitcredsAddressEntryValidator(QObject *parent) :
     QValidator(parent)
 {
 }
 
-QValidator::State CreditsAddressEntryValidator::validate(QString &input, int &pos) const
+QValidator::State BitcredsAddressEntryValidator::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos);
 
@@ -84,16 +84,16 @@ QValidator::State CreditsAddressEntryValidator::validate(QString &input, int &po
     return state;
 }
 
-CreditsAddressCheckValidator::CreditsAddressCheckValidator(QObject *parent) :
+BitcredsAddressCheckValidator::BitcredsAddressCheckValidator(QObject *parent) :
     QValidator(parent)
 {
 }
 
-QValidator::State CreditsAddressCheckValidator::validate(QString &input, int &pos) const
+QValidator::State BitcredsAddressCheckValidator::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos);
-    // Validate the passed Credits address
-    CCreditsAddress addr(input.toStdString());
+    // Validate the passed Bitcreds address
+    CBitcredsAddress addr(input.toStdString());
     if (addr.IsValid())
         return QValidator::Acceptable;
 

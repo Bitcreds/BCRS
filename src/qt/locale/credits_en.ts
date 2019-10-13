@@ -78,13 +78,13 @@
     </message>
     <message>
         <location line="+7"/>
-        <source>These are your Credits addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>These are your Credits addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
+        <source>These are your Bitcreds addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>These are your Bitcreds addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>These are your Credits addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>These are your Credits addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
+        <source>These are your Bitcreds addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
+        <translation>These are your Bitcreds addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -219,8 +219,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR CRDS&lt;/b&gt;!</source>
-        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR CRDS&lt;/b&gt;!</translation>
+        <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BCRS&lt;/b&gt;!</source>
+        <translation>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR BCRS&lt;/b&gt;!</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -235,8 +235,8 @@
     </message>
     <message>
         <location line="-57"/>
-        <source>Credits will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Credits from being stolen by malware infecting your computer.</source>
-        <translation>Credits will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Credits from being stolen by malware infecting your computer.</translation>
+        <source>Bitcreds will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Bitcreds from being stolen by malware infecting your computer.</source>
+        <translation>Bitcreds will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your Bitcreds from being stolen by malware infecting your computer.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -292,12 +292,12 @@
     </message>
 </context>
 <context>
-    <name>CreditsGUI</name>
+    <name>BitcredsGUI</name>
     <message>
-        <location filename="../creditsgui.cpp" line="+108"/>
+        <location filename="../bitcredsgui.cpp" line="+108"/>
         <location line="+752"/>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <location line="-743"/>
@@ -326,8 +326,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Send coins to a Credits address</source>
-        <translation>Send coins to a Credits address</translation>
+        <source>Send coins to a Bitcreds address</source>
+        <translation>Send coins to a Bitcreds address</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -336,8 +336,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Request payments (generates QR codes and credits: URIs)</source>
-        <translation>Request payments (generates QR codes and credits: URIs)</translation>
+        <source>Request payments (generates QR codes and bitcreds: URIs)</source>
+        <translation>Request payments (generates QR codes and bitcreds: URIs)</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -361,13 +361,13 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;About Credits</source>
-        <translation>&amp;About Credits</translation>
+        <source>&amp;About Bitcreds</source>
+        <translation>&amp;About Bitcreds</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Show information about Credits</source>
-        <translation>Show information about Credits</translation>
+        <source>Show information about Bitcreds</source>
+        <translation>Show information about Bitcreds</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -387,8 +387,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Modify configuration options for Credits</source>
-        <translation>Modify configuration options for Credits</translation>
+        <source>Modify configuration options for Bitcreds</source>
+        <translation>Modify configuration options for Bitcreds</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -452,8 +452,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Sign messages with your Credits addresses to prove you own them</source>
-        <translation>Sign messages with your Credits addresses to prove you own them</translation>
+        <source>Sign messages with your Bitcreds addresses to prove you own them</source>
+        <translation>Sign messages with your Bitcreds addresses to prove you own them</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -462,8 +462,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Verify messages to ensure they were signed with specified Credits addresses</source>
-        <translation>Verify messages to ensure they were signed with specified Credits addresses</translation>
+        <source>Verify messages to ensure they were signed with specified Bitcreds addresses</source>
+        <translation>Verify messages to ensure they were signed with specified Bitcreds addresses</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -562,8 +562,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Open a credits: URI or payment request</source>
-        <translation>Open a credits: URI or payment request</translation>
+        <source>Open a bitcreds: URI or payment request</source>
+        <translation>Open a bitcreds: URI or payment request</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -572,8 +572,8 @@
     </message>
     <message>
         <location line="+196"/>
-        <source>Credits client</source>
-        <translation>Credits client</translation>
+        <source>Bitcreds client</source>
+        <translation>Bitcreds client</translation>
     </message>
     <message numerus="yes">
         <location line="+182"/>
@@ -587,8 +587,8 @@
     </message>
     <message>
         <location line="-407"/>
-        <source>Show the Credits help message to get a list with possible Credits command-line options</source>
-        <translation>Show the Credits help message to get a list with possible Credits command-line options</translation>
+        <source>Show the Bitcreds help message to get a list with possible Bitcreds command-line options</source>
+        <translation>Show the Bitcreds help message to get a list with possible Bitcreds command-line options</translation>
     </message>
     <message>
         <location line="+36"/>
@@ -617,8 +617,8 @@
     </message>
     <message numerus="yes">
         <location line="+256"/>
-        <source>%n active connection(s) to Credits network</source>
-        <translation><numerusform>%n active connection to Credits network</numerusform><numerusform>%n active connections to Credits network</numerusform></translation>
+        <source>%n active connection(s) to Bitcreds network</source>
+        <translation><numerusform>%n active connection to Bitcreds network</numerusform><numerusform>%n active connections to Bitcreds network</numerusform></translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1090,13 +1090,13 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>Use 2 separate masternodes to mix funds up to 1000 CRDS</source>
-        <translation>Use 2 separate masternodes to mix funds up to 1000 CRDS</translation>
+        <source>Use 2 separate masternodes to mix funds up to 1000 BCRS</source>
+        <translation>Use 2 separate masternodes to mix funds up to 1000 BCRS</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>Use 8 separate masternodes to mix funds up to 1000 CRDS</source>
-        <translation>Use 8 separate masternodes to mix funds up to 1000 CRDS</translation>
+        <source>Use 8 separate masternodes to mix funds up to 1000 BCRS</source>
+        <translation>Use 8 separate masternodes to mix funds up to 1000 BCRS</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1105,18 +1105,18 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is the quickest and will cost about ~0.025 CRDS to anonymize 1000 CRDS</source>
-        <translation>This option is the quickest and will cost about ~0.025 CRDS to anonymize 1000 CRDS</translation>
+        <source>This option is the quickest and will cost about ~0.025 BCRS to anonymize 1000 BCRS</source>
+        <translation>This option is the quickest and will cost about ~0.025 BCRS to anonymize 1000 BCRS</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>This option is moderately fast and will cost about 0.05 CRDS to anonymize 1000 CRDS</source>
-        <translation>This option is moderately fast and will cost about 0.05 CRDS to anonymize 1000 CRDS</translation>
+        <source>This option is moderately fast and will cost about 0.05 BCRS to anonymize 1000 BCRS</source>
+        <translation>This option is moderately fast and will cost about 0.05 BCRS to anonymize 1000 BCRS</translation>
     </message>
     <message>
         <location line="+26"/>
-        <source>0.1 CRDS per 1000 CRDS you anonymize.</source>
-        <translation>0.1 CRDS per 1000 CRDS you anonymize.</translation>
+        <source>0.1 BCRS per 1000 BCRS you anonymize.</source>
+        <translation>0.1 BCRS per 1000 BCRS you anonymize.</translation>
     </message>
     <message>
         <location line="-13"/>
@@ -1132,18 +1132,18 @@ Address: %4
     </message>
     <message>
         <location line="-29"/>
-        <source>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</source>
-        <translation>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</translation>
+        <source>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</source>
+        <translation>Privatesend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</translation>
     </message>
     <message>
         <location line="+15"/>
-        <source>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</source>
-        <translation>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</translation>
+        <source>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</source>
+        <translation>Privatesend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</translation>
     </message>
     <message>
         <location line="+15"/>
-        <source>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</source>
-        <translation>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Credits&apos;s configuration screen.</translation>
+        <source>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</source>
+        <translation>Privatesend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Bitcreds&apos;s configuration screen.</translation>
     </message>
 </context>
 <context>
@@ -1195,8 +1195,8 @@ Address: %4
     </message>
     <message>
         <location line="+71"/>
-        <source>The entered address &quot;%1&quot; is not a valid Credits address.</source>
-        <translation>The entered address &quot;%1&quot; is not a valid Credits address.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid Bitcreds address.</source>
+        <translation>The entered address &quot;%1&quot; is not a valid Bitcreds address.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1246,8 +1246,8 @@ Address: %4
     <name>HelpMessageDialog</name>
     <message>
         <location filename="../utilitydialog.cpp" line="+32"/>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <location line="+0"/>
@@ -1262,8 +1262,8 @@ Address: %4
     </message>
     <message>
         <location line="+5"/>
-        <source>About Credits</source>
-        <translation>About Credits</translation>
+        <source>About Bitcreds</source>
+        <translation>About Bitcreds</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -1320,18 +1320,18 @@ Address: %4
     </message>
     <message>
         <location line="+9"/>
-        <source>Welcome to Credits.</source>
-        <translation>Welcome to Credits.</translation>
+        <source>Welcome to Bitcreds.</source>
+        <translation>Welcome to Bitcreds.</translation>
     </message>
     <message>
         <location line="+26"/>
-        <source>As this is the first time the program is launched, you can choose where Credits will store its data.</source>
-        <translation>As this is the first time the program is launched, you can choose where Credits will store its data.</translation>
+        <source>As this is the first time the program is launched, you can choose where Bitcreds will store its data.</source>
+        <translation>As this is the first time the program is launched, you can choose where Bitcreds will store its data.</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Credits will download and store a copy of the Credits block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
-        <translation>Credits will download and store a copy of the Credits block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</translation>
+        <source>Bitcreds will download and store a copy of the Bitcreds block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</source>
+        <translation>Bitcreds will download and store a copy of the Bitcreds block chain. At least %1GB of data will be stored in this directory, and it will grow over time. The wallet will also be stored in this directory.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1345,8 +1345,8 @@ Address: %4
     </message>
     <message>
         <location filename="../intro.cpp" line="+82"/>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1411,13 +1411,13 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically start Credits after logging in to the system.</source>
-        <translation>Automatically start Credits after logging in to the system.</translation>
+        <source>Automatically start Bitcreds after logging in to the system.</source>
+        <translation>Automatically start Bitcreds after logging in to the system.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Credits on system login</source>
-        <translation>&amp;Start Credits on system login</translation>
+        <source>&amp;Start Bitcreds on system login</source>
+        <translation>&amp;Start Bitcreds on system login</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1451,8 +1451,8 @@ Address: %4
     </message>
     <message>
         <location line="+15"/>
-        <source>Amount of Credits to keep anonymized</source>
-        <translation>Amount of Credits to keep anonymized</translation>
+        <source>Amount of Bitcreds to keep anonymized</source>
+        <translation>Amount of Bitcreds to keep anonymized</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1476,8 +1476,8 @@ Address: %4
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Credits network through a SOCKS5 proxy.</source>
-        <translation>Connect to the Credits network through a SOCKS5 proxy.</translation>
+        <source>Connect to the Bitcreds network through a SOCKS5 proxy.</source>
+        <translation>Connect to the Bitcreds network through a SOCKS5 proxy.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1516,8 +1516,8 @@ Address: %4
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Credits client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Automatically open the Credits client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
+        <source>Automatically open the Bitcreds client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Automatically open the Bitcreds client port on the router. This only works when your router supports UPnP and it is enabled.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1581,15 +1581,15 @@ Address: %4
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Credits.</source>
-        <translation>The user interface language can be set here. This setting will take effect after restarting Credits.</translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting Bitcreds.</source>
+        <translation>The user interface language can be set here. This setting will take effect after restarting Bitcreds.</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/credits/</source>
+https://www.transifex.com/projects/p/bitcreds/</source>
         <translation>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/credits/</translation>
+https://www.transifex.com/projects/p/bitcreds/</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -1695,8 +1695,8 @@ https://www.transifex.com/projects/p/credits/</translation>
         <location line="+53"/>
         <location line="+1015"/>
         <location line="+77"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Credits network after a connection is established, but this process has not completed yet.</source>
-        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the Credits network after a connection is established, but this process has not completed yet.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcreds network after a connection is established, but this process has not completed yet.</source>
+        <translation>The displayed information may be out of date. Your wallet automatically synchronizes with the Bitcreds network after a connection is established, but this process has not completed yet.</translation>
     </message>
     <message>
         <location line="-843"/>
@@ -1800,8 +1800,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>0 CRDS / 0 Rounds</source>
-        <translation>0 CRDS / 0 Rounds</translation>
+        <source>0 BCRS / 0 Rounds</source>
+        <translation>0 BCRS / 0 Rounds</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -1990,8 +1990,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="-400"/>
-        <source>Cannot start credits: click-to-pay handler</source>
-        <translation>Cannot start credits: click-to-pay handler</translation>
+        <source>Cannot start bitcreds: click-to-pay handler</source>
+        <translation>Cannot start bitcreds: click-to-pay handler</translation>
     </message>
     <message>
         <location line="+104"/>
@@ -2017,8 +2017,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>URI cannot be parsed! This can be caused by an invalid Credits address or malformed URI parameters.</source>
-        <translation>URI cannot be parsed! This can be caused by an invalid Credits address or malformed URI parameters.</translation>
+        <source>URI cannot be parsed! This can be caused by an invalid Bitcreds address or malformed URI parameters.</source>
+        <translation>URI cannot be parsed! This can be caused by an invalid Bitcreds address or malformed URI parameters.</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -2119,14 +2119,14 @@ https://www.transifex.com/projects/p/credits/</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../creditsunits.cpp" line="+252"/>
+        <location filename="../bitcredsunits.cpp" line="+252"/>
         <source>Amount</source>
         <translation>Amount</translation>
     </message>
     <message>
         <location filename="../guiutil.cpp" line="+110"/>
-        <source>Enter a Credits address (e.g. %1)</source>
-        <translation>Enter a Credits address (e.g. %1)</translation>
+        <source>Enter a Bitcreds address (e.g. %1)</source>
+        <translation>Enter a Bitcreds address (e.g. %1)</translation>
     </message>
     <message>
         <location line="+760"/>
@@ -2259,8 +2259,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+76"/>
-        <source>Open the Credits debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Open the Credits debug log file from the current data directory. This can take a few seconds for large log files.</translation>
+        <source>Open the Bitcreds debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Open the Bitcreds debug log file from the current data directory. This can take a few seconds for large log files.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2521,8 +2521,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="-35"/>
-        <source>Welcome to the Credits RPC console.</source>
-        <translation>Welcome to the Credits RPC console.</translation>
+        <source>Welcome to the Bitcreds RPC console.</source>
+        <translation>Welcome to the Bitcreds RPC console.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2606,8 +2606,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+14"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Credits network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Credits network.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcreds network.</source>
+        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the Bitcreds network.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -2622,8 +2622,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="-14"/>
-        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Credits network.</source>
-        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Credits network.</translation>
+        <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Bitcreds network.</source>
+        <translation>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the Bitcreds network.</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -2930,8 +2930,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     <message>
         <location line="+33"/>
         <location line="+13"/>
-        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for credits transactions than the network can process.</source>
-        <translation>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for credits transactions than the network can process.</translation>
+        <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for bitcreds transactions than the network can process.</source>
+        <translation>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for bitcreds transactions than the network can process.</translation>
     </message>
     <message>
         <location line="-59"/>
@@ -3191,8 +3191,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+129"/>
-        <source>Warning: Invalid Credits address</source>
-        <translation>Warning: Invalid Credits address</translation>
+        <source>Warning: Invalid Bitcreds address</source>
+        <translation>Warning: Invalid Bitcreds address</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -3219,8 +3219,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The Credits address to send the payment to</source>
-        <translation>The Credits address to send the payment to</translation>
+        <source>The Bitcreds address to send the payment to</source>
+        <translation>The Bitcreds address to send the payment to</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -3273,8 +3273,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>A message that was attached to the credits: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Credits network.</source>
-        <translation>A message that was attached to the credits: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Credits network.</translation>
+        <source>A message that was attached to the bitcreds: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcreds network.</source>
+        <translation>A message that was attached to the bitcreds: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the Bitcreds network.</translation>
     </message>
     <message>
         <location line="+426"/>
@@ -3308,8 +3308,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     <name>ShutdownWindow</name>
     <message>
         <location filename="../utilitydialog.cpp" line="+43"/>
-        <source>Credits is shutting down...</source>
-        <translation>Credits is shutting down...</translation>
+        <source>Bitcreds is shutting down...</source>
+        <translation>Bitcreds is shutting down...</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3336,8 +3336,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+18"/>
-        <source>The Credits address to sign the message with</source>
-        <translation>The Credits address to sign the message with</translation>
+        <source>The Bitcreds address to sign the message with</source>
+        <translation>The Bitcreds address to sign the message with</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -3378,8 +3378,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Credits address</source>
-        <translation>Sign the message to prove you own this Credits address</translation>
+        <source>Sign the message to prove you own this Bitcreds address</source>
+        <translation>Sign the message to prove you own this Bitcreds address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3409,13 +3409,13 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>The Credits address the message was signed with</source>
-        <translation>The Credits address the message was signed with</translation>
+        <source>The Bitcreds address the message was signed with</source>
+        <translation>The Bitcreds address the message was signed with</translation>
     </message>
     <message>
         <location line="+37"/>
-        <source>Verify the message to ensure it was signed with the specified Credits address</source>
-        <translation>Verify the message to ensure it was signed with the specified Credits address</translation>
+        <source>Verify the message to ensure it was signed with the specified Bitcreds address</source>
+        <translation>Verify the message to ensure it was signed with the specified Bitcreds address</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -3503,8 +3503,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     <name>SplashScreen</name>
     <message>
         <location filename="../splashscreen.cpp" line="+36"/>
-        <source>Credits</source>
-        <translation>Credits</translation>
+        <source>Bitcreds</source>
+        <translation>Bitcreds</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3518,8 +3518,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>The Credits developers</source>
-        <translation>The Credits developers</translation>
+        <source>The Bitcreds developers</source>
+        <translation>The Bitcreds developers</translation>
     </message>
     <message>
         <location filename="../networkstyle.cpp" line="+19"/>
@@ -4169,7 +4169,7 @@ https://www.transifex.com/projects/p/credits/</translation>
 <context>
     <name>UnitDisplayStatusBarControl</name>
     <message>
-        <location filename="../creditsgui.cpp" line="+115"/>
+        <location filename="../bitcredsgui.cpp" line="+115"/>
         <source>Unit to show amounts in. Click to select another unit.</source>
         <translation>Unit to show amounts in. Click to select another unit.</translation>
     </message>
@@ -4194,8 +4194,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     <message>
         <location line="-20"/>
         <location line="+9"/>
-        <source>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 CRDS.</source>
-        <translation>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 CRDS.</translation>
+        <source>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 BCRS.</source>
+        <translation>InstantSend doesn&apos;t support sending values that high yet. Transactions are currently limited to %1 BCRS.</translation>
     </message>
 </context>
 <context>
@@ -4247,16 +4247,16 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
 </context>
 <context>
-    <name>credits</name>
+    <name>bitcreds</name>
     <message>
-        <location filename="../creditsstrings.cpp" line="+22"/>
+        <location filename="../bitcredsstrings.cpp" line="+22"/>
         <source>Bind to given address and always listen on it. Use [host]:port notation for IPv6</source>
         <translation>Bind to given address and always listen on it. Use [host]:port notation for IPv6</translation>
     </message>
     <message>
         <location line="+10"/>
-        <source>Cannot obtain a lock on data directory %s. Credits is probably already running.</source>
-        <translation>Cannot obtain a lock on data directory %s. Credits is probably already running.</translation>
+        <source>Cannot obtain a lock on data directory %s. Bitcreds is probably already running.</source>
+        <translation>Cannot obtain a lock on data directory %s. Bitcreds is probably already running.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -4325,8 +4325,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+20"/>
-        <source>Unable to bind to %s on this computer. Credits is probably already running.</source>
-        <translation>Unable to bind to %s on this computer. Credits is probably already running.</translation>
+        <source>Unable to bind to %s on this computer. Bitcreds is probably already running.</source>
+        <translation>Unable to bind to %s on this computer. Bitcreds is probably already running.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4335,8 +4335,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 CRDS.</source>
-        <translation>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 CRDS.</translation>
+        <source>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 BCRS.</source>
+        <translation>Unable to locate enough Privatesend non-denominated funds for this transaction that are not equal 1000 BCRS.</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -4615,8 +4615,8 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Disable all Credits specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</source>
-        <translation>Disable all Credits specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</translation>
+        <source>Disable all Bitcreds specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</source>
+        <translation>Disable all Bitcreds specific functionality (Masternodes, Privatesend, InstantSend, Budgeting) (0-1, default: %u)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4640,13 +4640,13 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>Fees (in CRDS/Kb) smaller than this are considered zero fee for relaying (default: %s)</source>
-        <translation>Fees (in CRDS/Kb) smaller than this are considered zero fee for relaying (default: %s)</translation>
+        <source>Fees (in BCRS/Kb) smaller than this are considered zero fee for relaying (default: %s)</source>
+        <translation>Fees (in BCRS/Kb) smaller than this are considered zero fee for relaying (default: %s)</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Fees (in CRDS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</source>
-        <translation>Fees (in CRDS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</translation>
+        <source>Fees (in BCRS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</source>
+        <translation>Fees (in BCRS/Kb) smaller than this are considered zero fee for transaction creation (default: %s)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4735,33 +4735,33 @@ https://www.transifex.com/projects/p/credits/</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>To use creditsd, or the -server option to credits-qt, you must set an rpcpassword in the configuration file:
+        <source>To use bitcredsd, or the -server option to bitcreds-qt, you must set an rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=creditsrpc
+rpcuser=bitcredsrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Bitcreds Alert&quot; admin@foo.com
 </source>
-        <translation>To use creditsd, or the -server option to credits-qt, you must set an rpcpassword in the configuration file:
+        <translation>To use bitcredsd, or the -server option to bitcreds-qt, you must set an rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=creditsrpc
+rpcuser=bitcredsrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;Bitcreds Alert&quot; admin@foo.com
 </translation>
     </message>
     <message>
         <location line="+20"/>
-        <source>Unable to locate enough funds for this transaction that are not equal 1000 CRDS.</source>
-        <translation>Unable to locate enough funds for this transaction that are not equal 1000 CRDS.</translation>
+        <source>Unable to locate enough funds for this transaction that are not equal 1000 BCRS.</source>
+        <translation>Unable to locate enough funds for this transaction that are not equal 1000 BCRS.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4775,8 +4775,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+6"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Credits will not work properly.</source>
-        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Credits will not work properly.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Bitcreds will not work properly.</source>
+        <translation>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Bitcreds will not work properly.</translation>
     </message>
     <message>
         <location line="+16"/>
@@ -4842,8 +4842,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+1"/>
-        <source>Copyright (C) 2014-%i The Credits Developers</source>
-        <translation>Copyright (C) 2014-%i The Credits Developers</translation>
+        <source>Copyright (C) 2014-%i The Bitcreds Developers</source>
+        <translation>Copyright (C) 2014-%i The Bitcreds Developers</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -4882,8 +4882,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+6"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Credits</source>
-        <translation>Error loading wallet.dat: Wallet requires newer version of Credits</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of Bitcreds</source>
+        <translation>Error loading wallet.dat: Wallet requires newer version of Bitcreds</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -4902,8 +4902,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+5"/>
-        <source>Fee (in CRDS/kB) to add to transactions you send (default: %s)</source>
-        <translation>Fee (in CRDS/kB) to add to transactions you send (default: %s)</translation>
+        <source>Fee (in BCRS/kB) to add to transactions you send (default: %s)</source>
+        <translation>Fee (in BCRS/kB) to add to transactions you send (default: %s)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4972,8 +4972,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+1"/>
-        <source>Initialization sanity check failed. Credits is shutting down.</source>
-        <translation>Initialization sanity check failed. Credits is shutting down.</translation>
+        <source>Initialization sanity check failed. Bitcreds is shutting down.</source>
+        <translation>Initialization sanity check failed. Bitcreds is shutting down.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5287,8 +5287,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+9"/>
-        <source>Wallet needed to be rewritten: restart Credits to complete</source>
-        <translation>Wallet needed to be rewritten: restart Credits to complete</translation>
+        <source>Wallet needed to be rewritten: restart Bitcreds to complete</source>
+        <translation>Wallet needed to be rewritten: restart Bitcreds to complete</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -5362,8 +5362,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Credits Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+1"/>
-        <source>Keep N CRDS anonymized (default: %u)</source>
-        <translation>Keep N CRDS anonymized (default: %u)</translation>
+        <source>Keep N BCRS anonymized (default: %u)</source>
+        <translation>Keep N BCRS anonymized (default: %u)</translation>
     </message>
     <message>
         <location line="+1"/>

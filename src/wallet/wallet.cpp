@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -366,7 +366,7 @@ bool CWallet::LoadCScript(const CScript& redeemScript)
      * these. Do not add them to the wallet and warn. */
     if (redeemScript.size() > MAX_SCRIPT_ELEMENT_SIZE)
     {
-        std::string strAddr = CCreditsAddress(CScriptID(redeemScript)).ToString();
+        std::string strAddr = CBitcredsAddress(CScriptID(redeemScript)).ToString();
         LogPrintf("%s: Warning: This wallet contains a redeemScript of size %i which exceeds maximum size %i thus can never be redeemed. Do not use address %s.\n",
             __func__, redeemScript.size(), MAX_SCRIPT_ELEMENT_SIZE, strAddr);
         return true;
@@ -2803,10 +2803,10 @@ bool CWallet::SelectCoinsByDenominations(int nDenom, CAmount nValueMin, CAmount 
     std::random_shuffle(vCoins.rbegin(), vCoins.rend(), GetRandInt);
 
     // ( bit on if present )
-    // bit 0 - 100CRDS+1
-    // bit 1 - 10CRDS+1
-    // bit 2 - 1CRDS+1
-    // bit 3 - .1CRDS+1
+    // bit 0 - 100BCRS+1
+    // bit 1 - 10BCRS+1
+    // bit 2 - 1BCRS+1
+    // bit 3 - .1BCRS+1
 
     std::vector<int> vecBits;
     if (!privateSendPool.GetDenominationsBits(nDenom, vecBits)) {
@@ -2880,7 +2880,7 @@ bool CWallet::SelectCoinsGrouppedByAddresses(std::vector<CompactTallyItem>& vecT
     }
 
     // Tally
-    std::map<CCreditsAddress, CompactTallyItem> mapTally;
+    std::map<CBitcredsAddress, CompactTallyItem> mapTally;
     for (std::map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it) {
         const CWalletTx& wtx = (*it).second;
 
@@ -2918,7 +2918,7 @@ bool CWallet::SelectCoinsGrouppedByAddresses(std::vector<CompactTallyItem>& vecT
 
     // construct resulting vector
     vecTallyRet.clear();
-    BOOST_FOREACH(const PAIRTYPE(CCreditsAddress, CompactTallyItem)& item, mapTally) {
+    BOOST_FOREACH(const PAIRTYPE(CBitcredsAddress, CompactTallyItem)& item, mapTally) {
         if(fAnonymizable && item.second.nAmount < vecPrivateSendDenominations.back()) continue;
         vecTallyRet.push_back(item.second);
     }
@@ -3045,7 +3045,7 @@ bool CWallet::GetVinAndKeysFromOutput(COutput out, CTxIn& txinRet, CPubKey& pubK
 
     CTxDestination address1;
     ExtractDestination(pubScript, address1);
-    CCreditsAddress address2(address1);
+    CBitcredsAddress address2(address1);
 
     CKeyID keyID;
     if (!address2.GetKeyID(keyID)) {
@@ -3311,9 +3311,9 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                 if (!SelectCoins(nValueToSelect, setCoins, nValueIn, coinControl, nCoinType, fUseInstantSend))
                 {
                     if (nCoinType == ONLY_NOT500IFMN) {
-                        strFailReason = _("Unable to locate enough funds for this transaction that are not equal 5000 CRDS.");
+                        strFailReason = _("Unable to locate enough funds for this transaction that are not equal 5000 BCRS.");
                     } else if (nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
-                        strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 5000 CRDS.");
+                        strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 5000 BCRS.");
                     } else if (nCoinType == ONLY_DENOMINATED) {
                         strFailReason = _("Unable to locate enough PrivateSend denominated funds for this transaction.");
                         strFailReason += " " + _("PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.");
@@ -3322,7 +3322,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                     }
                     if (fUseInstantSend) {
                         if (nValueIn > sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)*COIN) {
-                            strFailReason += " " + strprintf(_("InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 CRDS."), sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE));
+                            strFailReason += " " + strprintf(_("InstantSend doesn't support sending values that high yet. Transactions are currently limited to %1 BCRS."), sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE));
                         } else {
                             // could be not true but most likely that's the reason
                             strFailReason += " " + strprintf(_("InstantSend requires inputs with at least %d confirmations, you might need to wait a few minutes and try again."), INSTANTSEND_CONFIRMATIONS_REQUIRED);
@@ -3363,7 +3363,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
 
                         // Fill a vout to ourself
                         // TODO: pass in scriptChange instead of reservekey so
-                        // change transaction isn't always pay-to-credits-address
+                        // change transaction isn't always pay-to-bitcreds-address
                         CScript scriptChange;
 
                         // coin control: send change to custom address
@@ -3717,9 +3717,9 @@ bool CWallet::SetAddressBook(const CTxDestination& address, const std::string& s
                              strPurpose, (fUpdated ? CT_UPDATED : CT_NEW) );
     if (!fFileBacked)
         return false;
-    if (!strPurpose.empty() && !CWalletDB(strWalletFile).WritePurpose(CCreditsAddress(address).ToString(), strPurpose))
+    if (!strPurpose.empty() && !CWalletDB(strWalletFile).WritePurpose(CBitcredsAddress(address).ToString(), strPurpose))
         return false;
-    return CWalletDB(strWalletFile).WriteName(CCreditsAddress(address).ToString(), strName);
+    return CWalletDB(strWalletFile).WriteName(CBitcredsAddress(address).ToString(), strName);
 }
 
 bool CWallet::DelAddressBook(const CTxDestination& address)
@@ -3730,7 +3730,7 @@ bool CWallet::DelAddressBook(const CTxDestination& address)
         if(fFileBacked)
         {
             // Delete destdata tuples associated with address
-            std::string strAddress = CCreditsAddress(address).ToString();
+            std::string strAddress = CBitcredsAddress(address).ToString();
             BOOST_FOREACH(const PAIRTYPE(std::string, std::string) &item, mapAddressBook[address].destdata)
             {
                 CWalletDB(strWalletFile).EraseDestData(strAddress, item.first);
@@ -3743,8 +3743,8 @@ bool CWallet::DelAddressBook(const CTxDestination& address)
 
     if (!fFileBacked)
         return false;
-    CWalletDB(strWalletFile).ErasePurpose(CCreditsAddress(address).ToString());
-    return CWalletDB(strWalletFile).EraseName(CCreditsAddress(address).ToString());
+    CWalletDB(strWalletFile).ErasePurpose(CBitcredsAddress(address).ToString());
+    return CWalletDB(strWalletFile).EraseName(CBitcredsAddress(address).ToString());
 }
 
 bool CWallet::SetDefaultKey(const CPubKey &vchPubKey)
@@ -4249,7 +4249,7 @@ void CWallet::LockCoin(COutPoint& output)
     AssertLockHeld(cs_wallet); // setLockedCoins
     setLockedCoins.insert(output);
     std::map<uint256, CWalletTx>::iterator it = mapWallet.find(output.hash);
-    if (it != mapWallet.end()) it->second.MarkDirty(); // recalculate all credits for this tx
+    if (it != mapWallet.end()) it->second.MarkDirty(); // recalculate all bitcreds for this tx
 
     fAnonymizableTallyCached = false;
     fAnonymizableTallyCachedNonDenom = false;
@@ -4260,7 +4260,7 @@ void CWallet::UnlockCoin(COutPoint& output)
     AssertLockHeld(cs_wallet); // setLockedCoins
     setLockedCoins.erase(output);
     std::map<uint256, CWalletTx>::iterator it = mapWallet.find(output.hash);
-    if (it != mapWallet.end()) it->second.MarkDirty(); // recalculate all credits for this tx
+    if (it != mapWallet.end()) it->second.MarkDirty(); // recalculate all bitcreds for this tx
 
     fAnonymizableTallyCached = false;
     fAnonymizableTallyCachedNonDenom = false;
@@ -4384,7 +4384,7 @@ bool CWallet::AddDestData(const CTxDestination &dest, const std::string &key, co
     mapAddressBook[dest].destdata.insert(std::make_pair(key, value));
     if (!fFileBacked)
         return true;
-    return CWalletDB(strWalletFile).WriteDestData(CCreditsAddress(dest).ToString(), key, value);
+    return CWalletDB(strWalletFile).WriteDestData(CBitcredsAddress(dest).ToString(), key, value);
 }
 
 bool CWallet::EraseDestData(const CTxDestination &dest, const std::string &key)
@@ -4393,7 +4393,7 @@ bool CWallet::EraseDestData(const CTxDestination &dest, const std::string &key)
         return false;
     if (!fFileBacked)
         return true;
-    return CWalletDB(strWalletFile).EraseDestData(CCreditsAddress(dest).ToString(), key);
+    return CWalletDB(strWalletFile).EraseDestData(CBitcredsAddress(dest).ToString(), key);
 }
 
 bool CWallet::LoadDestData(const CTxDestination &dest, const std::string &key, const std::string &value)

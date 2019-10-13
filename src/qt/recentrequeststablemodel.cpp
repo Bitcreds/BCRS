@@ -2,13 +2,13 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "recentrequeststablemodel.h"
 
-#include "creditsunits.h"
+#include "bitcredsunits.h"
 #include "guiutil.h"
 #include "optionsmodel.h"
 
@@ -98,9 +98,9 @@ QVariant RecentRequestsTableModel::data(const QModelIndex &index, int role) cons
             if (rec->recipient.amount == 0 && role == Qt::DisplayRole)
                 return tr("(no amount)");
             else if (role == Qt::EditRole)
-                return CreditsUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount, false, CreditsUnits::separatorNever);
+                return BitcredsUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount, false, BitcredsUnits::separatorNever);
             else
-                return CreditsUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount);
+                return BitcredsUnits::format(walletModel->getOptionsModel()->getDisplayUnit(), rec->recipient.amount);
         }
     }
     else if (role == Qt::TextAlignmentRole)
@@ -141,7 +141,7 @@ QString RecentRequestsTableModel::getAmountTitle()
     QString amountTitle = tr("Amount");
     if (this->walletModel->getOptionsModel() != NULL)
     {
-        amountTitle += " ("+CreditsUnits::name(this->walletModel->getOptionsModel()->getDisplayUnit()) + ")";
+        amountTitle += " ("+BitcredsUnits::name(this->walletModel->getOptionsModel()->getDisplayUnit()) + ")";
     }
     return amountTitle;
 }

@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -117,7 +117,7 @@ UniValue masternode(const UniValue& params, bool fHelp)
                 "  debug        - Print Masternode status\n"
                 "  genkey       - Generate new masternodeprivkey\n"
                 "  outputs      - Print Masternode compatible outputs\n"
-                "  start        - Start local Hot Masternode configured in credits.conf\n"
+                "  start        - Start local Hot Masternode configured in bitcreds.conf\n"
                 "  start-alias  - Start single remote Masternode by assigned alias configured in masternode.conf\n"
                 "  start-<mode> - Start remote Masternodes configured in masternode.conf (<mode>: 'all', 'missing', 'disabled')\n"
                 "  status       - Print Masternode status information\n"
@@ -200,7 +200,7 @@ UniValue masternode(const UniValue& params, bool fHelp)
         obj.push_back(Pair("IP:port",       winner->addr.ToString()));
         obj.push_back(Pair("protocol",      (int64_t)winner->nProtocolVersion));
         obj.push_back(Pair("vin",           winner->vin.prevout.ToStringShort()));
-        obj.push_back(Pair("payee",         CCreditsAddress(winner->pubKeyCollateralAddress.GetID()).ToString()));
+        obj.push_back(Pair("payee",         CBitcredsAddress(winner->pubKeyCollateralAddress.GetID()).ToString()));
         obj.push_back(Pair("lastseen",      (winner->lastPing == CMasternodePing()) ? winner->sigTime :
                                                     winner->lastPing.sigTime));
         obj.push_back(Pair("activeseconds", (winner->lastPing == CMasternodePing()) ? 0 :
@@ -344,7 +344,7 @@ UniValue masternode(const UniValue& params, bool fHelp)
         CKey secret;
         secret.MakeNewKey(false);
 
-        return CCreditsSecret(secret).ToString();
+        return CBitcredsSecret(secret).ToString();
     }
 
     if (strCommand == "list-conf")
@@ -396,7 +396,7 @@ UniValue masternode(const UniValue& params, bool fHelp)
 
         CMasternode mn;
         if(mnodeman.Get(activeMasternode.vin, mn)) {
-            mnObj.push_back(Pair("payee", CCreditsAddress(mn.pubKeyCollateralAddress.GetID()).ToString()));
+            mnObj.push_back(Pair("payee", CBitcredsAddress(mn.pubKeyCollateralAddress.GetID()).ToString()));
         }
 
         mnObj.push_back(Pair("status", activeMasternode.GetStatus()));
@@ -471,7 +471,7 @@ UniValue masternodelist(const UniValue& params, bool fHelp)
                 "  lastpaidblock  - Print the last block height a node was paid on the network\n"
                 "  lastpaidtime   - Print the last time a node was paid on the network\n"
                 "  lastseen       - Print timestamp of when a Masternode was last seen on the network\n"
-                "  payee          - Print Credits address associated with a Masternode (can be additionally filtered,\n"
+                "  payee          - Print Bitcreds address associated with a Masternode (can be additionally filtered,\n"
                 "                   partial match)\n"
                 "  protocol       - Print protocol of a Masternode (can be additionally filtered, exact match))\n"
                 "  rank           - Print rank of a Masternode based on current block\n"
@@ -509,7 +509,7 @@ UniValue masternodelist(const UniValue& params, bool fHelp)
                 streamFull << std::setw(18) <<
                                mn.GetStatus() << " " <<
                                mn.nProtocolVersion << " " <<
-                               CCreditsAddress(mn.pubKeyCollateralAddress.GetID()).ToString() << " " <<
+                               CBitcredsAddress(mn.pubKeyCollateralAddress.GetID()).ToString() << " " <<
                                (int64_t)mn.lastPing.sigTime << " " << std::setw(8) <<
                                (int64_t)(mn.lastPing.sigTime - mn.sigTime) << " " << std::setw(10) <<
                                mn.GetLastPaidTime() << " "  << std::setw(6) <<
@@ -529,7 +529,7 @@ UniValue masternodelist(const UniValue& params, bool fHelp)
                 if (strFilter !="" && strOutpoint.find(strFilter) == std::string::npos) continue;
                 obj.push_back(Pair(strOutpoint, (int64_t)mn.lastPing.sigTime));
             } else if (strMode == "payee") {
-                CCreditsAddress address(mn.pubKeyCollateralAddress.GetID());
+                CBitcredsAddress address(mn.pubKeyCollateralAddress.GetID());
                 std::string strPayee = address.ToString();
                 if (strFilter !="" && strPayee.find(strFilter) == std::string::npos &&
                     strOutpoint.find(strFilter) == std::string::npos) continue;
@@ -711,8 +711,8 @@ UniValue masternodebroadcast(const UniValue& params, bool fHelp)
                 nSuccessful++;
                 resultObj.push_back(Pair("vin", mnb.vin.ToString()));
                 resultObj.push_back(Pair("addr", mnb.addr.ToString()));
-                resultObj.push_back(Pair("pubKeyCollateralAddress", CCreditsAddress(mnb.pubKeyCollateralAddress.GetID()).ToString()));
-                resultObj.push_back(Pair("pubKeyMasternode", CCreditsAddress(mnb.pubKeyMasternode.GetID()).ToString()));
+                resultObj.push_back(Pair("pubKeyCollateralAddress", CBitcredsAddress(mnb.pubKeyCollateralAddress.GetID()).ToString()));
+                resultObj.push_back(Pair("pubKeyMasternode", CBitcredsAddress(mnb.pubKeyMasternode.GetID()).ToString()));
                 resultObj.push_back(Pair("vchSig", EncodeBase64(&mnb.vchSig[0], mnb.vchSig.size())));
                 resultObj.push_back(Pair("sigTime", mnb.sigTime));
                 resultObj.push_back(Pair("protocolVersion", mnb.nProtocolVersion));

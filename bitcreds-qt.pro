@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = credits
-VERSION = 1.4.0.0
+TARGET = bitcreds
+VERSION = 1.5.0.0
 INCLUDEPATH += src \
                src/crypto \
                src/crypto/heavyhash \
@@ -27,7 +27,7 @@ lessThan(QT_MAJOR_VERSION, 5) {
     error( "Qt 5 or greater is required." )
 }
 
-DEFINES += PACKAGE_NAME=\\\"Credits\\\"
+DEFINES += PACKAGE_NAME=\\\"Bitcreds\\\"
 DEFINES += QT_PROJECT_BUILD=1
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0
 DEFINES += HAVE_WORKING_BOOST_SLEEP_FOR=1
@@ -118,8 +118,8 @@ contains(USE_DBUS, 1) {
     QT += dbus
 }
 
-contains(CREDITS_NEED_QT_PLUGINS, 1) {
-    DEFINES += CREDITS_NEED_QT_PLUGINS
+contains(BITCREDS_NEED_QT_PLUGINS, 1) {
+    DEFINES += BITCREDS_NEED_QT_PLUGINS
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
@@ -205,8 +205,8 @@ FORMS += src/qt/forms/qrcodedialog.ui
 CODECFORTR = UTF-8
 
 # for lrelease/lupdate
-# also add new translations to src/qt/credits.qrc under translations/
-TRANSLATIONS = $$files(src/qt/locale/credits_*.ts)
+# also add new translations to src/qt/bitcreds.qrc under translations/
+TRANSLATIONS = $$files(src/qt/locale/bitcreds_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
     QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
@@ -250,8 +250,8 @@ INCLUDEPATH += $$PWD/../../../../usr/include/event2
 LIBS += -levent -levent_core -levent_extra -lpthread -levent_pthreads
 
 contains(RELEASE, 1) {
-    # Linux: turn credits linking back on for c/c++ runtime libraries
-    LIBS += -Wl,-Bcredits
+    # Linux: turn bitcreds linking back on for c/c++ runtime libraries
+    LIBS += -Wl,-Bbitcreds
 }
 
 system($$QMAKE_LRELEASE -silent $$_PRO_FILE_)
@@ -297,10 +297,10 @@ HEADERS += \
     src/qt/guiutil.h \
     src/qt/guiconstants.h \
     src/qt/editaddressdialog.h \
-    src/qt/creditsunits.h \
-    src/qt/creditsgui.h \
-    src/qt/creditsamountfield.h \
-    src/qt/creditsaddressvalidator.h \
+    src/qt/bitcredsunits.h \
+    src/qt/bitcredsgui.h \
+    src/qt/bitcredsamountfield.h \
+    src/qt/bitcredsaddressvalidator.h \
     src/qt/csvmodelwriter.h \
     src/qt/coincontroltreewidget.h \
     src/qt/coincontroldialog.h \
@@ -334,7 +334,7 @@ HEADERS += \
     src/policy/rbf.h \
     src/primitives/block.h \
     src/primitives/transaction.h \
-    src/script/creditsconsensus.h \
+    src/script/bitcredsconsensus.h \
     src/script/interpreter.h \
     src/script/script_error.h \
     src/script/script.h \
@@ -455,12 +455,12 @@ SOURCES += \
     src/qt/coincontroldialog.cpp \
     src/qt/coincontroltreewidget.cpp \
     src/qt/csvmodelwriter.cpp \
-    src/qt/credits.cpp \
-    src/qt/creditsaddressvalidator.cpp \
-    src/qt/creditsamountfield.cpp \
-    src/qt/creditsgui.cpp \
-    src/qt/creditsstrings.cpp \
-    src/qt/creditsunits.cpp \
+    src/qt/bitcreds.cpp \
+    src/qt/bitcredsaddressvalidator.cpp \
+    src/qt/bitcredsamountfield.cpp \
+    src/qt/bitcredsgui.cpp \
+    src/qt/bitcredsstrings.cpp \
+    src/qt/bitcredsunits.cpp \
     src/qt/editaddressdialog.cpp \
     src/qt/guiutil.cpp \
     src/qt/intro.cpp \
@@ -517,7 +517,7 @@ SOURCES += \
     src/policy/rbf.cpp \
     src/primitives/block.cpp \
     src/primitives/transaction.cpp \
-    src/script/creditsconsensus.cpp \
+    src/script/bitcredsconsensus.cpp \
     src/script/interpreter.cpp \
     src/script/script_error.cpp \
     src/script/script.cpp \
@@ -620,8 +620,8 @@ OTHER_FILES += \
     src/Makefile.am
 
 RESOURCES += \
-    src/qt/credits.qrc \
-    src/qt/credits_locale.qrc
+    src/qt/bitcreds.qrc \
+    src/qt/bitcreds_locale.qrc
 
 FORMS += \
     src/qt/forms/addressbookpage.ui \

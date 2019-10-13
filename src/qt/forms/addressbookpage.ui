@@ -137,7 +137,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../credits.qrc"/>
+  <include location="../bitcreds.qrc"/>
  </resources>
  <connections/>
 </ui>

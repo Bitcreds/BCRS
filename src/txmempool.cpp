@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,7 +30,7 @@ CTxMemPoolEntry::CTxMemPoolEntry(const CTransaction& _tx, const CAmount& _nFee,
 {
     nTxSize = ::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION);
     nModSize = tx.CalculateModifiedSize(nTxSize);
-    nUsageSize = RecursiveCreditsUsage(tx);
+    nUsageSize = RecursiveBitcredsUsage(tx);
 
     nCountWithDescendants = 1;
     nSizeWithDescendants = nTxSize;
@@ -393,7 +393,7 @@ bool CTxMemPool::addUnchecked(const uint256& hash, const CTxMemPoolEntry &entry,
     // Update cachedInnerUsage to include contained transaction's usage.
     // (When we update the entry for in-mempool parents, memory usage will be
     // further updated.)
-    cachedInnerUsage += entry.CreditsMemoryUsage();
+    cachedInnerUsage += entry.BitcredsMemoryUsage();
 
     const CTransaction& tx = newit->GetTx();
     std::set<uint256> setParentTransactions;
@@ -570,8 +570,8 @@ void CTxMemPool::removeUnchecked(txiter it)
         mapNextTx.erase(txin.prevout);
 
     totalTxSize -= it->GetTxSize();
-    cachedInnerUsage -= it->CreditsMemoryUsage();
-    cachedInnerUsage -= memusage::CreditsUsage(mapLinks[it].parents) + memusage::CreditsUsage(mapLinks[it].children);
+    cachedInnerUsage -= it->BitcredsMemoryUsage();
+    cachedInnerUsage -= memusage::BitcredsUsage(mapLinks[it].parents) + memusage::BitcredsUsage(mapLinks[it].children);
     mapLinks.erase(it);
     mapTx.erase(it);
     nTransactionsUpdated++;
@@ -769,12 +769,12 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
     for (indexed_transaction_set::const_iterator it = mapTx.begin(); it != mapTx.end(); it++) {
         unsigned int i = 0;
         checkTotal += it->GetTxSize();
-        innerUsage += it->CreditsMemoryUsage();
+        innerUsage += it->BitcredsMemoryUsage();
         const CTransaction& tx = it->GetTx();
         txlinksMap::const_iterator linksiter = mapLinks.find(it);
         assert(linksiter != mapLinks.end());
         const TxLinks &links = linksiter->second;
-        innerUsage += memusage::CreditsUsage(links.parents) + memusage::CreditsUsage(links.children);
+        innerUsage += memusage::BitcredsUsage(links.parents) + memusage::BitcredsUsage(links.children);
         bool fDependsWait = false;
         setEntries setParentCheck;
         BOOST_FOREACH(const CTxIn &txin, tx.vin) {
@@ -996,10 +996,10 @@ bool CCoinsViewMemPool::HaveCoins(const uint256 &txid) const {
     return mempool.exists(txid) || base->HaveCoins(txid);
 }
 
-size_t CTxMemPool::CreditsMemoryUsage() const {
+size_t CTxMemPool::BitcredsMemoryUsage() const {
     LOCK(cs);
     // Estimate the overhead of mapTx to be 12 pointers + an allocation, as no exact formula for boost::multi_index_contained is implemented.
-    return memusage::MallocUsage(sizeof(CTxMemPoolEntry) + 12 * sizeof(void*)) * mapTx.size() + memusage::CreditsUsage(mapNextTx) + memusage::CreditsUsage(mapDeltas) + memusage::CreditsUsage(mapLinks) + cachedInnerUsage;
+    return memusage::MallocUsage(sizeof(CTxMemPoolEntry) + 12 * sizeof(void*)) * mapTx.size() + memusage::BitcredsUsage(mapNextTx) + memusage::BitcredsUsage(mapDeltas) + memusage::BitcredsUsage(mapLinks) + cachedInnerUsage;
 }
 
 void CTxMemPool::RemoveStaged(setEntries &stage) {
@@ -1040,9 +1040,9 @@ void CTxMemPool::UpdateChild(txiter entry, txiter child, bool add)
 {
     setEntries s;
     if (add && mapLinks[entry].children.insert(child).second) {
-        cachedInnerUsage += memusage::IncrementalCreditsUsage(s);
+        cachedInnerUsage += memusage::IncrementalBitcredsUsage(s);
     } else if (!add && mapLinks[entry].children.erase(child)) {
-        cachedInnerUsage -= memusage::IncrementalCreditsUsage(s);
+        cachedInnerUsage -= memusage::IncrementalBitcredsUsage(s);
     }
 }
 
@@ -1050,9 +1050,9 @@ void CTxMemPool::UpdateParent(txiter entry, txiter parent, bool add)
 {
     setEntries s;
     if (add && mapLinks[entry].parents.insert(parent).second) {
-        cachedInnerUsage += memusage::IncrementalCreditsUsage(s);
+        cachedInnerUsage += memusage::IncrementalBitcredsUsage(s);
     } else if (!add && mapLinks[entry].parents.erase(parent)) {
-        cachedInnerUsage -= memusage::IncrementalCreditsUsage(s);
+        cachedInnerUsage -= memusage::IncrementalBitcredsUsage(s);
     }
 }
 
@@ -1080,9 +1080,9 @@ CFeeRate CTxMemPool::GetMinFee(size_t sizelimit) const {
     int64_t time = GetTime();
     if (time > lastRollingFeeUpdate + 10) {
         double halflife = ROLLING_FEE_HALFLIFE;
-        if (CreditsMemoryUsage() < sizelimit / 4)
+        if (BitcredsMemoryUsage() < sizelimit / 4)
             halflife /= 4;
-        else if (CreditsMemoryUsage() < sizelimit / 2)
+        else if (BitcredsMemoryUsage() < sizelimit / 2)
             halflife /= 2;
 
         rollingMinimumFeeRate = rollingMinimumFeeRate / pow(2.0, (time - lastRollingFeeUpdate) / halflife);
@@ -1109,7 +1109,7 @@ void CTxMemPool::TrimToSize(size_t sizelimit, std::vector<uint256>* pvNoSpendsRe
 
     unsigned nTxnRemoved = 0;
     CFeeRate maxFeeRateRemoved(0);
-    while (!mapTx.empty() && CreditsMemoryUsage() > sizelimit) {
+    while (!mapTx.empty() && BitcredsMemoryUsage() > sizelimit) {
         indexed_transaction_set::nth_index<1>::type::iterator it = mapTx.get<1>().begin();
 
         // We set the new mempool min fee to the feerate of the removed set, plus the

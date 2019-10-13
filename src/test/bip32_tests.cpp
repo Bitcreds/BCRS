@@ -9,7 +9,7 @@
 #include "uint256.h"
 #include "util.h"
 #include "utilstrencodings.h"
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 
 #include <string>
 #include <vector>
@@ -90,18 +90,18 @@ void RunTest(const TestVector &test) {
         pubkey.Encode(data);
 
         // Test private key
-        CCreditsExtKey b58key; b58key.SetKey(key);
+        CBitcredsExtKey b58key; b58key.SetKey(key);
         BOOST_CHECK(b58key.ToString() == derive.prv);
 
-        CCreditsExtKey b58keyDecodeCheck(derive.prv);
+        CBitcredsExtKey b58keyDecodeCheck(derive.prv);
         CExtKey checkKey = b58keyDecodeCheck.GetKey();
         assert(checkKey == key); //ensure a base58 decoded key also matches
 
         // Test public key
-        CCreditsExtPubKey b58pubkey; b58pubkey.SetKey(pubkey);
+        CBitcredsExtPubKey b58pubkey; b58pubkey.SetKey(pubkey);
         BOOST_CHECK(b58pubkey.ToString() == derive.pub);
 
-        CCreditsExtPubKey b58PubkeyDecodeCheck(derive.pub);
+        CBitcredsExtPubKey b58PubkeyDecodeCheck(derive.pub);
         CExtPubKey checkPubKey = b58PubkeyDecodeCheck.GetKey();
         assert(checkPubKey == pubkey); //ensure a base58 decoded pubkey also matches
 

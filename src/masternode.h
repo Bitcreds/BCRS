@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -136,7 +136,7 @@ struct masternode_info_t
 };
 
 //
-// The Masternode Class. For managing the Privatesend process. It contains the input of the 1000CRDS, signature to prove
+// The Masternode Class. For managing the Privatesend process. It contains the input of the 1000BCRS, signature to prove
 // it's the one who own that ip address and code for calculating the payment election.
 //
 class CMasternode
@@ -380,7 +380,7 @@ public:
     bool SimpleCheck(int& nDos);
     bool Update(CMasternode* pmn, int& nDos);
     bool CheckOutpoint(int& nDos);
-    /// Is the input associated with this public key? (and there is 500 CRDS (5,000 after fork) - checking if valid Masternode)
+    /// Is the input associated with this public key? (and there is 500 BCRS (5,000 after fork) - checking if valid Masternode)
     bool IsVinAssociatedWithPubkey(const CTxIn& vin, const CPubKey& pubkey);
 
     bool Sign(CKey& keyCollateralAddress);

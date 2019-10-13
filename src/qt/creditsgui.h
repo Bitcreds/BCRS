@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@
 #define CREDITS_QT_CREDITSGUI_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "amount.h"
@@ -45,7 +45,7 @@ class QProgressBar;
 class QProgressDialog;
 QT_END_NAMESPACE
 
-// Credits : to ensure that we can click on lock icon in GUI
+// Bitcreds : to ensure that we can click on lock icon in GUI
 class ClickableLockLabel : public QLabel
 {
     Q_OBJECT
@@ -66,10 +66,10 @@ protected:
 };
 
 /**
-  Credits GUI main class. This class represents the main window of the Credits UI. It communicates with both the client and
+  Bitcreds GUI main class. This class represents the main window of the Bitcreds UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
-class CreditsGUI : public QMainWindow
+class BitcredsGUI : public QMainWindow
 {
     Q_OBJECT
 
@@ -77,8 +77,8 @@ public:
     static const QString DEFAULT_WALLET;
     static const std::string DEFAULT_UIPLATFORM;
 
-    explicit CreditsGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
-    ~CreditsGUI();
+    explicit BitcredsGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
+    ~BitcredsGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
@@ -87,7 +87,7 @@ public:
 
 #ifdef ENABLE_WALLET
     /** Set the wallet model.
-        The wallet model represents a Credits wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a Bitcreds wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
     bool addWallet(const QString& name, WalletModel *walletModel);
@@ -265,7 +265,7 @@ private Q_SLOTS:
     void showPeers();
     void showRepair();
 
-    /** Open external (default) editor with credits.conf */
+    /** Open external (default) editor with bitcreds.conf */
     void showConfEditor();
     /** Open external (default) editor with masternode.conf */
     void showSNConfEditor();

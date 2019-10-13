@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,7 +15,7 @@ static const int MODEL_UPDATE_DELAY = 250;
 /* AskPassphraseDialog -- Maximum passphrase length */
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
-/* CreditsGUI -- Size of icons in status bar */
+/* BitcredsGUI -- Size of icons in status bar */
 static const int STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
@@ -50,9 +50,9 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Credits"
-#define QAPP_ORG_DOMAIN "github.com/credits-crds/credits"
-#define QAPP_APP_NAME_DEFAULT "Credits-Qt"
-#define QAPP_APP_NAME_TESTNET "Credits-Qt-testnet"
+#define QAPP_ORG_NAME "Bitcreds"
+#define QAPP_ORG_DOMAIN "github.com/bitcreds/bcrs"
+#define QAPP_APP_NAME_DEFAULT "Bitcreds-Qt"
+#define QAPP_APP_NAME_TESTNET "Bitcreds-Qt-testnet"
 
 #endif // CREDITS_QT_GUICONSTANTS_H

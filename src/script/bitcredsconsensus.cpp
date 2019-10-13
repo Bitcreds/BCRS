@@ -2,11 +2,11 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "creditsconsensus.h"
+#include "bitcredsconsensus.h"
 
 #include "script/interpreter.h"
 #include "pubkey.h"
@@ -57,7 +57,7 @@ private:
     size_t m_remaining;
 };
 
-inline int set_error(creditsconsensus_error* ret, creditsconsensus_error serror)
+inline int set_error(bitcredsconsensus_error* ret, bitcredsconsensus_error serror)
 {
     if (ret)
         *ret = serror;
@@ -75,35 +75,35 @@ ECCryptoClosure instance_of_eccryptoclosure;
 /** Check that all specified flags are part of the libconsensus interface. */
 static bool verify_flags(unsigned int flags)
 {
-    return (flags & ~(creditsconsensus_SCRIPT_FLAGS_VERIFY_ALL)) == 0;
+    return (flags & ~(bitcredsconsensus_SCRIPT_FLAGS_VERIFY_ALL)) == 0;
 }
 
-int creditsconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen,
+int bitcredsconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen,
                                     const unsigned char *txTo        , unsigned int txToLen,
-                                    unsigned int nIn, unsigned int flags, creditsconsensus_error* err)
+                                    unsigned int nIn, unsigned int flags, bitcredsconsensus_error* err)
 {
     if (!verify_flags(flags)) {
-        return creditsconsensus_ERR_INVALID_FLAGS;
+        return bitcredsconsensus_ERR_INVALID_FLAGS;
     }
     try {
         TxInputStream stream(SER_NETWORK, PROTOCOL_VERSION, txTo, txToLen);
         CTransaction tx;
         stream >> tx;
         if (nIn >= tx.vin.size())
-            return set_error(err, creditsconsensus_ERR_TX_INDEX);
+            return set_error(err, bitcredsconsensus_ERR_TX_INDEX);
         if (tx.GetSerializeSize(SER_NETWORK, PROTOCOL_VERSION) != txToLen)
-            return set_error(err, creditsconsensus_ERR_TX_SIZE_MISMATCH);
+            return set_error(err, bitcredsconsensus_ERR_TX_SIZE_MISMATCH);
 
          // Regardless of the verification result, the tx did not error.
-         set_error(err, creditsconsensus_ERR_OK);
+         set_error(err, bitcredsconsensus_ERR_OK);
 
         return VerifyScript(tx.vin[nIn].scriptSig, CScript(scriptPubKey, scriptPubKey + scriptPubKeyLen), flags, TransactionSignatureChecker(&tx, nIn), NULL);
     } catch (const std::exception&) {
-        return set_error(err, creditsconsensus_ERR_TX_DESERIALIZE); // Error deserializing
+        return set_error(err, bitcredsconsensus_ERR_TX_DESERIALIZE); // Error deserializing
     }
 }
 
-unsigned int creditsconsensus_version()
+unsigned int bitcredsconsensus_version()
 {
     // Just use the API version for now
     return CREDITSCONSENSUS_API_VER;

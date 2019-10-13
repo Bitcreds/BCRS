@@ -2,14 +2,14 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "privatesendconfig.h"
 #include "ui_privatesendconfig.h"
 
-#include "creditsunits.h"
+#include "bitcredsunits.h"
 #include "guiconstants.h"
 #include "optionsmodel.h"
 #include "walletmodel.h"
@@ -47,11 +47,11 @@ void PrivatesendConfig::clickBasic()
 {
     configure(true, 1000, 2);
 
-    QString strAmount(CreditsUnits::formatWithUnit(
+    QString strAmount(BitcredsUnits::formatWithUnit(
         model->getOptionsModel()->getDisplayUnit(), 1000 * COIN));
     QMessageBox::information(this, tr("PrivateSend Configuration"),
         tr(
-            "PrivateSend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Credits's configuration screen."
+            "PrivateSend was successfully set to basic (%1 and 2 rounds). You can change this at any time by opening Bitcreds's configuration screen."
         ).arg(strAmount)
     );
 
@@ -62,11 +62,11 @@ void PrivatesendConfig::clickHigh()
 {
     configure(true, 1000, 8);
 
-    QString strAmount(CreditsUnits::formatWithUnit(
+    QString strAmount(BitcredsUnits::formatWithUnit(
         model->getOptionsModel()->getDisplayUnit(), 1000 * COIN));
     QMessageBox::information(this, tr("PrivateSend Configuration"),
         tr(
-            "PrivateSend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Credits's configuration screen."
+            "PrivateSend was successfully set to high (%1 and 8 rounds). You can change this at any time by opening Bitcreds's configuration screen."
         ).arg(strAmount)
     );
 
@@ -77,11 +77,11 @@ void PrivatesendConfig::clickMax()
 {
     configure(true, 1000, 16);
 
-    QString strAmount(CreditsUnits::formatWithUnit(
+    QString strAmount(BitcredsUnits::formatWithUnit(
         model->getOptionsModel()->getDisplayUnit(), 1000 * COIN));
     QMessageBox::information(this, tr("PrivateSend Configuration"),
         tr(
-            "PrivateSend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Credits's configuration screen."
+            "PrivateSend was successfully set to maximum (%1 and 16 rounds). You can change this at any time by opening Bitcreds's configuration screen."
         ).arg(strAmount)
     );
 

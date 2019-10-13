@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,24 +14,24 @@
 /** Base58 entry widget validator, checks for valid characters and
  * removes some whitespace.
  */
-class CreditsAddressEntryValidator : public QValidator
+class BitcredsAddressEntryValidator : public QValidator
 {
     Q_OBJECT
 
 public:
-    explicit CreditsAddressEntryValidator(QObject *parent);
+    explicit BitcredsAddressEntryValidator(QObject *parent);
 
     State validate(QString &input, int &pos) const;
 };
 
-/** Credits address widget validator, checks for a valid Credits address.
+/** Bitcreds address widget validator, checks for a valid Bitcreds address.
  */
-class CreditsAddressCheckValidator : public QValidator
+class BitcredsAddressCheckValidator : public QValidator
 {
     Q_OBJECT
 
 public:
-    explicit CreditsAddressCheckValidator(QObject *parent);
+    explicit BitcredsAddressCheckValidator(QObject *parent);
 
     State validate(QString &input, int &pos) const;
 };

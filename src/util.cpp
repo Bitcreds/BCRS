@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "util.h"
@@ -95,7 +95,7 @@
 
 using namespace std;
 
-//Credits only features
+//Bitcreds only features
 bool fMasterNode = false;
 bool fLiteMode = false;
 /**
@@ -107,8 +107,8 @@ bool fLiteMode = false;
 */
 int nWalletBackups = 10;
 
-const char * const CREDITS_CONF_FILENAME = "credits.conf";
-const char * const CREDITS_PID_FILENAME = "creditsd.pid";
+const char * const CREDITS_CONF_FILENAME = "bitcreds.conf";
+const char * const CREDITS_PID_FILENAME = "bitcredsd.pid";
 
 std::map<std::string, std::string> mapArgs;
 std::map<std::string, std::vector<std::string> > mapMultiArgs;
@@ -262,8 +262,8 @@ bool LogAcceptCategory(const char* category)
             const std::vector<std::string>& categories = mapMultiArgs["-debug"];
             ptrCategory.reset(new std::set<std::string>(categories.begin(), categories.end()));
             // thread_specific_ptr automatically deletes the set when the thread ends.
-            // "credits" is a composite category enabling all Credits-related debug output
-            if(ptrCategory->count(std::string("credits"))) {
+            // "bitcreds" is a composite category enabling all Bitcreds-related debug output
+            if(ptrCategory->count(std::string("bitcreds"))) {
                 ptrCategory->insert(std::string("privatesend"));
                 ptrCategory->insert(std::string("instantsend"));
                 ptrCategory->insert(std::string("masternode"));
@@ -486,7 +486,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "credits";
+    const char* pszModule = "bitcreds";
 #endif
     if (pex)
         return strprintf(
@@ -506,13 +506,13 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Credits
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Credits
-    // Mac: ~/Library/Application Support/Credits
-    // Unix: ~/.credits
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Bitcreds
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Bitcreds
+    // Mac: ~/Library/Application Support/Bitcreds
+    // Unix: ~/.bitcreds
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Credits";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Bitcreds";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -522,10 +522,10 @@ boost::filesystem::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-    return pathRet / "Library/Application Support/Credits";
+    return pathRet / "Library/Application Support/Bitcreds";
 #else
     // Unix
-    return pathRet / ".credits";
+    return pathRet / ".bitcreds";
 #endif
 #endif
 }
@@ -658,12 +658,12 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
     boost::filesystem::ifstream streamConfig(GetConfigFile());
 
     if (!streamConfig.good()){
-        // Create credits.conf if it does not exist
+        // Create bitcreds.conf if it does not exist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL) {
-            // Write credits.conf file with random username and password.
+            // Write bitcreds.conf file with random username and password.
             WriteConfigFile(configFile);
-            // New credits.conf file written, now read it.
+            // New bitcreds.conf file written, now read it.
         }
     }
 
@@ -672,7 +672,7 @@ void ReadConfigFile(std::map<std::string, std::string>& mapSettingsRet,
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override credits.conf
+        // Don't overwrite existing settings so command line settings override bitcreds.conf
         std::string strKey = std::string("-") + it->string_key;
         std::string strValue = it->value[0];
         InterpretNegativeSetting(strKey, strValue);

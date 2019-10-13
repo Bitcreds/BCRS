@@ -4,7 +4,7 @@
 
 #include "limitedmap.h"
 
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 
 #include <boost/test/unit_test.hpp>
 

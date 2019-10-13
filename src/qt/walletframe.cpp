@@ -2,13 +2,13 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "walletframe.h"
 
-#include "creditsgui.h"
+#include "bitcredsgui.h"
 #include "walletview.h"
 
 #include <cstdio>
@@ -16,7 +16,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 
-WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, CreditsGUI *_gui) :
+WalletFrame::WalletFrame(const PlatformStyle *_platformStyle, BitcredsGUI *_gui) :
     QFrame(_gui),
     gui(_gui),
     platformStyle(_platformStyle)
@@ -48,12 +48,12 @@ bool WalletFrame::addWallet(const QString& name, WalletModel *walletModel)
         return false;
 
     WalletView *walletView = new WalletView(platformStyle, this);
-    walletView->setCreditsGUI(gui);
+    walletView->setBitcredsGUI(gui);
     walletView->setClientModel(clientModel);
     walletView->setWalletModel(walletModel);
     walletView->showOutOfSyncWarning(bOutOfSync);
 
-     /* TODO we should goto the currently selected page once creditsally adding wallets is supported */
+     /* TODO we should goto the currently selected page once bitcredsally adding wallets is supported */
     walletView->gotoOverviewPage();
     walletStack->addWidget(walletView);
     mapWalletViews[name] = walletView;

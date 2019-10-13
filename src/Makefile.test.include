@@ -1,13 +1,13 @@
-TESTS += test/test_credits
-bin_PROGRAMS += test/test_credits
+TESTS += test/test_bitcreds
+bin_PROGRAMS += test/test_bitcreds
 TEST_SRCDIR = test
-TEST_BINARY=test/test_credits$(EXEEXT)
+TEST_BINARY=test/test_bitcreds$(EXEEXT)
 
 
 EXTRA_DIST += \
 	test/bctest.py \
-	test/credits-util-test.py \
-	test/data/credits-util-test.json \
+	test/bitcreds-util-test.py \
+	test/data/bitcreds-util-test.json \
 	test/data/blanktx.hex \
 	test/data/tt-delin1-out.hex \
 	test/data/tt-delout1-out.hex \
@@ -83,8 +83,8 @@ CREDITS_TESTS =\
   test/sigopcount_tests.cpp \
   test/skiplist_tests.cpp \
   test/streams_tests.cpp \
-  test/test_credits.cpp \
-  test/test_credits.h \
+  test/test_bitcreds.cpp \
+  test/test_bitcreds.h \
   test/test_random.h \
   test/timedata_tests.cpp \
   test/transaction_tests.cpp \
@@ -101,23 +101,23 @@ CREDITS_TESTS += \
   test/rpc_wallet_tests.cpp
 endif
 
-test_test_credits_SOURCES = $(CREDITS_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
-test_test_credits_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES) -I$(builddir)/test/ $(TESTDEFS) $(EVENT_CFLAGS)
-test_test_credits_LDADD = $(LIBCREDITS_SERVER) $(LIBCREDITS_CLI) $(LIBCREDITS_COMMON) $(LIBCREDITS_UTIL) $(LIBCREDITS_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) \
+test_test_bitcreds_SOURCES = $(CREDITS_TESTS) $(JSON_TEST_FILES) $(RAW_TEST_FILES)
+test_test_bitcreds_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES) -I$(builddir)/test/ $(TESTDEFS) $(EVENT_CFLAGS)
+test_test_bitcreds_LDADD = $(LIBCREDITS_SERVER) $(LIBCREDITS_CLI) $(LIBCREDITS_COMMON) $(LIBCREDITS_UTIL) $(LIBCREDITS_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB) $(LIBSECP256K1)
-test_test_credits_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+test_test_bitcreds_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 if ENABLE_WALLET
-test_test_credits_LDADD += $(LIBCREDITS_WALLET)
+test_test_bitcreds_LDADD += $(LIBCREDITS_WALLET)
 endif
 
-test_test_credits_LDADD += $(LIBCREDITS_CONSENSUS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-test_test_credits_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
+test_test_bitcreds_LDADD += $(LIBCREDITS_CONSENSUS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+test_test_bitcreds_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) -static
 
 if ENABLE_ZMQ
-test_test_credits_LDADD += $(ZMQ_LIBS)
+test_test_bitcreds_LDADD += $(ZMQ_LIBS)
 endif
 
-nodist_test_test_credits_SOURCES = $(GENERATED_TEST_FILES)
+nodist_test_test_bitcreds_SOURCES = $(GENERATED_TEST_FILES)
 
 $(CREDITS_TESTS): $(GENERATED_TEST_FILES)
 
@@ -125,17 +125,17 @@ CLEAN_CREDITS_TEST = test/*.gcda test/*.gcno $(GENERATED_TEST_FILES)
 
 CLEANFILES += $(CLEAN_CREDITS_TEST)
 
-credits_test: $(TEST_BINARY)
+bitcreds_test: $(TEST_BINARY)
 
-credits_test_check: $(TEST_BINARY) FORCE
+bitcreds_test_check: $(TEST_BINARY) FORCE
 	$(MAKE) check-TESTS TESTS=$^
 
-credits_test_clean : FORCE
-	rm -f $(CLEAN_CREDITS_TEST) $(test_test_credits_OBJECTS) $(TEST_BINARY)
+bitcreds_test_clean : FORCE
+	rm -f $(CLEAN_CREDITS_TEST) $(test_test_bitcreds_OBJECTS) $(TEST_BINARY)
 
 check-local:
-	@echo "Running test/credits-util-test.py..."
-	$(AM_V_at)srcdir=$(srcdir) PYTHONPATH=$(builddir)/test $(srcdir)/test/credits-util-test.py
+	@echo "Running test/bitcreds-util-test.py..."
+	$(AM_V_at)srcdir=$(srcdir) PYTHONPATH=$(builddir)/test $(srcdir)/test/bitcreds-util-test.py
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C secp256k1 check
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C univalue check
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -31,8 +31,8 @@
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called Credits (https://www.github.com/credits-crds/credits/),
- * which enables instant payments to anyone, anywhere in the world. Credits uses peer-to-peer technology to operate
+ * This is the developer documentation of the reference client for an experimental new digital currency called Bitcreds (https://www.github.com/bitcreds/bcrs/),
+ * which enables instant payments to anyone, anywhere in the world. Bitcreds uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *
  * The software is a community-driven open source project, released under the MIT license.
@@ -73,13 +73,13 @@ bool AppInit(int argc, char* argv[])
     //
     // Parameters
     //
-    // If Qt is used, parameters/credits.conf are parsed in qt/credits.cpp's main()
+    // If Qt is used, parameters/bitcreds.conf are parsed in qt/bitcreds.cpp's main()
     ParseParameters(argc, argv);
 
     // Process help and version before taking care about datadir
     if (mapArgs.count("-?") || mapArgs.count("-h") ||  mapArgs.count("-help") || mapArgs.count("-version"))
     {
-        std::string strUsage = _("Credits Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n";
+        std::string strUsage = _("Bitcreds Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n";
 
         if (mapArgs.count("-version"))
         {
@@ -88,7 +88,7 @@ bool AppInit(int argc, char* argv[])
         else
         {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  creditsd [options]                     " + _("Start Credits Daemon") + "\n";
+                  "  bitcredsd [options]                     " + _("Start Bitcreds Daemon") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_CREDITSD);
         }
@@ -129,19 +129,19 @@ bool AppInit(int argc, char* argv[])
         // Command-line RPC
         bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "credits:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "bitcreds:"))
                 fCommandLine = true;
 
         if (fCommandLine)
         {
-            fprintf(stderr, "Error: There is no RPC client functionality in creditsd anymore. Use the credits-cli utility instead.\n");
+            fprintf(stderr, "Error: There is no RPC client functionality in bitcredsd anymore. Use the bitcreds-cli utility instead.\n");
             exit(EXIT_FAILURE);
         }
 #ifndef WIN32
         fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon)
         {
-            fprintf(stdout, "Credits server starting\n");
+            fprintf(stdout, "Bitcreds server starting\n");
 
             // Daemonize
             pid_t pid = fork();
@@ -192,7 +192,7 @@ int main(int argc, char* argv[])
 {
     SetupEnvironment();
 
-    // Connect creditsd signal handlers
+    // Connect bitcredsd signal handlers
     noui_connect();
 
     return (AppInit(argc, argv) ? EXIT_SUCCESS : EXIT_FAILURE);

@@ -1,6 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource prefix="/icons">
-        <file alias="credits">res/icons/credits.png</file>
+        <file alias="bitcreds">res/icons/bitcreds.png</file>
     </qresource>
     <qresource prefix="/icons/light">
         <file alias="about">res/icons/light/about.png</file>
@@ -53,9 +53,9 @@
         <file alias="tx_input">res/icons/light/tx_input.png</file>
         <file alias="tx_output">res/icons/light/tx_output.png</file>
         <file alias="tx_inout">res/icons/light/tx_inout.png</file>
-        <file alias="unit_crds">res/icons/light/unit_crds.png</file>
-        <file alias="unit_mcrds">res/icons/light/unit_mcrds.png</file>
-        <file alias="unit_ucrds">res/icons/light/unit_ucrds.png</file>
+        <file alias="unit_bcrs">res/icons/light/unit_bcrs.png</file>
+        <file alias="unit_mbcrs">res/icons/light/unit_mbcrs.png</file>
+        <file alias="unit_ubcrs">res/icons/light/unit_ubcrs.png</file>
         <file alias="unit_satoshis">res/icons/light/unit_satoshis.png</file>
         <file alias="verify">res/icons/light/verify.png</file>
         <file alias="warning">res/icons/light/warning.png</file>
@@ -65,7 +65,7 @@
     </qresource>
     <qresource prefix="/images/light">
         <file alias="about">res/images/light/about.png</file>
-        <file alias="credits_logo_horizontal">res/images/light/credits_logo_horizontal.png</file>
+        <file alias="bitcreds_logo_horizontal">res/images/light/bitcreds_logo_horizontal.png</file>
         <file alias="unchecked">res/images/light/unchecked.png</file>
         <file alias="checked">res/images/light/checked.png</file>
         <file alias="drkblue_downArrow">res/images/light/drkblue_downArrow.png</file>

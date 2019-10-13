@@ -2,14 +2,14 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "guiutil.h"
 
-#include "creditsaddressvalidator.h"
-#include "creditsunits.h"
+#include "bitcredsaddressvalidator.h"
+#include "bitcredsunits.h"
 #include "qvalidatedlineedit.h"
 #include "walletmodel.h"
 
@@ -97,7 +97,7 @@ QString dateTimeStr(qint64 nTime)
     return dateTimeStr(QDateTime::fromTime_t((qint32)nTime));
 }
 
-QFont CreditsAddressFont()
+QFont BitcredsAddressFont()
 {
     QFont font("Monospace");
 #if QT_VERSION >= 0x040800
@@ -131,10 +131,10 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 #if QT_VERSION >= 0x040700
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a Credits address (e.g. %1)").arg("C5nRy9Tf7Zsef8gMGL2fhWA9ZslrP4K5tf"));
+    widget->setPlaceholderText(QObject::tr("Enter a Bitcreds address (e.g. %1)").arg("C5nRy9Tf7Zsef8gMGL2fhWA9ZslrP4K5tf"));
 #endif
-    widget->setValidator(new CreditsAddressEntryValidator(parent));
-    widget->setCheckValidator(new CreditsAddressCheckValidator(parent));
+    widget->setValidator(new BitcredsAddressEntryValidator(parent));
+    widget->setCheckValidator(new BitcredsAddressCheckValidator(parent));
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
@@ -146,10 +146,10 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 }
 
-bool parseCreditsURI(const QUrl &uri, SendCoinsRecipient *out)
+bool parseBitcredsURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no credits: URI
-    if(!uri.isValid() || uri.scheme() != QString("credits"))
+    // return if URI is not valid or is no bitcreds: URI
+    if(!uri.isValid() || uri.scheme() != QString("bitcreds"))
         return false;
 
     SendCoinsRecipient rv;
@@ -198,7 +198,7 @@ bool parseCreditsURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!CreditsUnits::parse(CreditsUnits::CRDS, i->second, &rv.amount))
+                if(!BitcredsUnits::parse(BitcredsUnits::BCRS, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -216,28 +216,28 @@ bool parseCreditsURI(const QUrl &uri, SendCoinsRecipient *out)
     return true;
 }
 
-bool parseCreditsURI(QString uri, SendCoinsRecipient *out)
+bool parseBitcredsURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert credits:// to credits:
+    // Convert bitcreds:// to bitcreds:
     //
-    //    Cannot handle this later, because credits:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because bitcreds:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("credits://", Qt::CaseInsensitive))
+    if(uri.startsWith("bitcreds://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 7, "credits:");
+        uri.replace(0, 7, "bitcreds:");
     }
     QUrl uriInstance(uri);
-    return parseCreditsURI(uriInstance, out);
+    return parseBitcredsURI(uriInstance, out);
 }
 
-QString formatCreditsURI(const SendCoinsRecipient &info)
+QString formatBitcredsURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("credits:%1").arg(info.address);
+    QString ret = QString("bitcreds:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(CreditsUnits::format(CreditsUnits::CRDS, info.amount, false, CreditsUnits::separatorNever));
+        ret += QString("?amount=%1").arg(BitcredsUnits::format(BitcredsUnits::BCRS, info.amount, false, BitcredsUnits::separatorNever));
         paramCount++;
     }
 
@@ -266,7 +266,7 @@ QString formatCreditsURI(const SendCoinsRecipient &info)
 
 bool isDust(const QString& address, const CAmount& amount)
 {
-    CTxDestination dest = CCreditsAddress(address.toStdString()).Get();
+    CTxDestination dest = CBitcredsAddress(address.toStdString()).Get();
     CScript script = GetScriptForDestination(dest);
     CTxOut txOut(amount, script);
     return txOut.IsDust(::minRelayTxFee);
@@ -444,7 +444,7 @@ void openConfigfile()
 {
     boost::filesystem::path pathConfig = GetConfigFile();
 
-    /* Open credits.conf with the associated application */
+    /* Open bitcreds.conf with the associated application */
     if (boost::filesystem::exists(pathConfig))
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
@@ -653,15 +653,15 @@ boost::filesystem::path static StartupShortcutPath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Credits.lnk";
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcreds.lnk";
     if (chain == CBaseChainParams::TESTNET) // Remove this special case when CBaseChainParams::TESTNET = "testnet4"
-        return GetSpecialFolderPath(CSIDL_STARTUP) / "Credits (testnet).lnk";
-    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Credits (%s).lnk", chain);
+        return GetSpecialFolderPath(CSIDL_STARTUP) / "Bitcreds (testnet).lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / strprintf("Bitcreds (%s).lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for Credits*.lnk
+    // check for Bitcreds*.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -753,8 +753,8 @@ boost::filesystem::path static GetAutostartFilePath()
 {
     std::string chain = ChainNameFromCommandLine();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "credits.desktop";
-    return GetAutostartDir() / strprintf("credits-%s.lnk", chain);
+        return GetAutostartDir() / "bitcreds.desktop";
+    return GetAutostartDir() / strprintf("bitcreds-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -793,13 +793,13 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (!optionFile.good())
             return false;
         std::string chain = ChainNameFromCommandLine();
-        // Write a credits.desktop file to the autostart directory:
+        // Write a bitcreds.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
-            optionFile << "Name=Credits\n";
+            optionFile << "Name=Bitcreds\n";
         else
-            optionFile << strprintf("Name=Credits (%s)\n", chain);
+            optionFile << strprintf("Name=Bitcreds (%s)\n", chain);
         optionFile << "Exec=" << pszExePath << strprintf(" -min -testnet=%d -regtest=%d\n", GetBoolArg("-testnet", false), GetBoolArg("-regtest", false));
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -818,7 +818,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl);
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl)
 {
-    // loop through the list of startup items and try to find the Credits app
+    // loop through the list of startup items and try to find the Bitcreds app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, NULL);
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
@@ -850,21 +850,21 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
 
 bool GetStartOnSystemStartup()
 {
-    CFURLRef creditsAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFURLRef bitcredsAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, creditsAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcredsAppUrl);
     return !!foundItem; // return boolified object
 }
 
 bool SetStartOnSystemStartup(bool fAutoStart)
 {
-    CFURLRef creditsAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    CFURLRef bitcredsAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, creditsAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcredsAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add Credits app to startup item list
-        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, NULL, NULL, creditsAppUrl, NULL, NULL);
+        // add Bitcreds app to startup item list
+        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, NULL, NULL, bitcredsAppUrl, NULL, NULL);
     }
     else if(!fAutoStart && foundItem) {
         // remove item
