@@ -3,8 +3,8 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: Credits consensus library
-Description: Library for the Credits consensus protocol.
+Name: Bitcreds consensus library
+Description: Library for the Bitcreds consensus protocol.
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lcreditsconsensus
 Cflags: -I${includedir}
