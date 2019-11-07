@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -33,13 +33,13 @@ Shutdown again, restore using importwallet,
 and confirm again balances are correct.
 """
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 from random import randint
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-class WalletBackupTest(CreditsTestFramework):
+class WalletBackupTest(BitcredsTestFramework):
 
     def setup_chain(self):
         logging.info("Initializing test directory "+self.options.tmpdir)

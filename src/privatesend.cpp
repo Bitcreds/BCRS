@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -35,7 +35,7 @@ std::vector<CAmount> vecPrivateSendDenominations;
 
 void CPrivatesendPool::ProcessMessage(CNode* pfrom, std::string& strCommand, CDataStream& vRecv)
 {
-    if(fLiteMode) return; // ignore all Credits related functionality
+    if(fLiteMode) return; // ignore all Bitcreds related functionality
     if(!masternodeSync.IsBlockchainSynced()) return;
 
     if(strCommand == NetMsgType::PSACCEPT) {
@@ -442,8 +442,8 @@ void CPrivatesendPool::InitDenominations()
         is convertable to another.
 
         For example:
-        1CRDS+1000 == (.1CRDS+100)*10
-        10CRDS+10000 == (1CRDS+1000)*10
+        1BCRS+1000 == (.1BCRS+100)*10
+        10BCRS+10000 == (1BCRS+1000)*10
     */
     vecPrivateSendDenominations.push_back( (10       * COIN)+10000 );
     vecPrivateSendDenominations.push_back( (1        * COIN)+1000 );
@@ -750,9 +750,9 @@ void CPrivatesendPool::ChargeFees()
 
     Being that mixing has "no fees" we need to have some kind of cost associated
     with using it to stop abuse. Otherwise it could serve as an attack vector and
-    allow endless transaction that would bloat Credits and make it unusable. To
+    allow endless transaction that would bloat Bitcreds and make it unusable. To
     stop these kinds of attacks 1 in 10 successful transactions are charged. This
-    adds up to a cost of 0.001 CRDS per transaction on average.
+    adds up to a cost of 0.001 BCRS per transaction on average.
 */
 void CPrivatesendPool::ChargeRandomFees()
 {
@@ -2203,10 +2203,10 @@ int CPrivatesendPool::GetDenominations(const std::vector<CTxOut>& vecTxOut, bool
 bool CPrivatesendPool::GetDenominationsBits(int nDenom, std::vector<int> &vecBitsRet)
 {
     // ( bit on if present, 4 denominations example )
-    // bit 0 - 100CRDS+1
-    // bit 1 - 10CRDS+1
-    // bit 2 - 1CRDS+1
-    // bit 3 - .1CRDS+1
+    // bit 0 - 100BCRS+1
+    // bit 1 - 10BCRS+1
+    // bit 2 - 1BCRS+1
+    // bit 3 - .1BCRS+1
 
     int nMaxDenoms = vecPrivateSendDenominations.size();
 
@@ -2412,14 +2412,14 @@ void CPrivatesendPool::UpdatedBlockTip(const CBlockIndex *pindex)
 //TODO: Rename/move to core
 void ThreadCheckPrivateSendPool()
 {
-    if(fLiteMode) return; // disable all Credits specific functionality
+    if(fLiteMode) return; // disable all Bitcreds specific functionality
 
     static bool fOneThread;
     if(fOneThread) return;
     fOneThread = true;
 
     // Make this thread recognisable as the PrivateSend thread
-    RenameThread("credits-privatesend");
+    RenameThread("bitcreds-privatesend");
 
     unsigned int nTick = 0;
     unsigned int nDoAutoNextRun = nTick + PRIVATESEND_AUTO_TIMEOUT_MIN;

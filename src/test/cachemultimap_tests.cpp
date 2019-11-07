@@ -2,7 +2,7 @@
 
 #include "cachemultimap.h"
 
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 
 #include <algorithm>
 #include <iostream>

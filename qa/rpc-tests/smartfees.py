@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,7 +8,7 @@
 #
 
 from collections import OrderedDict
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 
 # Construct 2 trivial P2SH's and the ScriptSigs that spend them
@@ -165,7 +165,7 @@ def check_estimates(node, fees_seen, max_invalid, print_estimates = True):
     return all_estimates
 
 
-class EstimateFeeTest(CreditsTestFramework):
+class EstimateFeeTest(BitcredsTestFramework):
 
     def setup_network(self):
         '''

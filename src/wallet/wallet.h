@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_WALLET_WALLET_H
-#define CREDITS_WALLET_WALLET_H
+#ifndef BITCREDS_WALLET_WALLET_H
+#define BITCREDS_WALLET_WALLET_H
 
 #include "amount.h"
 #include "base58.h"
@@ -112,7 +112,7 @@ enum AvailableCoinsType
 
 struct CompactTallyItem
 {
-    CCreditsAddress address;
+    CBitcredsAddress address;
     CAmount nAmount;
     std::vector<CTxIn> vecTxIn;
     CompactTallyItem()
@@ -696,7 +696,7 @@ public:
     bool SelectCoinsMix(CAmount nValueMin, const CAmount nValueMax, std::vector<CTxIn>& vecTxInRet, CAmount& nValueRet, int nPrivateSendRoundsMin, int nPrivateSendRoundsMax) const;
     bool SelectCoinsGrouppedByAddresses(std::vector<CompactTallyItem>& vecTallyRet, bool fSkipDenominated = true, bool fAnonymizable = true) const;
 
-    /// Get 500 CRDS (5,000 after fork) output and keys which can be used for the Masternode
+    /// Get 500 BCRS (5,000 after fork) output and keys which can be used for the Masternode
     bool GetMasternodeVinAndKeys(CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet, std::string strTxHash = "", std::string strOutputIndex = "");
     /// Extract txin information and keys from output
     bool GetVinAndKeysFromOutput(COutput out, CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet);
@@ -1107,4 +1107,4 @@ private:
     std::vector<char> _ssExtra;
 };
 
-#endif // CREDITS_WALLET_WALLET_H
+#endif // BITCREDS_WALLET_WALLET_H

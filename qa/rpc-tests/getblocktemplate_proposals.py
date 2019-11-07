@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 
 from binascii import a2b_hex, b2a_hex
@@ -65,7 +65,7 @@ def assert_template(node, tmpl, txlist, expect):
     if rsp != expect:
         raise AssertionError('unexpected: %s' % (rsp,))
 
-class GetBlockTemplateProposalTest(CreditsTestFramework):
+class GetBlockTemplateProposalTest(BitcredsTestFramework):
     '''
     Test block proposals with getblocktemplate.
     '''

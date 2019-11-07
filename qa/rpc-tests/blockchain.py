@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@
 
 from decimal import Decimal
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.authproxy import JSONRPCException
 from test_framework.util import (
     initialize_chain,
@@ -23,7 +23,7 @@ from test_framework.util import (
 )
 
 
-class BlockchainTest(CreditsTestFramework):
+class BlockchainTest(BitcredsTestFramework):
     """
     Test blockchain-related RPC calls:
 

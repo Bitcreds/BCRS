@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_VERSIONBITS_H
-#define CREDITS_VERSIONBITS_H
+#ifndef BITCREDS_VERSIONBITS_H
+#define BITCREDS_VERSIONBITS_H
 
 #include "chain.h"
 
@@ -72,4 +72,4 @@ ThresholdState VersionBitsState(const CBlockIndex* pindexPrev, const Consensus::
 int VersionBitsStateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos, VersionBitsCache& cache);
 uint32_t VersionBitsMask(const Consensus::Params& params, Consensus::DeploymentPos pos);
 
-#endif // CREDITS_VERSIONBITS_H
+#endif // BITCREDS_VERSIONBITS_H

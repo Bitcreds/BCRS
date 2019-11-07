@@ -2,11 +2,11 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-//#define ENABLE_CREDITS_DEBUG
+//#define ENABLE_BITCREDS_DEBUG
 
 #include "activemasternode.h"
 #include "masternode.h"
@@ -48,7 +48,7 @@ UniValue gobject(const UniValue& params, bool fHelp)
                 "  list               - List governance objects (can be filtered by signal and/or object type)\n"
                 "  diff               - List differences since last diff\n"
                 "  vote-alias         - Vote on a governance object by Masternode alias (using masternode.conf setup)\n"
-                "  vote-conf          - Vote on a governance object by Masternode configured in credits.conf\n"
+                "  vote-conf          - Vote on a governance object by Masternode configured in bitcreds.conf\n"
                 "  vote-many          - Vote on a governance object by all Masternodes (using masternode.conf setup)\n"
                 );
 
@@ -273,7 +273,7 @@ UniValue gobject(const UniValue& params, bool fHelp)
             nFailed++;
             statusObj.push_back(Pair("result", "failed"));
             statusObj.push_back(Pair("errorMessage", "Can't find Masternode by collateral output"));
-            resultsObj.push_back(Pair("credits.conf", statusObj));
+            resultsObj.push_back(Pair("bitcreds.conf", statusObj));
             returnObj.push_back(Pair("overall", strprintf("Voted successfully %d time(s) and failed %d time(s).", nSuccessful, nFailed)));
             returnObj.push_back(Pair("detail", resultsObj));
             return returnObj;
@@ -284,7 +284,7 @@ UniValue gobject(const UniValue& params, bool fHelp)
             nFailed++;
             statusObj.push_back(Pair("result", "failed"));
             statusObj.push_back(Pair("errorMessage", "Failure to sign."));
-            resultsObj.push_back(Pair("credits.conf", statusObj));
+            resultsObj.push_back(Pair("bitcreds.conf", statusObj));
             returnObj.push_back(Pair("overall", strprintf("Voted successfully %d time(s) and failed %d time(s).", nSuccessful, nFailed)));
             returnObj.push_back(Pair("detail", resultsObj));
             return returnObj;
@@ -301,7 +301,7 @@ UniValue gobject(const UniValue& params, bool fHelp)
             statusObj.push_back(Pair("errorMessage", exception.GetMessage()));
         }
 
-        resultsObj.push_back(Pair("credits.conf", statusObj));
+        resultsObj.push_back(Pair("bitcreds.conf", statusObj));
 
         returnObj.push_back(Pair("overall", strprintf("Voted successfully %d time(s) and failed %d time(s).", nSuccessful, nFailed)));
         returnObj.push_back(Pair("detail", resultsObj));

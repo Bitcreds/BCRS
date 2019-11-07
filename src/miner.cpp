@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -41,7 +41,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// CreditsMiner
+// BitcredsMiner
 //
 
 uint32_t ByteReverse(uint32_t value)
@@ -521,11 +521,11 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 }
 
 // ***TODO*** that part changed in bitcoin, we are using a mix with old one here for now
-void static CreditsMiner(const CChainParams& chainparams)
+void static BitcredsMiner(const CChainParams& chainparams)
 {
-    LogPrintf("CreditsMiner -- started\n");
+    LogPrintf("BitcredsMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("credits-miner");
+    RenameThread("bitcreds-miner");
 
     unsigned int nExtraNonce = 0;
 
@@ -568,13 +568,13 @@ void static CreditsMiner(const CChainParams& chainparams)
 
             if (!pblocktemplate.get())
             {
-                LogPrintf("CreditsMiner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                LogPrintf("BitcredsMiner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 return;
             }
             CBlock *pblock = &pblocktemplate->block;
             IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-            LogPrintf("CreditsMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("BitcredsMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                 ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
@@ -599,7 +599,7 @@ void static CreditsMiner(const CChainParams& chainparams)
                         //assert(hash == pblock->GetHash());
 
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                        LogPrintf("CreditsMiner:\n proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex(), hashTarget.GetHex());
+                        LogPrintf("BitcredsMiner:\n proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, chainparams);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
                         coinbaseScript->KeepScript();
@@ -672,17 +672,17 @@ void static CreditsMiner(const CChainParams& chainparams)
     }
     catch (const boost::thread_interrupted&)
     {
-        LogPrintf("CreditsMiner -- terminated\n");
+        LogPrintf("BitcredsMiner -- terminated\n");
         throw;
     }
     catch (const std::runtime_error &e)
     {
-        LogPrintf("CreditsMiner -- runtime error: %s\n", e.what());
+        LogPrintf("BitcredsMiner -- runtime error: %s\n", e.what());
         return;
     }
 }
 
-void GenerateCreditss(bool fGenerate, int nThreads, const CChainParams& chainparams)
+void GenerateBitcredss(bool fGenerate, int nThreads, const CChainParams& chainparams)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -702,5 +702,5 @@ void GenerateCreditss(bool fGenerate, int nThreads, const CChainParams& chainpar
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&CreditsMiner, boost::cref(chainparams)));
+        minerThreads->create_thread(boost::bind(&BitcredsMiner, boost::cref(chainparams)));
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,13 +8,13 @@
 #
 
 import time
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 from test_framework.script import *
 from test_framework.mininode import *
 import binascii
 
-class AddressIndexTest(CreditsTestFramework):
+class AddressIndexTest(BitcredsTestFramework):
 
     def setup_chain(self):
         print("Initializing test directory "+self.options.tmpdir)

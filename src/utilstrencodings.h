@@ -2,15 +2,15 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 /**
  * Utilities for converting data from/to strings.
  */
-#ifndef CREDITS_UTILSTRENCODINGS_H
-#define CREDITS_UTILSTRENCODINGS_H
+#ifndef BITCREDS_UTILSTRENCODINGS_H
+#define BITCREDS_UTILSTRENCODINGS_H
 
 #include <stdint.h>
 #include <string>
@@ -43,7 +43,7 @@ enum SafeChars
 std::string SanitizeString(const std::string& str, int rule = SAFE_CHARS_DEFAULT);
 /// Formats the network peer user agent text (or subversion)
 /// by removing the begining and ending charactors(/).
-/// example: /Credits:1.0.0/ --> Credits:1.0.0
+/// example: /Bitcreds:1.0.0/ --> Bitcreds:1.0.0
 std::string SanitizeSubVersionString(const std::string& str);
 std::vector<unsigned char> ParseHex(const char* psz);
 std::vector<unsigned char> ParseHex(const std::string& str);
@@ -138,4 +138,4 @@ bool TimingResistantEqual(const T& a, const T& b)
  */
 bool ParseFixedPoint(const std::string &val, int decimals, int64_t *amount_out);
 
-#endif // CREDITS_UTILSTRENCODINGS_H
+#endif // BITCREDS_UTILSTRENCODINGS_H

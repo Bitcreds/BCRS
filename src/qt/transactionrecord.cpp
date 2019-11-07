@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -65,9 +65,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 sub.involvesWatchAddress = mine & ISMINE_WATCH_ONLY;
                 if (ExtractDestination(txout.scriptPubKey, address) && IsMine(*wallet, address))
                 {
-                    // Received by Credits Address
+                    // Received by Bitcreds Address
                     sub.type = TransactionRecord::RecvWithAddress;
-                    sub.address = CCreditsAddress(address).ToString();
+                    sub.address = CBitcredsAddress(address).ToString();
                 }
                 else
                 {
@@ -136,8 +136,8 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 if (ExtractDestination(wtx.vout[0].scriptPubKey, address))
                 {
-                    // Sent to Credits Address
-                    sub.address = CCreditsAddress(address).ToString();
+                    // Sent to Bitcreds Address
+                    sub.address = CBitcredsAddress(address).ToString();
                 }
                 else
                 {
@@ -189,9 +189,9 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet *
                 CTxDestination address;
                 if (ExtractDestination(txout.scriptPubKey, address))
                 {
-                    // Sent to Credits Address
+                    // Sent to Bitcreds Address
                     sub.type = TransactionRecord::SendToAddress;
-                    sub.address = CCreditsAddress(address).ToString();
+                    sub.address = CBitcredsAddress(address).ToString();
                 }
                 else
                 {

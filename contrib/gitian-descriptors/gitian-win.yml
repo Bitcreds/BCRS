@@ -1,5 +1,5 @@
 ---
-name: "credits-1.0.0.0"
+name: "bitcreds-1.0.0.0"
 enable_cache: true
 suites:
 - "trusty"
@@ -22,8 +22,8 @@ packages:
 - "ca-certificates"
 - "python"
 remotes:
-- "url": "https://github.com/credits-crds/credits.git"
-  "dir": "credits"
+- "url": "https://github.com/bitcreds-crds/bitcreds.git"
+  "dir": "bitcreds"
 files: []
 script: |
   WRAP_DIR=$HOME/wrapped
@@ -95,7 +95,7 @@ script: |
   create_per-host_faketime_wrappers "2000-01-01 12:00:00"
   create_per-host_linker_wrapper "2000-01-01 12:00:00"
   export PATH=${WRAP_DIR}:${PATH}
-  cd credits
+  cd bitcreds
   BASEPREFIX=`pwd`/depends
   # Build dependencies for each host
   for i in $HOSTS; do
@@ -111,13 +111,13 @@ script: |
   ./autogen.sh
   CONFIG_SITE=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`/share/config.site ./configure --disable-tests --with-gui=qt5 --prefix=/
   make dist
-  SOURCEDIST=`echo credits-*.tar.gz`
+  SOURCEDIST=`echo bitcreds-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find credits-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find bitcreds-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   mkdir -p $OUTDIR/src
   cp ../$SOURCEDIST $OUTDIR/src
   popd
@@ -134,7 +134,7 @@ script: |
     make ${MAKEOPTS}
     make deploy
     make install DESTDIR=${INSTALLPATH}
-    cp -f credits-*setup*.exe $OUTDIR/
+    cp -f bitcreds-*setup*.exe $OUTDIR/
     cd installed
     mv ${DISTNAME}/bin/*.dll ${DISTNAME}/lib/
     find . -name "lib*.la" -delete

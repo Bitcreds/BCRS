@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_TXDB_H
-#define CREDITS_TXDB_H
+#ifndef BITCREDS_TXDB_H
+#define BITCREDS_TXDB_H
 
 #include "coins.h"
 #include "dbwrapper.h"
@@ -95,4 +95,4 @@ public:
     bool LoadBlockIndexGuts();
 };
 
-#endif // CREDITS_TXDB_H
+#endif // BITCREDS_TXDB_H

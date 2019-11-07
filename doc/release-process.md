@@ -2,7 +2,7 @@ Release Process
 ====================
 
 * update translations (ping wumpus, Diapolo or tcatm on IRC)
-* see https://github.com/credits-crds/credits/blob/master/doc/translation_process.md#syncing-with-transifex
+* see https://github.com/bitcreds-crds/bitcreds/blob/master/doc/translation_process.md#syncing-with-transifex
 
 * * *
 
@@ -29,11 +29,11 @@ Release Process
 
 ###perform gitian builds
 
- From a directory containing the credits source, gitian-builder and gitian.sigs
+ From a directory containing the bitcreds source, gitian-builder and gitian.sigs
 
 	export SIGNER=(your gitian key, ie bluematt, sipa, etc)
 	export VERSION=(new version, e.g. 1.1.0.0)
-	pushd ./credits
+	pushd ./bitcreds
 	git checkout v${VERSION}
 	popd
 	pushd ./gitian-builder
@@ -54,29 +54,29 @@ Release Process
 
   By default, gitian will fetch source files as needed. For offline builds, they can be fetched ahead of time:
 
-	make -C ../credits/depends download SOURCES_PATH=`pwd`/cache/common
+	make -C ../bitcreds/depends download SOURCES_PATH=`pwd`/cache/common
 
   Only missing files will be fetched, so this is safe to re-run for each build.
 
-###Build Credits for Linux, Windows, and OS X:
+###Build Bitcreds for Linux, Windows, and OS X:
 
-	./bin/gbuild --commit credits=v${VERSION} ../credits/contrib/gitian-descriptors/gitian-linux.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../credits/contrib/gitian-descriptors/gitian-linux.yml
-	mv build/out/credits-*.tar.gz build/out/src/credits-*.tar.gz ../
-	./bin/gbuild --commit credits=v${VERSION} ../credits/contrib/gitian-descriptors/gitian-win.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-win --destination ../gitian.sigs/ ../credits/contrib/gitian-descriptors/gitian-win.yml
-	mv build/out/credits-*.zip build/out/credits-*.exe ../
-	./bin/gbuild --commit credits=v${VERSION} ../credits/contrib/gitian-descriptors/gitian-osx.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../credits/contrib/gitian-descriptors/gitian-osx.yml
-	mv build/out/credits-*-unsigned.tar.gz inputs/credits-osx-unsigned.tar.gz
-	mv build/out/credits-*.tar.gz build/out/credits-*.dmg ../
+	./bin/gbuild --commit bitcreds=v${VERSION} ../bitcreds/contrib/gitian-descriptors/gitian-linux.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-linux --destination ../gitian.sigs/ ../bitcreds/contrib/gitian-descriptors/gitian-linux.yml
+	mv build/out/bitcreds-*.tar.gz build/out/src/bitcreds-*.tar.gz ../
+	./bin/gbuild --commit bitcreds=v${VERSION} ../bitcreds/contrib/gitian-descriptors/gitian-win.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-win --destination ../gitian.sigs/ ../bitcreds/contrib/gitian-descriptors/gitian-win.yml
+	mv build/out/bitcreds-*.zip build/out/bitcreds-*.exe ../
+	./bin/gbuild --commit bitcreds=v${VERSION} ../bitcreds/contrib/gitian-descriptors/gitian-osx.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-unsigned --destination ../gitian.sigs/ ../bitcreds/contrib/gitian-descriptors/gitian-osx.yml
+	mv build/out/bitcreds-*-unsigned.tar.gz inputs/bitcreds-osx-unsigned.tar.gz
+	mv build/out/bitcreds-*.tar.gz build/out/bitcreds-*.dmg ../
 	popd
   Build output expected:
 
-  1. source tarball (credits-${VERSION}.tar.gz)
-  2. linux 32-bit and 64-bit binaries dist tarballs (credits-${VERSION}-linux[32|64].tar.gz)
-  3. windows 32-bit and 64-bit installers and dist zips (credits-${VERSION}-win[32|64]-setup.exe, credits-${VERSION}-win[32|64].zip)
-  4. OSX unsigned installer (credits-${VERSION}-osx-unsigned.dmg)
+  1. source tarball (bitcreds-${VERSION}.tar.gz)
+  2. linux 32-bit and 64-bit binaries dist tarballs (bitcreds-${VERSION}-linux[32|64].tar.gz)
+  3. windows 32-bit and 64-bit installers and dist zips (bitcreds-${VERSION}-win[32|64]-setup.exe, bitcreds-${VERSION}-win[32|64].zip)
+  4. OSX unsigned installer (bitcreds-${VERSION}-osx-unsigned.dmg)
   5. Gitian signatures (in gitian.sigs/${VERSION}-<linux|win|osx-unsigned>/(your gitian key)/
 
 ###Next steps:
@@ -100,9 +100,9 @@ Commit your signature to gitian.sigs:
 	pushd ./gitian-builder
 	# Fetch the signature as instructed by Evan
 	cp signature.tar.gz inputs/
-	./bin/gbuild -i ../credits/contrib/gitian-descriptors/gitian-osx-signer.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../credits/contrib/gitian-descriptors/gitian-osx-signer.yml
-	mv build/out/credits-osx-signed.dmg ../credits-${VERSION}-osx.dmg
+	./bin/gbuild -i ../bitcreds/contrib/gitian-descriptors/gitian-osx-signer.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-osx-signed --destination ../gitian.sigs/ ../bitcreds/contrib/gitian-descriptors/gitian-osx-signer.yml
+	mv build/out/bitcreds-osx-signed.dmg ../bitcreds-${VERSION}-osx.dmg
 	popd
 
 Commit your signature for the signed OSX binary:
@@ -131,20 +131,20 @@ rm SHA256SUMS
 ```
 (the digest algorithm is forced to sha256 to avoid confusion of the `Hash:` header that GPG adds with the SHA256 used for the files)
 
-- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the credits.org server
-  into `/var/www/bin/credits-${VERSION}`
+- Upload zips and installers, as well as `SHA256SUMS.asc` from last step, to the bitcreds.org server
+  into `/var/www/bin/bitcreds-${VERSION}`
 
-- Update creditspay.io version ***TODO***
+- Update bitcredspay.io version ***TODO***
 
-  - First, check to see if the creditspay.io maintainers have prepared a
-    release: https://github.com/credits-crds/credits/labels/Releases
+  - First, check to see if the bitcredspay.io maintainers have prepared a
+    release: https://github.com/bitcreds-crds/bitcreds/labels/Releases
 
       - If they have, it will have previously failed their Travis CI
         checks because the final release files weren't uploaded.
         Trigger a Travis CI rebuild---if it passes, merge.
 
-  - If they have not prepared a release, follow the Credits.org release
-    instructions: https://github.com/credits-crds/credits#release-notes
+  - If they have not prepared a release, follow the Bitcreds.org release
+    instructions: https://github.com/bitcreds-crds/bitcreds#release-notes
 
   - After the pull request is merged, the website will automatically show the newest version within 15 minutes, as well
     as update the OS download links. Ping @saivann/@harding (saivann/harding on Freenode) in case anything goes wrong

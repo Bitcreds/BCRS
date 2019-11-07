@@ -1,4 +1,4 @@
-Building Credits
+Building Bitcreds
 
 Use the autogen script to prepare the build environment.
 
@@ -7,10 +7,10 @@ Use the autogen script to prepare the build environment.
     make
 
 Precompiled binaries are available at github, see
-https://github.com/CRDS/Credits/releases
+https://github.com/Bitcreds/BCRS/releases
 
 Always verify the signatures and checksums.
 
-See doc/build-*.md for instructions on building creditsd,
+See doc/build-*.md for instructions on building bitcredsd,
 the intended-for-services, no-graphical-interface, reference
-implementation of Credits.
+implementation of Bitcreds.

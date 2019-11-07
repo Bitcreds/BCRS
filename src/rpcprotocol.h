@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_RPCPROTOCOL_H
-#define CREDITS_RPCPROTOCOL_H
+#ifndef BITCREDS_RPCPROTOCOL_H
+#define BITCREDS_RPCPROTOCOL_H
 
 #include <univalue.h>
 
@@ -31,7 +31,7 @@ enum HTTPStatusCode
     HTTP_SERVICE_UNAVAILABLE   = 503,
 };
 
-//! Credits RPC error codes
+//! Bitcreds RPC error codes
 enum RPCErrorCode
 {
     //! Standard JSON-RPC 2.0 errors
@@ -61,7 +61,7 @@ enum RPCErrorCode
     RPC_TRANSACTION_ALREADY_IN_CHAIN= RPC_VERIFY_ALREADY_IN_CHAIN,
 
     //! P2P client errors
-    RPC_CLIENT_NOT_CONNECTED        = -9,  //! Credits is not connected
+    RPC_CLIENT_NOT_CONNECTED        = -9,  //! Bitcreds is not connected
     RPC_CLIENT_IN_INITIAL_DOWNLOAD  = -10, //! Still downloading initial blocks
     RPC_CLIENT_NODE_ALREADY_ADDED   = -23, //! Node is already added
     RPC_CLIENT_NODE_NOT_ADDED       = -24, //! Node has not been added before
@@ -94,4 +94,4 @@ bool GetAuthCookie(std::string *cookie_out);
 /** Delete RPC authentication cookie from disk */
 void DeleteAuthCookie();
 
-#endif // CREDITS_RPCPROTOCOL_H
+#endif // BITCREDS_RPCPROTOCOL_H

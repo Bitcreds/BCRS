@@ -1,0 +1,3 @@
+debian/manpages/bitcredsd.1
+debian/manpages/bitcreds.conf.5
+debian/manpages/bitcreds-cli.1

@@ -5,19 +5,19 @@ AM_CXXFLAGS = $(HARDENED_CXXFLAGS)
 AM_CPPFLAGS = $(HARDENED_CPPFLAGS)
 EXTRA_LIBRARIES =
 
-CREDITS_CONFIG_INCLUDES=-I$(builddir)/config
-CREDITS_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
+BITCREDS_CONFIG_INCLUDES=-I$(builddir)/config
+BITCREDS_INCLUDES=-I$(builddir) -I$(builddir)/obj $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) $(CRYPTO_CFLAGS) $(SSL_CFLAGS)
 
-CREDITS_INCLUDES += -I$(srcdir)/secp256k1/include
-CREDITS_INCLUDES += -I$(srcdir)/univalue/include
+BITCREDS_INCLUDES += -I$(srcdir)/secp256k1/include
+BITCREDS_INCLUDES += -I$(srcdir)/univalue/include
 
-LIBCREDITS_SERVER=libcredits_server.a
-LIBCREDITS_WALLET=libcredits_wallet.a
-LIBCREDITS_COMMON=libcredits_common.a
-LIBCREDITS_CLI=libcredits_cli.a
-LIBCREDITS_UTIL=libcredits_util.a
-LIBCREDITS_CRYPTO=crypto/libcredits_crypto.a
-LIBCREDITSQT=qt/libcreditsqt.a
+LIBBITCREDS_SERVER=libbitcreds_server.a
+LIBBITCREDS_WALLET=libbitcreds_wallet.a
+LIBBITCREDS_COMMON=libbitcreds_common.a
+LIBBITCREDS_CLI=libbitcreds_cli.a
+LIBBITCREDS_UTIL=libbitcreds_util.a
+LIBBITCREDS_CRYPTO=crypto/libbitcreds_crypto.a
+LIBBITCREDSQT=qt/libbitcredsqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 LIBUNIVALUE=univalue/libunivalue.la
 
@@ -30,41 +30,41 @@ $(LIBUNIVALUE): $(wildcard univalue/lib/*) $(wildcard univalue/include/*)
 # Make is not made aware of per-object dependencies to avoid limiting building parallelization
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES += \
-  crypto/libcredits_crypto.a \
-  libcredits_util.a \
-  libcredits_common.a \
-  libcredits_server.a \
-  libcredits_cli.a
+  crypto/libbitcreds_crypto.a \
+  libbitcreds_util.a \
+  libbitcreds_common.a \
+  libbitcreds_server.a \
+  libbitcreds_cli.a
 if ENABLE_WALLET
-CREDITS_INCLUDES += $(BDB_CPPFLAGS)
-EXTRA_LIBRARIES += libcredits_wallet.a
+BITCREDS_INCLUDES += $(BDB_CPPFLAGS)
+EXTRA_LIBRARIES += libbitcreds_wallet.a
 endif
 if ENABLE_ZMQ
-EXTRA_LIBRARIES += libcredits_zmq.a
+EXTRA_LIBRARIES += libbitcreds_zmq.a
 endif
 
-if BUILD_CREDITS_LIBS
-lib_LTLIBRARIES = libcreditsconsensus.la
-LIBCREDITS_CONSENSUS=libcreditsconsensus.la
+if BUILD_BITCREDS_LIBS
+lib_LTLIBRARIES = libbitcredsconsensus.la
+LIBBITCREDS_CONSENSUS=libbitcredsconsensus.la
 else
-LIBCREDITS_CONSENSUS=
+LIBBITCREDS_CONSENSUS=
 endif
 
 bin_PROGRAMS =
 TESTS =
 BENCHMARKS =
 
-if BUILD_CREDITSD
-  bin_PROGRAMS += creditsd
+if BUILD_BITCREDSD
+  bin_PROGRAMS += bitcredsd
 endif
 
-if BUILD_CREDITS_UTILS
-  bin_PROGRAMS += credits-cli credits-tx
+if BUILD_BITCREDS_UTILS
+  bin_PROGRAMS += bitcreds-cli bitcreds-tx
 endif
 
 .PHONY: FORCE check-symbols check-security
-# credits #
-CREDITS_CORE_H = \
+# bitcreds #
+BITCREDS_CORE_H = \
   activemasternode.h \
   addressindex.h \
   spentindex.h \
@@ -193,12 +193,12 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh $(abs_top_builddir)/src/obj/build.h \
 	  $(abs_top_srcdir)
-libcredits_util_a-clientversion.$(OBJEXT): obj/build.h
+libbitcreds_util_a-clientversion.$(OBJEXT): obj/build.h
 
-# server: shared between creditsd and credits-qt
-libcredits_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libcredits_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_server_a_SOURCES = \
+# server: shared between bitcredsd and bitcreds-qt
+libbitcreds_server_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES) $(MINIUPNPC_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libbitcreds_server_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_server_a_SOURCES = \
   addrman.cpp \
   alert.cpp \
   bloom.cpp \
@@ -241,25 +241,25 @@ libcredits_server_a_SOURCES = \
   ui_interface.cpp \
   validationinterface.cpp \
   versionbits.cpp \
-  $(CREDITS_CORE_H)
+  $(BITCREDS_CORE_H)
 
 if ENABLE_ZMQ
-LIBCREDITS_ZMQ=libcredits_zmq.a
+LIBBITCREDS_ZMQ=libbitcreds_zmq.a
 
-libcredits_zmq_a_CPPFLAGS = $(CREDITS_INCLUDES) $(ZMQ_CFLAGS)
-libcredits_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_zmq_a_SOURCES = \
+libbitcreds_zmq_a_CPPFLAGS = $(BITCREDS_INCLUDES) $(ZMQ_CFLAGS)
+libbitcreds_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp
 endif
 
 
-# wallet: shared between creditsd and credits-qt, but only linked
+# wallet: shared between bitcredsd and bitcreds-qt, but only linked
 # when wallet enabled
-libcredits_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-libcredits_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_wallet_a_SOURCES = \
+libbitcreds_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+libbitcreds_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_wallet_a_SOURCES = \
   activemasternode.cpp \
   masternode.cpp \
   masternode-payments.cpp \
@@ -279,12 +279,12 @@ libcredits_wallet_a_SOURCES = \
   wallet/wallet.cpp \
   wallet/wallet_ismine.cpp \
   wallet/walletdb.cpp \
-  $(CREDITS_CORE_H)
+  $(BITCREDS_CORE_H)
 
 # crypto primitives library
-crypto_libcredits_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_CONFIG_INCLUDES) $(PIC_FLAGS)
-crypto_libcredits_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
-crypto_libcredits_crypto_a_SOURCES = \
+crypto_libbitcreds_crypto_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_CONFIG_INCLUDES) $(PIC_FLAGS)
+crypto_libbitcreds_crypto_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(PIC_FLAGS)
+crypto_libbitcreds_crypto_a_SOURCES = \
   crypto/common.h \
   crypto/argon2d/argon2.h \
   crypto/argon2d/core.h \
@@ -314,10 +314,10 @@ crypto_libcredits_crypto_a_SOURCES = \
   crypto/sha512.cpp \
   crypto/sha512.h
 
-# common: shared between creditsd, and credits-qt and non-server tools
-libcredits_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-libcredits_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_common_a_SOURCES = \
+# common: shared between bitcredsd, and bitcreds-qt and non-server tools
+libbitcreds_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+libbitcreds_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_common_a_SOURCES = \
   amount.cpp \
   arith_uint256.cpp \
   base58.cpp \
@@ -344,14 +344,14 @@ libcredits_common_a_SOURCES = \
   script/sign.cpp \
   script/standard.cpp \
   spork.cpp \
-  $(CREDITS_CORE_H)
+  $(BITCREDS_CORE_H)
 
 # util: shared between all executables.
 # This library *must* be included to make sure that the glibc
 # backward-compatibility objects and their sanity checks are linked.
-libcredits_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-libcredits_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_util_a_SOURCES = \
+libbitcreds_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+libbitcreds_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_util_a_SOURCES = \
   chainparamsbase.cpp \
   clientversion.cpp \
   compat/glibc_sanity.cpp \
@@ -367,93 +367,93 @@ libcredits_util_a_SOURCES = \
   utilmoneystr.cpp \
   utilstrencodings.cpp \
   utiltime.cpp \
-  $(CREDITS_CORE_H)
+  $(BITCREDS_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libcredits_util_a_SOURCES += compat/glibc_compat.cpp
+libbitcreds_util_a_SOURCES += compat/glibc_compat.cpp
 endif
 
-# cli: shared between credits-cli and credits-qt
-libcredits_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-libcredits_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libcredits_cli_a_SOURCES = \
+# cli: shared between bitcreds-cli and bitcreds-qt
+libbitcreds_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+libbitcreds_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcreds_cli_a_SOURCES = \
   rpcclient.cpp \
-  $(CREDITS_CORE_H)
+  $(BITCREDS_CORE_H)
 
-nodist_libcredits_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libbitcreds_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# creditsd binary #
-creditsd_SOURCES = creditsd.cpp
-creditsd_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-creditsd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-creditsd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bitcredsd binary #
+bitcredsd_SOURCES = bitcredsd.cpp
+bitcredsd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+bitcredsd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcredsd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-creditsd_SOURCES += creditsd-res.rc
+bitcredsd_SOURCES += bitcredsd-res.rc
 endif
 
-creditsd_LDADD = \
-  $(LIBCREDITS_SERVER) \
-  $(LIBCREDITS_COMMON) \
+bitcredsd_LDADD = \
+  $(LIBBITCREDS_SERVER) \
+  $(LIBBITCREDS_COMMON) \
   $(LIBUNIVALUE) \
-  $(LIBCREDITS_UTIL) \
-  $(LIBCREDITS_CRYPTO) \
+  $(LIBBITCREDS_UTIL) \
+  $(LIBBITCREDS_CRYPTO) \
   $(LIBLEVELDB) \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
 if ENABLE_ZMQ
-creditsd_LDADD += $(LIBCREDITS_ZMQ) $(ZMQ_LIBS)
+bitcredsd_LDADD += $(LIBBITCREDS_ZMQ) $(ZMQ_LIBS)
 endif
 
 if ENABLE_WALLET
-creditsd_LDADD += libcredits_wallet.a
+bitcredsd_LDADD += libbitcreds_wallet.a
 endif
 
-creditsd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+bitcredsd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
 
-# credits-cli binary #
-credits_cli_SOURCES = credits-cli.cpp
-credits_cli_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES) $(EVENT_CFLAGS)
-credits_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-credits_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bitcreds-cli binary #
+bitcreds_cli_SOURCES = bitcreds-cli.cpp
+bitcreds_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES) $(EVENT_CFLAGS)
+bitcreds_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcreds_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-credits_cli_SOURCES += credits-cli-res.rc
+bitcreds_cli_SOURCES += bitcreds-cli-res.rc
 endif
 
-credits_cli_LDADD = \
-  $(LIBCREDITS_CLI) \
+bitcreds_cli_LDADD = \
+  $(LIBBITCREDS_CLI) \
   $(LIBUNIVALUE) \
-  $(LIBCREDITS_UTIL)
-credits_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+  $(LIBBITCREDS_UTIL)
+bitcreds_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
-# credits-tx binary #
-credits_tx_SOURCES = credits-tx.cpp
-credits_tx_CPPFLAGS = $(AM_CPPFLAGS) $(CREDITS_INCLUDES)
-credits_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-credits_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+# bitcreds-tx binary #
+bitcreds_tx_SOURCES = bitcreds-tx.cpp
+bitcreds_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCREDS_INCLUDES)
+bitcreds_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+bitcreds_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-credits_tx_SOURCES += credits-tx-res.rc
+bitcreds_tx_SOURCES += bitcreds-tx-res.rc
 endif
 
-credits_tx_LDADD = \
+bitcreds_tx_LDADD = \
   $(LIBUNIVALUE) \
-  $(LIBCREDITS_COMMON) \
-  $(LIBCREDITS_UTIL) \
-  $(LIBCREDITS_CRYPTO) \
+  $(LIBBITCREDS_COMMON) \
+  $(LIBBITCREDS_UTIL) \
+  $(LIBBITCREDS_CRYPTO) \
   $(LIBSECP256K1)
 
-credits_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+bitcreds_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
-# creditsconsensus library #
-if BUILD_CREDITS_LIBS
-include_HEADERS = script/creditsconsensus.h
-libcreditsconsensus_la_SOURCES = \
+# bitcredsconsensus library #
+if BUILD_BITCREDS_LIBS
+include_HEADERS = script/bitcredsconsensus.h
+libbitcredsconsensus_la_SOURCES = \
   crypto/hmac_sha512.cpp \
   crypto/ripemd160.cpp \
   crypto/sha1.cpp \
@@ -462,20 +462,20 @@ libcreditsconsensus_la_SOURCES = \
   hash.cpp \
   primitives/transaction.cpp \
   pubkey.cpp \
-  script/creditsconsensus.cpp \
+  script/bitcredsconsensus.cpp \
   script/interpreter.cpp \
   script/script.cpp \
   uint256.cpp \
   utilstrencodings.cpp
 
 if GLIBC_BACK_COMPAT
-  libcreditsconsensus_la_SOURCES += compat/glibc_compat.cpp
+  libbitcredsconsensus_la_SOURCES += compat/glibc_compat.cpp
 endif
 
-libcreditsconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libcreditsconsensus_la_LIBADD = $(LIBSECP256K1)
-libcreditsconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_CREDITS_INTERNAL
-libcreditsconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcredsconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libbitcredsconsensus_la_LIBADD = $(LIBSECP256K1)
+libbitcredsconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCREDS_INTERNAL
+libbitcredsconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
@@ -503,7 +503,7 @@ clean-local:
 	-$(MAKE) -C secp256k1 clean
 	-$(MAKE) -C univalue clean
 	-rm -f leveldb/*/*.gcda leveldb/*/*.gcno leveldb/helpers/memenv/*.gcda leveldb/helpers/memenv/*.gcno
-	-rm -f config/credits-config.* config/stamp-h1
+	-rm -f config/bitcreds-config.* config/stamp-h1
 
 .rc.o:
 	@test -f $(WINDRES)

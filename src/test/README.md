@@ -1,13 +1,13 @@
 # Notes
 The sources in this directory are unit test cases.  Boost includes a
-unit testing framework, and since Credits already uses boost, it makes
+unit testing framework, and since Bitcreds already uses boost, it makes
 sense to simply use this framework rather than require developers to
 configure some other framework (we want as few impediments to creating
 unit tests as possible).
 
-The build system is setup to compile an executable called "test_credits"
+The build system is setup to compile an executable called "test_bitcreds"
 that runs all of the unit tests.  The main source file is called
-test_credits.cpp, which simply includes other files that contain the
+test_bitcreds.cpp, which simply includes other files that contain the
 actual unit tests (outside of a couple required preprocessor
 directives).  The pattern is to create one test file for each class or
 source file for which you want to create unit tests.  The file naming
@@ -22,14 +22,14 @@ For further reading, I found the following website to be helpful in
 explaining how the boost unit test framework works:
 [http://www.alittlemadness.com/2009/03/31/c-unit-testing-with-boosttest/](http://www.alittlemadness.com/2009/03/31/c-unit-testing-with-boosttest/).
 
-test_credits has some built-in command-line arguments; for
+test_bitcreds has some built-in command-line arguments; for
 example, to run just the getarg_tests verbosely:
 
-    test_credits --log_level=all --run_test=getarg_tests
+    test_bitcreds --log_level=all --run_test=getarg_tests
 
-... or to run just the doublecredits test:
+... or to run just the doublebitcreds test:
 
-    test_credits --run_test=getarg_tests/doublecredits
+    test_bitcreds --run_test=getarg_tests/doublebitcreds
 
-Run  test_credits --help   for the full list.
+Run  test_bitcreds --help   for the full list.
 

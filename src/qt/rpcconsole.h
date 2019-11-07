@@ -1,12 +1,12 @@
 // Copyright (c) 2009-2019 Satoshi Nakamoto
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_RPCCONSOLE_H
-#define CREDITS_QT_RPCCONSOLE_H
+#ifndef BITCREDS_QT_RPCCONSOLE_H
+#define BITCREDS_QT_RPCCONSOLE_H
 
 #include "guiutil.h"
 #include "peertablemodel.h"
@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 class QItemSelection;
 QT_END_NAMESPACE
 
-/** Local Credits RPC console. */
+/** Local Bitcreds RPC console. */
 class RPCConsole: public QDialog
 {
     Q_OBJECT
@@ -165,4 +165,4 @@ private:
     QCompleter *autoCompleter;
 };
 
-#endif // CREDITS_QT_RPCCONSOLE_H
+#endif // BITCREDS_QT_RPCCONSOLE_H

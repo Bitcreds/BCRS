@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,13 +7,13 @@
 # on chains of different lengths, and join the network together again.
 # This gives us two tips, verify that it works.
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import assert_equal
 
-class GetChainTipsTest (CreditsTestFramework):
+class GetChainTipsTest (BitcredsTestFramework):
 
     def run_test (self):
-        CreditsTestFramework.run_test (self)
+        BitcredsTestFramework.run_test (self)
 
         tips = self.nodes[0].getchaintips ()
         assert_equal (len (tips), 1)

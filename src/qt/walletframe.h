@@ -2,18 +2,18 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_QT_WALLETFRAME_H
-#define CREDITS_QT_WALLETFRAME_H
+#ifndef BITCREDS_QT_WALLETFRAME_H
+#define BITCREDS_QT_WALLETFRAME_H
 
 #include <QFrame>
 #include <QMap>
 
 class ClientModel;
-class CreditsGUI;
+class BitcredsGUI;
 class PlatformStyle;
 class SendCoinsRecipient;
 class WalletModel;
@@ -28,7 +28,7 @@ class WalletFrame : public QFrame
     Q_OBJECT
 
 public:
-    explicit WalletFrame(const PlatformStyle *platformStyle, CreditsGUI *_gui = 0);
+    explicit WalletFrame(const PlatformStyle *platformStyle, BitcredsGUI *_gui = 0);
     ~WalletFrame();
 
     void setClientModel(ClientModel *clientModel);
@@ -48,7 +48,7 @@ Q_SIGNALS:
 
 private:
     QStackedWidget *walletStack;
-    CreditsGUI *gui;
+    BitcredsGUI *gui;
     ClientModel *clientModel;
     QMap<QString, WalletView*> mapWalletViews;
 
@@ -95,4 +95,4 @@ public Q_SLOTS:
     void outOfSyncWarningClicked();
 };
 
-#endif // CREDITS_QT_WALLETFRAME_H
+#endif // BITCREDS_QT_WALLETFRAME_H

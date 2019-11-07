@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,8 +20,8 @@ If you need to broadcast an alert, here's what to do:
 1. Modify alert parameters below, see alert.* and comments in the code
    for what does what.
 
-2. run creditsd with -printalert or -sendalert like this:
-   /path/to/creditsd -printalert
+2. run bitcredsd with -printalert or -sendalert like this:
+   /path/to/bitcredsd -printalert
 
 One minute after starting up the alert will be broadcast. It is then
 flooded through the network until the nRelayUntil time, and will be
@@ -65,10 +65,10 @@ void ThreadSendAlert()
     //  Higher numbers mean higher priority
     alert.nPriority     = 5000;
     alert.strComment    = "";
-    alert.strStatusBar  = "URGENT: Upgrade required: see https://www.github.com/credits-crds/credits";
+    alert.strStatusBar  = "URGENT: Upgrade required: see https://www.github.com/bitcreds/bcrs";
 
     // Set specific client version/versions here. If setSubVer is empty, no filtering on subver is done:
-    // alert.setSubVer.insert(std::string("/Credits:1.0.0.0/"));
+    // alert.setSubVer.insert(std::string("/Bitcreds:1.0.0.0/"));
 
     // Sign
     if(!alert.Sign())

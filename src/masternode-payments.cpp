@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -31,7 +31,7 @@ CCriticalSection cs_mapMasternodePaymentVotes;
 *   Determine if coinbase outgoing created money is the correct value
 *
 *   Why is this needed?
-*   - In Credits some blocks are superblocks, which output much higher amounts of coins
+*   - In Bitcreds some blocks are superblocks, which output much higher amounts of coins
 *   - Otherblocks are 10% lower in outgoing value, so in total, no extra coins are created
 *   - When non-superblocks are detected, the normal schedule should be maintained
 */
@@ -156,7 +156,7 @@ bool IsBlockPayeeValid(const CTransaction& txNew, int nBlockHeight, CAmount bloc
             return true;
         }
 
-        // Superblocks are disabled for Credits.
+        // Superblocks are disabled for Bitcreds.
         int nOffset = nBlockHeight % consensusParams.nBudgetPaymentsCycleBlocks;
         if(nBlockHeight >= consensusParams.nBudgetPaymentsStartBlock &&
             nOffset < consensusParams.nBudgetPaymentsWindowBlocks) {
@@ -337,13 +337,13 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
 
     txNew.vout[0].nValue = PoWPayment;
 
-    // 0.5 CRDS reward to Dev fund from 625001 until block 1375000
+    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
     if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
         txNew.vout.resize(2);
         txNew.vout[0].nValue = PoWPayment;
 
         std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -353,13 +353,13 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
         LogPrintf("CMasternodePayments::FillBlockPayee -- 1st Check Development Fund payment %lld to %s\n", devPayment, intAddress.ToString());
     }
 
-    // 1 CRDS reward to Dev fund from 550001 until block 625000
+    // 1 BCRS reward to Dev fund from 550001 until block 625000
     if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
         txNew.vout.resize(2);
         txNew.vout[0].nValue = PoWPayment;
 
         std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -369,13 +369,13 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
         LogPrintf("CMasternodePayments::FillBlockPayee -- 1st Check Development Fund payment %lld to %s\n", tempDevPayment, intAddress.ToString());
     }
 
-    // 0.5 CRDS reward to old Dev fund from 375001 until block 550000
+    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
     if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
         txNew.vout.resize(2);
         txNew.vout[0].nValue = PoWPayment;
 
         std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -402,7 +402,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
             txNew.vout[1].nValue = MNPayment;
 
             std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-            CCreditsAddress intAddress(strDevAddress.c_str());
+            CBitcredsAddress intAddress(strDevAddress.c_str());
             CTxDestination devDestination = intAddress.Get();
             CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -421,7 +421,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
             txNew.vout[1].nValue = MNPayment;
 
             std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-            CCreditsAddress intAddress(strDevAddress.c_str());
+            CBitcredsAddress intAddress(strDevAddress.c_str());
             CTxDestination devDestination = intAddress.Get();
             CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -440,7 +440,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
             txNew.vout[1].nValue = MNPayment;
 
             std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
-            CCreditsAddress intAddress(strDevAddress.c_str());
+            CBitcredsAddress intAddress(strDevAddress.c_str());
             CTxDestination devDestination = intAddress.Get();
             CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -452,7 +452,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
 
         CTxDestination address1;
         ExtractDestination(payee, address1);
-        CCreditsAddress address2(address1);
+        CBitcredsAddress address2(address1);
 
         txoutMasternodeRet = CTxOut(MNPayment, payee);
 
@@ -469,7 +469,7 @@ void CMasternodePayments::ProcessMessage(CNode* pfrom, std::string& strCommand, 
     // Ignore any payments messages until Masternode list is synced
     if(!masternodeSync.IsMasternodeListSynced()) return;
 
-    if(fLiteMode) return; // disable all Credits specific functionality
+    if(fLiteMode) return; // disable all Bitcreds specific functionality
 
     if (strCommand == NetMsgType::MASTERNODEPAYMENTSYNC) { //Masternode Payments Request Sync
 
@@ -569,7 +569,7 @@ void CMasternodePayments::ProcessMessage(CNode* pfrom, std::string& strCommand, 
 
         CTxDestination address1;
         ExtractDestination(vote.payee, address1);
-        CCreditsAddress address2(address1);
+        CBitcredsAddress address2(address1);
 
         LogPrint("mnpayments", "MASTERNODEPAYMENTVOTE -- vote: address=%s, nBlockHeight=%d, nHeight=%d, prevout=%s\n", address2.ToString(), vote.nBlockHeight, pCurrentBlockIndex->nHeight, vote.vinMasternode.prevout.ToStringShort());
 
@@ -738,7 +738,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
 
             CTxDestination address1;
             ExtractDestination(payee.GetPayee(), address1);
-            CCreditsAddress address2(address1);
+            CBitcredsAddress address2(address1);
 
             if(strPayeesPossible == "") {
                 strPayeesPossible = address2.ToString();
@@ -748,7 +748,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
         }
     }
 
-    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f CRDS\n", strPayeesPossible, (float)nMasternodePayment/COIN);
+    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f BCRS\n", strPayeesPossible, (float)nMasternodePayment/COIN);
     return false;
 }
 
@@ -762,7 +762,7 @@ std::string CMasternodeBlockPayees::GetRequiredPaymentsString()
     {
         CTxDestination address1;
         ExtractDestination(payee.GetPayee(), address1);
-        CCreditsAddress address2(address1);
+        CBitcredsAddress address2(address1);
 
         if (strRequiredPayments != "Unknown") {
             strRequiredPayments += ", " + address2.ToString() + ":" + boost::lexical_cast<std::string>(payee.GetVoteCount());
@@ -916,7 +916,7 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight)
 
     CTxDestination address1;
     ExtractDestination(payee, address1);
-    CCreditsAddress address2(address1);
+    CBitcredsAddress address2(address1);
 
     LogPrintf("CMasternodePayments::ProcessBlock -- vote: payee=%s, nBlockHeight=%d\n", address2.ToString(), nBlockHeight);
 
@@ -1057,7 +1057,7 @@ void CMasternodePayments::RequestLowDataPaymentBlocks(CNode* pnode)
             BOOST_FOREACH(CMasternodePayee& payee, it->second.vecPayees) {
                 CTxDestination address1;
                 ExtractDestination(payee.GetPayee(), address1);
-                CCreditsAddress address2(address1);
+                CBitcredsAddress address2(address1);
                 printf("payee %s votes %d\n", address2.ToString().c_str(), payee.GetVoteCount());
             }
             printf("block %d votes total %d\n", it->first, nTotalVotes);

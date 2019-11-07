@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SUPPORT_ALLOCATORS_SECURE_H
-#define CREDITS_SUPPORT_ALLOCATORS_SECURE_H
+#ifndef BITCREDS_SUPPORT_ALLOCATORS_SECURE_H
+#define BITCREDS_SUPPORT_ALLOCATORS_SECURE_H
 
 #include "support/lockedpool.h"
 #include "support/cleanse.h"
@@ -58,4 +58,4 @@ typedef std::basic_string<char, std::char_traits<char>, secure_allocator<char> >
 
 typedef std::vector<unsigned char, secure_allocator<unsigned char> > SecureVector;
 
-#endif // CREDITS_SUPPORT_ALLOCATORS_SECURE_H
+#endif // BITCREDS_SUPPORT_ALLOCATORS_SECURE_H

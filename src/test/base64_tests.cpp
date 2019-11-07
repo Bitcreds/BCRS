@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "utilstrencodings.h"
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 
 #include <boost/test/unit_test.hpp>
 

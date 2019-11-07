@@ -572,7 +572,7 @@ const char * const wordlist[] = {
 "dutch",
 "duty",
 "dwarf",
-"credits",
+"bitcreds",
 "eager",
 "eagle",
 "early",

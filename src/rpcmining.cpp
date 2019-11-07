@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -137,7 +137,7 @@ UniValue getgenerate(const UniValue& params, bool fHelp)
         throw std::runtime_error(
             "getgenerate\n"
             "\nReturn if the server is set to generate coins or not. The default is false.\n"
-            "It is set with the command line argument -gen (or " + std::string(CREDITS_CONF_FILENAME) + " setting gen)\n"
+            "It is set with the command line argument -gen (or " + std::string(BITCREDS_CONF_FILENAME) + " setting gen)\n"
             "It can also be set with the setgenerate call.\n"
             "\nResult\n"
             "true|false      (boolean) If the server is set to generate coins or not\n"
@@ -263,7 +263,7 @@ UniValue setgenerate(const UniValue& params, bool fHelp)
 
     mapArgs["-gen"] = (fGenerate ? "1" : "0");
     mapArgs ["-genproclimit"] = itostr(nGenProcLimit);
-    GenerateCreditss(fGenerate, nGenProcLimit, Params());
+    GenerateBitcredss(fGenerate, nGenProcLimit, Params());
 
     return NullUniValue;
 }
@@ -552,10 +552,10 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid mode");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Credits is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Bitcreds is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Credits is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Bitcreds is downloading blocks...");
 
     static unsigned int nTransactionsUpdatedLast;
 
@@ -766,7 +766,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     if(pblock->txoutMasternode != CTxOut()) {
         CTxDestination address1;
         ExtractDestination(pblock->txoutMasternode.scriptPubKey, address1);
-        CCreditsAddress address2(address1);
+        CBitcredsAddress address2(address1);
         masternodeObj.push_back(Pair("payee", address2.ToString().c_str()));
         masternodeObj.push_back(Pair("script", HexStr(pblock->txoutMasternode.scriptPubKey.begin(), pblock->txoutMasternode.scriptPubKey.end())));
         masternodeObj.push_back(Pair("amount", pblock->txoutMasternode.nValue));
@@ -786,11 +786,11 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     
     int nNextHeight = chainActive.Height() + 1;
 
-    // 0.5 CRDS reward to Dev fund from 625001 until block 1375000
+    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
     if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
         UniValue fundRewardObj(UniValue::VOBJ);
         std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -801,11 +801,11 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
         result.push_back(Pair("fundreward", fundRewardObj));
     }
 
-    // 1 CRDS reward to Dev fund from 550001 until block 625000
+    // 1 BCRS reward to Dev fund from 550001 until block 625000
     if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
         UniValue fundRewardObj(UniValue::VOBJ);
         std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -815,11 +815,11 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
 
         result.push_back(Pair("fundreward", fundRewardObj));
     }
-    // 0.5 CRDS reward to old Dev fund from 375001 until block 550000
+    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
     if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
         UniValue fundRewardObj(UniValue::VOBJ);
         std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V"; //old Dev fund address
-        CCreditsAddress intAddress(strDevAddress.c_str());
+        CBitcredsAddress intAddress(strDevAddress.c_str());
         CTxDestination devDestination = intAddress.Get();
         CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -836,7 +836,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
             UniValue entry(UniValue::VOBJ);
             CTxDestination address1;
             ExtractDestination(txout.scriptPubKey, address1);
-            CCreditsAddress address2(address1);
+            CBitcredsAddress address2(address1);
             entry.push_back(Pair("payee", address2.ToString().c_str()));
             entry.push_back(Pair("script", HexStr(txout.scriptPubKey.begin(), txout.scriptPubKey.end())));
             entry.push_back(Pair("amount", txout.nValue));

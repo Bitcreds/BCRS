@@ -384,7 +384,7 @@ QTabBar { alignment: left; }</string>
          <item>
           <widget class="QPushButton" name="openDebugLogfileButton">
            <property name="toolTip">
-            <string>Open the Credits debug log file from the current data directory. This can take a few seconds for large log files.</string>
+            <string>Open the Bitcreds debug log file from the current data directory. This can take a few seconds for large log files.</string>
            </property>
            <property name="text">
             <string>&amp;Open</string>
@@ -468,7 +468,7 @@ QTabBar { alignment: left; }</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../credits.qrc">
+            <iconset resource="../bitcreds.qrc">
              <normaloff>:/icons/light/remove</normaloff>:/icons/light/remove</iconset>
            </property>
            <property name="shortcut">
@@ -1564,7 +1564,7 @@ QTabBar { alignment: left; }</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../credits.qrc"/>
+  <include location="../bitcreds.qrc"/>
  </resources>
  <connections/>
 </ui>

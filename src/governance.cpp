@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1286,7 +1286,7 @@ void CGovernanceManager::UpdatedBlockTip(const CBlockIndex *pindex)
     // Note this gets called from ActivateBestChain without cs_main being held
     // so it should be safe to lock our mutex here without risking a deadlock
     // On the other hand it should be safe for us to access pindex without holding a lock
-    // on cs_main because the CBlockIndex objects are creditsally allocated and
+    // on cs_main because the CBlockIndex objects are bitcredsally allocated and
     // presumably never deleted.
     if(!pindex) {
         return;

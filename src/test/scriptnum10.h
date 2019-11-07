@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_TEST_SCRIPTNUM10_H
-#define CREDITS_TEST_SCRIPTNUM10_H
+#ifndef BITCREDS_TEST_SCRIPTNUM10_H
+#define BITCREDS_TEST_SCRIPTNUM10_H
 
 #include <algorithm>
 #include <limits>
@@ -180,4 +180,4 @@ private:
 };
 
 
-#endif // CREDITS_TEST_BIGNUM_H
+#endif // BITCREDS_TEST_BIGNUM_H

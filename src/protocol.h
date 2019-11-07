@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,8 +10,8 @@
 #error This header can only be compiled as C++.
 #endif
 
-#ifndef CREDITS_PROTOCOL_H
-#define CREDITS_PROTOCOL_H
+#ifndef BITCREDS_PROTOCOL_H
+#define BITCREDS_PROTOCOL_H
 
 #include "netbase.h"
 #include "serialize.h"
@@ -222,7 +222,7 @@ extern const char *REJECT;
  */
 extern const char *SENDHEADERS;
 
-// Credits message types
+// Bitcreds message types
 // NOTE: do NOT declare non-implmented here, we don't want them to be exposed to the outside
 // TODO: add description
 extern const char *TXLOCKREQUEST;
@@ -255,15 +255,15 @@ const std::vector<std::string> &getAllNetMessageTypes();
 /** nServices flags */
 enum {
     // NODE_NETWORK means that the node is capable of serving the block chain. It is currently
-    // set by all Credits nodes, and is unset by SPV clients or other peers that just want
+    // set by all Bitcreds nodes, and is unset by SPV clients or other peers that just want
     // network services but don't provide them.
     NODE_NETWORK = (1 << 0),
     // NODE_GETUTXO means the node is capable of responding to the getutxo protocol request.
-    // Credits does not support this but a patch set called Bitcoin XT does.
+    // Bitcreds does not support this but a patch set called Bitcoin XT does.
     // See BIP 64 for details on how this is implemented.
     NODE_GETUTXO = (1 << 1),
     // NODE_BLOOM means the node is capable and willing to handle bloom-filtered connections.
-    // Credits nodes used to support this by default, without advertising this bit.
+    // Bitcreds nodes used to support this by default, without advertising this bit.
     NODE_BLOOM = (1 << 2),
 
     // Bits 24-31 are reserved for temporary experiments. Just pick a bit that
@@ -343,7 +343,7 @@ enum {
     // Nodes may always request a MSG_FILTERED_BLOCK in a getdata, however,
     // MSG_FILTERED_BLOCK should not appear in any invs except as a part of getdata.
     MSG_FILTERED_BLOCK,
-    // Credits message types
+    // Bitcreds message types
     // NOTE: declare non-implmented here, we must keep this enum consistent and backwards compatible
     MSG_TXLOCK_REQUEST,
     MSG_TXLOCK_VOTE,
@@ -359,4 +359,4 @@ enum {
     MSG_MASTERNODE_VERIFY,
 };
 
-#endif // CREDITS_PROTOCOL_H
+#endif // BITCREDS_PROTOCOL_H

@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_TXMEMPOOL_H
-#define CREDITS_TXMEMPOOL_H
+#ifndef BITCREDS_TXMEMPOOL_H
+#define BITCREDS_TXMEMPOOL_H
 
 #include "addressindex.h"
 #include "amount.h"
@@ -129,7 +129,7 @@ public:
     bool WasClearAtEntry() const { return hadNoDependencies; }
     unsigned int GetSigOpCount() const { return sigOpCount; }
     int64_t GetModifiedFee() const { return nFee + feeDelta; }
-    size_t CreditsMemoryUsage() const { return nUsageSize; }
+    size_t BitcredsMemoryUsage() const { return nUsageSize; }
     const LockPoints& GetLockPoints() const { return lockPoints; }
 
     // Adjusts the descendant state, if this entry is not dirty.
@@ -357,7 +357,7 @@ private:
     CBlockPolicyEstimator* minerPolicyEstimator;
 
     uint64_t totalTxSize; //! sum of all mempool tx' byte sizes
-    uint64_t cachedInnerUsage; //! sum of credits memory usage of all the map elements (NOT the maps themselves)
+    uint64_t cachedInnerUsage; //! sum of bitcreds memory usage of all the map elements (NOT the maps themselves)
 
     CFeeRate minReasonableRelayFee;
 
@@ -533,7 +533,7 @@ public:
       */
     CFeeRate GetMinFee(size_t sizelimit) const;
 
-    /** Remove transactions from the mempool until its credits size is <= sizelimit.
+    /** Remove transactions from the mempool until its bitcreds size is <= sizelimit.
       *  pvNoSpendsRemaining, if set, will be populated with the list of transactions
       *  which are not in mempool which no longer have any spends in this mempool.
       */
@@ -584,7 +584,7 @@ public:
     bool WriteFeeEstimates(CAutoFile& fileout) const;
     bool ReadFeeEstimates(CAutoFile& filein);
 
-    size_t CreditsMemoryUsage() const;
+    size_t BitcredsMemoryUsage() const;
 
 private:
     /** UpdateForDescendants is used by UpdateTransactionsFromBlock to update
@@ -653,4 +653,4 @@ struct TxCoinAgePriorityCompare
     }
 };
 
-#endif // CREDITS_TXMEMPOOL_H
+#endif // BITCREDS_TXMEMPOOL_H

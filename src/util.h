@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,11 +10,11 @@
  * Server/client environment: argument handling, config file parsing,
  * logging, thread wrappers
  */
-#ifndef CREDITS_UTIL_H
-#define CREDITS_UTIL_H
+#ifndef BITCREDS_UTIL_H
+#define BITCREDS_UTIL_H
 
 #if defined(HAVE_CONFIG_H)
-#include "config/credits-config.h"
+#include "config/bitcreds-config.h"
 #endif
 
 #include "amount.h"
@@ -36,14 +36,14 @@
 
 // Uncomment the following line to enable debugging messages
 // or enable on a per file basis prior to inclusion of util.h
-//#define ENABLE_CREDITS_DEBUG
-#ifdef ENABLE_CREDITS_DEBUG
+//#define ENABLE_BITCREDS_DEBUG
+#ifdef ENABLE_BITCREDS_DEBUG
 #define DBG( x ) x
 #else
 #define DBG( x ) 
 #endif
 
-//Credits only features
+//Bitcreds only features
 
 extern bool fMasterNode;
 extern bool fLiteMode;
@@ -76,8 +76,8 @@ extern bool fLogIPs;
 extern volatile bool fReopenDebugLog;
 extern CTranslationInterface translationInterface;
 
-extern const char * const CREDITS_CONF_FILENAME;
-extern const char * const CREDITS_PID_FILENAME;
+extern const char * const BITCREDS_CONF_FILENAME;
+extern const char * const BITCREDS_PID_FILENAME;
 
 /**
  * Translation function: Call Translate signal on UI interface, which returns a boost::optional result.
@@ -249,7 +249,7 @@ std::string GetThreadName();
  */
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("credits-%s", name);
+    std::string s = strprintf("bitcreds-%s", name);
     RenameThread(s.c_str());
     try
     {
@@ -272,4 +272,4 @@ template <typename Callable> void TraceThread(const char* name,  Callable func)
     }
 }
 
-#endif // CREDITS_UTIL_H
+#endif // BITCREDS_UTIL_H

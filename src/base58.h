@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,8 +14,8 @@
  * - E-mail usually won't line-break if there's no punctuation to break at.
  * - Double-clicking selects the whole string as one word if it's all alphanumeric.
  */
-#ifndef CREDITS_BASE58_H
-#define CREDITS_BASE58_H
+#ifndef BITCREDS_BASE58_H
+#define BITCREDS_BASE58_H
 
 #include "chainparams.h"
 #include "key.h"
@@ -98,13 +98,13 @@ public:
     bool operator> (const CBase58Data& b58) const { return CompareTo(b58) >  0; }
 };
 
-/** base58-encoded Credits addresses.
+/** base58-encoded Bitcreds addresses.
  * Public-key-hash-addresses have version 76 (or 140 testnet).
  * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
  * Script-hash-addresses have version 16 (or 19 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
-class CCreditsAddress : public CBase58Data {
+class CBitcredsAddress : public CBase58Data {
 public:
     bool Set(const CKeyID &id);
     bool Set(const CScriptID &id);
@@ -112,10 +112,10 @@ public:
     bool IsValid() const;
     bool IsValid(const CChainParams &params) const;
 
-    CCreditsAddress() {}
-    CCreditsAddress(const CTxDestination &dest) { Set(dest); }
-    CCreditsAddress(const std::string& strAddress) { SetString(strAddress); }
-    CCreditsAddress(const char* pszAddress) { SetString(pszAddress); }
+    CBitcredsAddress() {}
+    CBitcredsAddress(const CTxDestination &dest) { Set(dest); }
+    CBitcredsAddress(const std::string& strAddress) { SetString(strAddress); }
+    CBitcredsAddress(const char* pszAddress) { SetString(pszAddress); }
 
     CTxDestination Get() const;
     bool GetKeyID(CKeyID &keyID) const;
@@ -126,7 +126,7 @@ public:
 /**
  * A base58-encoded secret key
  */
-class CCreditsSecret : public CBase58Data
+class CBitcredsSecret : public CBase58Data
 {
 public:
     void SetKey(const CKey& vchSecret);
@@ -135,11 +135,11 @@ public:
     bool SetString(const char* pszSecret);
     bool SetString(const std::string& strSecret);
 
-    CCreditsSecret(const CKey& vchSecret) { SetKey(vchSecret); }
-    CCreditsSecret() {}
+    CBitcredsSecret(const CKey& vchSecret) { SetKey(vchSecret); }
+    CBitcredsSecret() {}
 };
 
-template<typename K, int Size, CChainParams::Base58Type Type> class CCreditsExtKeyBase : public CBase58Data
+template<typename K, int Size, CChainParams::Base58Type Type> class CBitcredsExtKeyBase : public CBase58Data
 {
 public:
     void SetKey(const K &key) {
@@ -157,18 +157,18 @@ public:
         return ret;
     }
 
-    CCreditsExtKeyBase(const K &key) {
+    CBitcredsExtKeyBase(const K &key) {
         SetKey(key);
     }
 
-    CCreditsExtKeyBase(const std::string& strBase58c) {
+    CBitcredsExtKeyBase(const std::string& strBase58c) {
         SetString(strBase58c.c_str(), Params().Base58Prefix(Type).size());
     }
 
-    CCreditsExtKeyBase() {}
+    CBitcredsExtKeyBase() {}
 };
 
-typedef CCreditsExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRET_KEY> CCreditsExtKey;
-typedef CCreditsExtKeyBase<CExtPubKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CCreditsExtPubKey;
+typedef CBitcredsExtKeyBase<CExtKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_SECRET_KEY> CBitcredsExtKey;
+typedef CBitcredsExtKeyBase<CExtPubKey, BIP32_EXTKEY_SIZE, CChainParams::EXT_PUBLIC_KEY> CBitcredsExtPubKey;
 
-#endif // CREDITS_BASE58_H
+#endif // BITCREDS_BASE58_H

@@ -1,11 +1,11 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_PRIVATESEND_H
-#define CREDITS_PRIVATESEND_H
+#ifndef BITCREDS_PRIVATESEND_H
+#define BITCREDS_PRIVATESEND_H
 
 #include "masternode.h"
 #include "wallet/wallet.h"
@@ -337,7 +337,7 @@ private:
 
     void CompletedTransaction(PoolMessage nMessageID);
 
-    /// Get the denominations for a specific amount of credits.
+    /// Get the denominations for a specific amount of bitcreds.
     int GetDenominationsByAmounts(const std::vector<CAmount>& vecAmount);
 
     std::string GetMessageByID(PoolMessage nMessageID);
@@ -467,4 +467,4 @@ public:
 
 void ThreadCheckPrivateSendPool();
 
-#endif // CREDITS_PRIVATESEND_H
+#endif // BITCREDS_PRIVATESEND_H

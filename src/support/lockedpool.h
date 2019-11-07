@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SUPPORT_LOCKEDPOOL_H
-#define CREDITS_SUPPORT_LOCKEDPOOL_H
+#ifndef BITCREDS_SUPPORT_LOCKEDPOOL_H
+#define BITCREDS_SUPPORT_LOCKEDPOOL_H
 
 #include <stdint.h>
 #include <list>
@@ -228,4 +228,4 @@ private:
     static std::once_flag init_flag;
 };
 
-#endif // CREDITS_SUPPORT_LOCKEDPOOL_H
+#endif // BITCREDS_SUPPORT_LOCKEDPOOL_H

@@ -1,0 +1,33 @@
+# /etc/conf.d/bitcredsd: config file for /etc/init.d/bitcredsd
+
+# Config file location
+#BITCREDSD_CONFIGFILE="/etc/bitcreds/bitcreds.conf"
+
+# What directory to write pidfile to?  (created and owned by $BITCREDSD_USER)
+#BITCREDSD_PIDDIR="/var/run/bitcredsd"
+
+# What filename to give the pidfile
+#BITCREDSD_PIDFILE="${BITCREDSD_PIDDIR}/bitcredsd.pid"
+
+# Where to write bitcredsd data (be mindful that the blockchain is large)
+#BITCREDSD_DATADIR="/var/lib/bitcredsd"
+
+# User and group to own bitcredsd process
+#BITCREDSD_USER="bitcreds"
+#BITCREDSD_GROUP="bitcreds"
+
+# Path to bitcredsd executable
+#BITCREDSD_BIN="/usr/bin/bitcredsd"
+
+# Nice value to run bitcredsd under
+#BITCREDSD_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+BITCREDSD_OPTS="-disablewallet"
+
+# The timeout in seconds OpenRC will wait for bitcredsd to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+BITCREDSD_SIGTERM_TIMEOUT=60

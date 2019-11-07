@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -241,11 +241,11 @@ UniValue stop(const UniValue& params, bool fHelp)
     if (fHelp || params.size() > 1)
         throw std::runtime_error(
             "stop\n"
-            "\nStop Credits server.");
+            "\nStop Bitcreds server.");
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "Credits server stopping";
+    return "Bitcreds server stopping";
 }
 
 /**
@@ -342,19 +342,19 @@ static const CRPCCommand vRPCCommands[] =
     { "Hidden",                 "resendwallettransactions", &resendwallettransactions, true},
 #endif
 
-    /* Credits features */
-    { "Credits",                "masternode",                 &masternode,                 true  },
-    { "Credits",                "masternodelist",             &masternodelist,             true  },
-    { "Credits",                "masternodebroadcast",        &masternodebroadcast,        true  },
-    { "Credits",                "gobject",                &gobject,                true  },
-    { "Credits",                "getgovernanceinfo",      &getgovernanceinfo,      true  },
-    { "Credits",                "getsuperblockbudget",    &getsuperblockbudget,    true  },
-    { "Credits",                "voteraw",                &voteraw,                true  },
-    { "Credits",                "mnsync",                 &mnsync,                 true  },
-    { "Credits",                "spork",                  &spork,                  true  },
-    { "Credits",                "getpoolinfo",            &getpoolinfo,            true  },
+    /* Bitcreds features */
+    { "Bitcreds",                "masternode",                 &masternode,                 true  },
+    { "Bitcreds",                "masternodelist",             &masternodelist,             true  },
+    { "Bitcreds",                "masternodebroadcast",        &masternodebroadcast,        true  },
+    { "Bitcreds",                "gobject",                &gobject,                true  },
+    { "Bitcreds",                "getgovernanceinfo",      &getgovernanceinfo,      true  },
+    { "Bitcreds",                "getsuperblockbudget",    &getsuperblockbudget,    true  },
+    { "Bitcreds",                "voteraw",                &voteraw,                true  },
+    { "Bitcreds",                "mnsync",                 &mnsync,                 true  },
+    { "Bitcreds",                "spork",                  &spork,                  true  },
+    { "Bitcreds",                "getpoolinfo",            &getpoolinfo,            true  },
 #ifdef ENABLE_WALLET
-    { "Credits",                "privatesend",            &privatesend,            false },
+    { "Bitcreds",                "privatesend",            &privatesend,            false },
 
     /* Wallet */
     { "Wallet",             "keepass",                &keepass,                true },
@@ -578,7 +578,7 @@ std::vector<std::string> CRPCTable::listCommands() const
 
 std::string HelpExampleCli(const std::string& methodname, const std::string& args)
 {
-    return "> credits-cli " + methodname + " " + args + "\n";
+    return "> bitcreds-cli " + methodname + " " + args + "\n";
 }
 
 std::string HelpExampleRpc(const std::string& methodname, const std::string& args)

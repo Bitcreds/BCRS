@@ -17,7 +17,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 
-#include "test/test_credits.h"
+#include "test/test_bitcreds.h"
 
 #include <memory>
 

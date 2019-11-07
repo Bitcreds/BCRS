@@ -1,24 +1,24 @@
 #!/usr/bin/env python2
 # coding=utf-8
 # ^^^^^^^^^^^^ TODO remove when supporting only Python3
-# Copyright (c) 2017 Credits Developers
+# Copyright (c) 2017 Bitcreds Developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import CreditsTestFramework
+from test_framework.test_framework import BitcredsTestFramework
 from test_framework.util import *
 
-class WalletTest (CreditsTestFramework):
+class WalletTest (BitcredsTestFramework):
 
     def check_fee_amount(self, curr_balance, balance_with_fee, fee_per_byte, tx_size):
         """Return curr_balance after asserting the fee was in range"""
         fee = balance_with_fee - curr_balance
         target_fee = fee_per_byte * tx_size
         if fee < target_fee:
-            raise AssertionError("Fee of %s CRDS too low! (Should be %s CRDS)"%(str(fee), str(target_fee)))
+            raise AssertionError("Fee of %s BCRS too low! (Should be %s BCRS)"%(str(fee), str(target_fee)))
         # allow the node's estimation to be at most 2 bytes off
         if fee > fee_per_byte * (tx_size + 2):
-            raise AssertionError("Fee of %s CRDS too high! (Should be %s CRDS)"%(str(fee), str(target_fee)))
+            raise AssertionError("Fee of %s BCRS too high! (Should be %s BCRS)"%(str(fee), str(target_fee)))
         return curr_balance
 
     def setup_chain(self):
@@ -61,7 +61,7 @@ class WalletTest (CreditsTestFramework):
         assert_equal(len(self.nodes[1].listunspent()), 1)
         assert_equal(len(self.nodes[2].listunspent()), 0)
 
-        # Send 210 CRDS from 0 to 2 using sendtoaddress call.
+        # Send 210 BCRS from 0 to 2 using sendtoaddress call.
         # Second transaction will be child of first, and will require a fee
         self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 110)
         self.nodes[0].sendtoaddress(self.nodes[2].getnewaddress(), 100)
@@ -86,7 +86,7 @@ class WalletTest (CreditsTestFramework):
         self.nodes[1].generate(100)
         self.sync_all()
 
-        # node0 should end up with 1000 CRDS in block rewards plus fees, but
+        # node0 should end up with 1000 BCRS in block rewards plus fees, but
         # minus the 210 plus fees sent to node2
         assert_equal(self.nodes[0].getbalance(), 1000-210)
         assert_equal(self.nodes[2].getbalance(), 210)
@@ -119,7 +119,7 @@ class WalletTest (CreditsTestFramework):
         assert_equal(self.nodes[2].getbalance(), 1000)
         assert_equal(self.nodes[2].getbalance("from1"), 1000-210)
 
-        # Send 100 CRDS normal
+        # Send 100 BCRS normal
         address = self.nodes[0].getnewaddress("test")
         fee_per_byte = Decimal('0.001') / 1000
         self.nodes[2].settxfee(fee_per_byte * 1000)
@@ -129,7 +129,7 @@ class WalletTest (CreditsTestFramework):
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), Decimal('900'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
         assert_equal(self.nodes[0].getbalance(), Decimal('100'))
 
-        # Send 100 CRDS with subtract fee from amount
+        # Send 100 BCRS with subtract fee from amount
         txid = self.nodes[2].sendtoaddress(address, 100, "", "", True)
         self.nodes[2].generate(1)
         self.sync_all()
@@ -137,7 +137,7 @@ class WalletTest (CreditsTestFramework):
         assert_equal(self.nodes[2].getbalance(), node_2_bal)
         node_0_bal = self.check_fee_amount(self.nodes[0].getbalance(), Decimal('200'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
 
-        # Sendmany 100 CRDS
+        # Sendmany 100 BCRS
         txid = self.nodes[2].sendmany('from1', {address: 100}, 0, "", [])
         self.nodes[2].generate(1)
         self.sync_all()
@@ -145,7 +145,7 @@ class WalletTest (CreditsTestFramework):
         node_2_bal = self.check_fee_amount(self.nodes[2].getbalance(), node_2_bal - Decimal('100'), fee_per_byte, count_bytes(self.nodes[2].getrawtransaction(txid)))
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
 
-        # Sendmany 100 CRDS with subtract fee from amount
+        # Sendmany 100 BCRS with subtract fee from amount
         txid = self.nodes[2].sendmany('from1', {address: 100}, 0, "", [address])
         self.nodes[2].generate(1)
         self.sync_all()
@@ -205,7 +205,7 @@ class WalletTest (CreditsTestFramework):
 
         #do some -walletbroadcast tests
         stop_nodes(self.nodes)
-        wait_creditsds()
+        wait_bitcredsds()
         self.nodes = start_nodes(3, self.options.tmpdir, [["-walletbroadcast=0"],["-walletbroadcast=0"],["-walletbroadcast=0"]])
         connect_nodes_bi(self.nodes,0,1)
         connect_nodes_bi(self.nodes,1,2)
@@ -231,7 +231,7 @@ class WalletTest (CreditsTestFramework):
 
         #restart the nodes with -walletbroadcast=1
         stop_nodes(self.nodes)
-        wait_creditsds()
+        wait_bitcredsds()
         self.nodes = start_nodes(3, self.options.tmpdir)
         connect_nodes_bi(self.nodes,0,1)
         connect_nodes_bi(self.nodes,1,2)
@@ -331,7 +331,7 @@ class WalletTest (CreditsTestFramework):
         for m in maintenance:
             print "check " + m
             stop_nodes(self.nodes)
-            wait_creditsds()
+            wait_bitcredsds()
             self.nodes = start_nodes(3, self.options.tmpdir, [[m]] * 3)
             while m == '-reindex' and [block_count] * 3 != [self.nodes[i].getblockcount() for i in range(3)]:
                 # reindex will leave rpc warm up "early"; Wait for it to finish

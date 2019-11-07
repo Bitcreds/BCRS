@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_WALLET_WALLET_ISMINE_H
-#define CREDITS_WALLET_WALLET_ISMINE_H
+#ifndef BITCREDS_WALLET_WALLET_ISMINE_H
+#define BITCREDS_WALLET_WALLET_ISMINE_H
 
 #include "script/standard.h"
 
@@ -34,4 +34,4 @@ typedef uint8_t isminefilter;
 isminetype IsMine(const CKeyStore& keystore, const CScript& scriptPubKey);
 isminetype IsMine(const CKeyStore& keystore, const CTxDestination& dest);
 
-#endif // CREDITS_WALLET_WALLET_ISMINE_H
+#endif // BITCREDS_WALLET_WALLET_ISMINE_H

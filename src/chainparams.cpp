@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -100,7 +100,7 @@ static void MineGenesis(CBlockHeader& genesisBlock, const uint256& powLimit, boo
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "17th of June 2017: Credits(CRDS) Launched";
+    const char* pszTimestamp = "17th of June 2017: Bitcreds(BCRS) Launched";
     const CScript genesisOutputScript = CScript() << ParseHex("") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -120,11 +120,11 @@ public:
         consensus.nTempDevFundIncreaseEnd = 625000; //block
         consensus.nMasternodePaymentsStartBlock = 100; // Masternode Payments begin on block 100.
         consensus.nInstantSendKeepLock = 24;
-        consensus.nBudgetPaymentsStartBlock = 20545; // Credits doesn't use budget payments.
+        consensus.nBudgetPaymentsStartBlock = 20545; // Bitcreds doesn't use budget payments.
         consensus.nBudgetPaymentsCycleBlocks = 20545; // Blocks per month
         consensus.nBudgetPaymentsWindowBlocks = 100;
         consensus.nBudgetProposalEstablishingTime = 24 * 60 * 60;
-        consensus.nSuperblockStartBlock = 20546; // Credits doesn't have superblocks.
+        consensus.nSuperblockStartBlock = 20546; // Bitcreds doesn't have superblocks.
         consensus.nSuperblockCycle = 20545; // 675 (Blocks per day) x 365.25 (Days per Year) / 12 = 20545
         consensus.nGovernanceMinQuorum = 10;
         consensus.nGovernanceFilterElements = 20000;
@@ -133,10 +133,10 @@ public:
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Credits: 24 hours
-        consensus.nPowTargetSpacing = 2 * 64; // Credits: 128 seconds
-        consensus.nPowMaxAdjustDown = 32; // Credits: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Credits: 16% adjustment up
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
+        consensus.nPowTargetSpacing = 2 * 64; // Bitcreds: 128 seconds
+        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
+        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
         consensus.nPowAveragingWindow = 17;
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -177,20 +177,20 @@ public:
             assert(genesis.hashMerkleRoot == uint256S("0x1df9b425c9a06de51b3fb210ffd2e051e05718e264e8ee4692592746c1566a0c"));
 	}
 
-        vSeeds.push_back(CDNSSeedData("crds.co", "dnsseed1.crds.co"));
-        vSeeds.push_back(CDNSSeedData("crds.co", "dnsseed2.crds.co"));
+        vSeeds.push_back(CDNSSeedData("bcrs.co", "dnsseed1.bcrs.org"));
+        vSeeds.push_back(CDNSSeedData("bcrs.co", "dnsseed2.bcrs.org"));
 
-        // Credits addresses start with 'C'
+        // Bitcreds addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);
-        // Credits script addresses start with '5'
+        // Bitcreds script addresses start with '5'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,10);
-        // Credits private keys start with 'y'
+        // Bitcreds private keys start with 'y'
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,140);
-        // Credits BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+        // Bitcreds BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        // Credits BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+        // Bitcreds BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
-        // Credits BIP44 coin type is '5'
+        // Bitcreds BIP44 coin type is '5'
         nExtCoinType = 5;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
@@ -252,10 +252,10 @@ public:
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowAveragingWindow = 17;
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Credits: 24 hours
-        consensus.nPowTargetSpacing = 10; // Credits Testnet: 10 seconds
-        consensus.nPowMaxAdjustDown = 32; // Credits: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Credits: 16% adjustment up
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
+        consensus.nPowTargetSpacing = 10; // Bitcreds Testnet: 10 seconds
+        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
+        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
@@ -295,17 +295,17 @@ public:
         //vSeeds.push_back(CDNSSeedData("",  ""));
         //vSeeds.push_back(CDNSSeedData("", ""));
 
-        // Testnet Credits addresses start with 'C'
+        // Testnet Bitcreds addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);
-        // Testnet Credits script addresses start with '8' or '9'
+        // Testnet Bitcreds script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,10);
         // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,158);
-        // Testnet Credits BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Testnet Bitcreds BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Credits BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Testnet Bitcreds BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Credits BIP44 coin type is '1' (All coin's testnet default)
+        // Testnet Bitcreds BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
@@ -366,10 +366,10 @@ public:
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Credits: 24 hours
-        consensus.nPowTargetSpacing = 2 * 64; // Credits: 256 seconds
-        consensus.nPowMaxAdjustDown = 32; // Credits: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Credits: 16% adjustment up
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
+        consensus.nPowTargetSpacing = 2 * 64; // Bitcreds: 256 seconds
+        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
+        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
         assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
@@ -419,17 +419,17 @@ public:
             //   (the tx=... number in the SetBestChain debug.log lines)
             500        // * estimated number of transactions per day after checkpoint
         };
-        // Regtest Credits addresses start with 'C'
+        // Regtest Bitcreds addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);
-        // Regtest Credits script addresses start with '8' or '9'
+        // Regtest Bitcreds script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
         // Regtest private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
-        // Regtest Credits BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Regtest Bitcreds BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Regtest Credits BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Regtest Bitcreds BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
-        // Regtest Credits BIP44 coin type is '1' (All coin's testnet default)
+        // Regtest Bitcreds BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
 	consensus.nIntPhaseTotalBlocks = 125000;

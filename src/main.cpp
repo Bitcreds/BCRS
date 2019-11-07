@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -59,7 +59,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error "Credits cannot be compiled without assertions."
+# error "Bitcreds cannot be compiled without assertions."
 #endif
 
 /**
@@ -127,7 +127,7 @@ static void CheckBlockIndex(const Consensus::Params& consensusParams);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "Credits Signed Message:\n";
+const std::string strMessageMagic = "Bitcreds Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -2454,7 +2454,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("credits-scriptch");
+    RenameThread("bitcreds-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -2597,7 +2597,7 @@ bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward) {
         strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
     }
 
-    CCreditsAddress intAddress(strDevAddress.c_str());
+    CBitcredsAddress intAddress(strDevAddress.c_str());
     CTxDestination devDestination = intAddress.Get();
     CScript devScriptPubKey = GetScriptForDestination(devDestination);
 
@@ -2848,7 +2848,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     int64_t nTime3 = GetTimeMicros(); nTimeConnect += nTime3 - nTime2;
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime3 - nTime2), 0.001 * (nTime3 - nTime2) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime3 - nTime2) / (nInputs-1), nTimeConnect * 0.000001);
 
-    // CRDS : MODIFIED TO CHECK MASTERNODE PAYMENTS AND SUPERBLOCKS
+    // BCRS : MODIFIED TO CHECK MASTERNODE PAYMENTS AND SUPERBLOCKS
 
     // It's possible that we simply don't have enough data and this could fail
     // (i.e. block itself could be a correct one and we need to store it),
@@ -2868,30 +2868,30 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     CAmount fundReward = 0 * COIN;
     int nNextHeight = chainActive.Height() + 1;
 
-    // 0.5 CRDS reward to Dev fund from 625001 until block 1375000
+    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
     if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
         fundReward = 0.5 * COIN;
 
         if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(CRDS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
+        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
         }
     }
 
-    // Temporal increase 1 CRDS reward to Dev fund from 550001 until block 625000
+    // Temporal increase 1 BCRS reward to Dev fund from 550001 until block 625000
     if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
         fundReward = 1 * COIN;
 
         if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(CRDS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
+        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
         }
     }
     
-    // 0.5 CRDS reward to old Dev fund from 375001 until block 550000
+    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
     if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
         fundReward = 0.5 * COIN;
 
         if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(CRDS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
+        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
         }
     }
 
@@ -2899,15 +2899,15 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     std::string strError = "";
 
     if(!IsBlockValueValid(block, pindex->nHeight, nExpectedBlockValue, strError)){
-        return state.DoS(0, error("ConnectBlock(CRDS): %s", strError), REJECT_INVALID, "bad-cb-amount");
+        return state.DoS(0, error("ConnectBlock(BCRS): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
 
     if (!IsBlockPayeeValid(block.vtx[0], pindex->nHeight, nExpectedBlockValue)) {
         mapRejectedBlocks.insert(std::make_pair(block.GetHash(), GetTime()));
-        return state.DoS(0, error("ConnectBlock(CRDS): couldn't find Masternode or Superblock payments"),
+        return state.DoS(0, error("ConnectBlock(BCRS): couldn't find Masternode or Superblock payments"),
                                 REJECT_INVALID, "bad-cb-payee");
     }
-    // END CREDITS
+    // END BITCREDS
 
     if (!control.Wait())
         return state.DoS(100, false);
@@ -3028,7 +3028,7 @@ bool static FlushStateToDisk(CValidationState &state, FlushStateMode mode) {
     if (nLastSetChain == 0) {
         nLastSetChain = nNow;
     }
-    size_t cacheSize = pcoinsTip->CreditsMemoryUsage();
+    size_t cacheSize = pcoinsTip->BitcredsMemoryUsage();
     // The cache is large and close to the limit, but we have time now (not in the middle of a block processing).
     bool fCacheLarge = mode == FLUSH_STATE_PERIODIC && cacheSize * (10.0/9) > nCoinCacheUsage;
     // The cache is over the limit, we have to write now.
@@ -3160,7 +3160,7 @@ void static UpdateTip(CBlockIndex *pindexNew) {
     LogPrintf("%s: new best=%s  height=%d  log2_work=%.8g  tx=%lu  date=%s progress=%f  cache=%.1fMiB(%utx)\n", __func__,
       chainActive.Tip()->GetBlockHash().ToString(), chainActive.Height(), log(chainActive.Tip()->nChainWork.getdouble())/log(2.0), (unsigned long)chainActive.Tip()->nChainTx,
       DateTimeStrFormat("%Y-%m-%d %H:%M:%S", chainActive.Tip()->GetBlockTime()),
-      Checkpoints::GuessVerificationProgress(chainParams.Checkpoints(), chainActive.Tip()), pcoinsTip->CreditsMemoryUsage() * (1.0 / (1<<20)), pcoinsTip->GetCacheSize());
+      Checkpoints::GuessVerificationProgress(chainParams.Checkpoints(), chainActive.Tip()), pcoinsTip->BitcredsMemoryUsage() * (1.0 / (1<<20)), pcoinsTip->GetCacheSize());
     if (!warningMessages.empty())
         LogPrintf(" warning='%s'", boost::algorithm::join(warningMessages, ", "));
     LogPrintf("\n");
@@ -3884,7 +3884,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                              REJECT_INVALID, "bad-cb-multiple");
 
 
-    // CREDITS : CHECK TRANSACTIONS FOR INSTANTSEND
+    // BITCREDS : CHECK TRANSACTIONS FOR INSTANTSEND
 
     if(sporkManager.IsSporkActive(SPORK_3_INSTANTSEND_BLOCK_FILTERING)) {
         // We should never accept block which conflicts with completed transaction lock,
@@ -3904,17 +3904,17 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                     instantsend.Relay(hashLocked);
                     LOCK(cs_main);
                     mapRejectedBlocks.insert(std::make_pair(block.GetHash(), GetTime()));
-                    return state.DoS(0, error("CheckBlock(CRDS): transaction %s conflicts with transaction lock %s",
+                    return state.DoS(0, error("CheckBlock(BCRS): transaction %s conflicts with transaction lock %s",
                                                 tx.GetHash().ToString(), hashLocked.ToString()),
                                      REJECT_INVALID, "conflict-tx-lock");
                 }
             }
         }
     } else {
-        LogPrintf("CheckBlock(CRDS): spork is off, skipping transaction locking checks\n");
+        LogPrintf("CheckBlock(BCRS): spork is off, skipping transaction locking checks\n");
     }
 
-    // END CREDITS
+    // END BITCREDS
 
     // Check transactions
     BOOST_FOREACH(const CTransaction& tx, block.vtx)
@@ -4560,7 +4560,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
             }
         }
         // check level 3: check for inconsistencies during memory-only disconnect of tip blocks
-        if (nCheckLevel >= 3 && pindex == pindexState && (coins.CreditsMemoryUsage() + pcoinsTip->CreditsMemoryUsage()) <= nCoinCacheUsage) {
+        if (nCheckLevel >= 3 && pindex == pindexState && (coins.BitcredsMemoryUsage() + pcoinsTip->BitcredsMemoryUsage()) <= nCoinCacheUsage) {
             bool fClean = true;
             if (!DisconnectBlock(block, state, pindex, coins, &fClean))
                 return error("VerifyDB(): *** irrecoverable inconsistency in block data at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString());
@@ -5094,7 +5094,7 @@ bool static AlreadyHave(const CInv& inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
         return mapBlockIndex.count(inv.hash);
 
     /*
-        Credits Related Inventory Messages
+        Bitcreds Related Inventory Messages
 
         --
 
@@ -5995,7 +5995,7 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
             LogPrint("mempool", "AcceptToMemoryPool: peer=%d: accepted %s (poolsz %u txn, %u kB)\n",
                 pfrom->id,
                 tx.GetHash().ToString(),
-                mempool.size(), mempool.CreditsMemoryUsage() / 1000);
+                mempool.size(), mempool.BitcredsMemoryUsage() / 1000);
 
             // Recursively process any orphan transactions that depended on this one
             std::set<NodeId> setMisbehaving;

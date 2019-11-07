@@ -1,5 +1,5 @@
 ---
-name: "credits-osx-1.0.0.0"
+name: "bitcreds-osx-1.0.0.0"
 enable_cache: true
 suites:
 - "trusty"
@@ -29,8 +29,8 @@ packages:
 - "fonts-tuffy"
 reference_datetime: "2017-01-01 00:00:00"
 remotes:
-- "url": "https://github.com/credits-crds/credits.git"
-  "dir": "credits"
+- "url": "https://github.com/bitcreds-crds/bitcreds.git"
+  "dir": "bitcreds"
 files:
 - "MacOSX10.11.sdk.tar.gz"
 script: |
@@ -77,7 +77,7 @@ script: |
   done
   export PATH=${WRAP_DIR}:${PATH}
 
-  cd credits
+  cd bitcreds
   BASEPREFIX=`pwd`/depends
 
   mkdir -p ${BASEPREFIX}/SDKs
@@ -92,14 +92,14 @@ script: |
   ./autogen.sh
   ./configure --disable-tests --prefix=${BASEPREFIX}/`echo "${HOSTS}" | awk '{print $1;}'`
   make dist
-  SOURCEDIST=`echo credits-*.tar.gz`
+  SOURCEDIST=`echo bitcreds-*.tar.gz`
   DISTNAME=`echo ${SOURCEDIST} | sed 's/.tar.*//'`
 
   # Correct tar file order
   mkdir -p temp
   pushd temp
   tar xf ../$SOURCEDIST
-  find credits-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
+  find bitcreds-* | sort | tar --no-recursion --mode='u+rw,go+r-w,a+X' --owner=0 --group=0 -c -T - | gzip -9n > ../$SOURCEDIST
   popd
 
   ORIGPATH="$PATH"
@@ -129,7 +129,7 @@ script: |
     popd
 
     make deploy
-    ${WRAP_DIR}/dmg dmg Credits.dmg ${OUTDIR}/${DISTNAME}-osx-unsigned.dmg
+    ${WRAP_DIR}/dmg dmg Bitcreds.dmg ${OUTDIR}/${DISTNAME}-osx-unsigned.dmg
 
     cd installed
     find . -name "lib*.la" -delete

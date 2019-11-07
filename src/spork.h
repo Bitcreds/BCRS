@@ -1,11 +1,11 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_SPORK_H
-#define CREDITS_SPORK_H
+#ifndef BITCREDS_SPORK_H
+#define BITCREDS_SPORK_H
 
 #include "hash.h"
 #include "net.h"
@@ -31,12 +31,12 @@ static const int SPORK_12_RECONSIDER_BLOCKS                             = 10011;
 static const int SPORK_13_OLD_SUPERBLOCK_FLAG                           = 10012;
 static const int SPORK_14_REQUIRE_SENTINEL_FLAG                         = 10013;
 
-// The code has been modified such that Credits will no longer accept blocks with no Masternode payments.
+// The code has been modified such that Bitcreds will no longer accept blocks with no Masternode payments.
 // This is similar to enabling Spork 8.
 
 static const int64_t SPORK_2_INSTANTSEND_ENABLED_DEFAULT                = 0;            // ON
 static const int64_t SPORK_3_INSTANTSEND_BLOCK_FILTERING_DEFAULT        = 0;            // ON
-static const int64_t SPORK_5_INSTANTSEND_MAX_VALUE_DEFAULT              = 1000;         // 1000 CRDS
+static const int64_t SPORK_5_INSTANTSEND_MAX_VALUE_DEFAULT              = 1000;         // 1000 BCRS
 static const int64_t SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT     = 4070908800;   // OFF
 static const int64_t SPORK_9_SUPERBLOCKS_ENABLED_DEFAULT                = 4070908800;   // OFF
 static const int64_t SPORK_10_MASTERNODE_PAY_UPDATED_NODES_DEFAULT      = 4070908800;   // OFF
@@ -123,4 +123,4 @@ public:
     bool SetPrivKey(std::string strPrivKey);
 };
 
-#endif // CREDITS_SPORK_H
+#endif // BITCREDS_SPORK_H

@@ -1,0 +1,6 @@
+usr/local/bin/bitcreds-qt usr/bin
+share/pixmaps/bitcreds32.xpm usr/share/pixmaps
+share/pixmaps/bitcreds16.xpm usr/share/pixmaps
+share/pixmaps/bitcreds128.png usr/share/pixmaps
+debian/bitcreds-qt.desktop usr/share/applications
+debian/bitcreds-qt.protocol usr/share/kde4/services/

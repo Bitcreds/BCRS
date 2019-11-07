@@ -1,11 +1,11 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Credits Developers
+// Copyright (c) 2017-2019 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef CREDITS_MASTERNODE_SYNC_H
-#define CREDITS_MASTERNODE_SYNC_H
+#ifndef BITCREDS_MASTERNODE_SYNC_H
+#define BITCREDS_MASTERNODE_SYNC_H
 
 #include "chain.h"
 #include "net.h"
@@ -92,4 +92,4 @@ public:
     void UpdatedBlockTip(const CBlockIndex *pindex);
 };
 
-#endif // CREDITS_MASTERNODE_SYNC_H
+#endif // BITCREDS_MASTERNODE_SYNC_H

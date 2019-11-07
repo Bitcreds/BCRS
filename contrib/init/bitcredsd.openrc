@@ -1,0 +1,92 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/bitcreds/.bitcreds" ]; then
+	BITCREDSD_DEFAULT_DATADIR="/var/lib/bitcreds/.bitcreds"
+else
+	BITCREDSD_DEFAULT_DATADIR="/var/lib/bitcredsd"
+fi
+
+BITCREDSD_CONFIGFILE=${BITCREDSD_CONFIGFILE:-/etc/bitcreds/bitcreds.conf}
+BITCREDSD_PIDDIR=${BITCREDSD_PIDDIR:-/var/run/bitcredsd}
+BITCREDSD_PIDFILE=${BITCREDSD_PIDFILE:-${BITCREDSD_PIDDIR}/bitcredsd.pid}
+BITCREDSD_DATADIR=${BITCREDSD_DATADIR:-${BITCREDSD_DEFAULT_DATADIR}}
+BITCREDSD_USER=${BITCREDSD_USER:-${BITCREDS_USER:-bitcreds}}
+BITCREDSD_GROUP=${BITCREDSD_GROUP:-bitcreds}
+BITCREDSD_BIN=${BITCREDSD_BIN:-/usr/bin/bitcredsd}
+BITCREDSD_NICE=${BITCREDSD_NICE:-${NICELEVEL:-0}}
+BITCREDSD_OPTS="${BITCREDSD_OPTS:-${BITCREDS_OPTS}}"
+
+name="Bitcreds Daemon"
+description="Bitcreds cryptocurrency P2P network daemon"
+
+command="/usr/bin/bitcredsd"
+command_args="-pid=\"${BITCREDSD_PIDFILE}\" \
+		-conf=\"${BITCREDSD_CONFIGFILE}\" \
+		-datadir=\"${BITCREDSD_DATADIR}\" \
+		-daemon \
+		${BITCREDSD_OPTS}"
+
+required_files="${BITCREDSD_CONFIGFILE}"
+start_stop_daemon_args="-u ${BITCREDSD_USER} \
+			-N ${BITCREDSD_NICE} -w 2000"
+pidfile="${BITCREDSD_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${BITCREDSD_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${BITCREDSD_USER}:${BITCREDSD_GROUP}" \
+	"${BITCREDSD_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${BITCREDSD_USER}:${BITCREDSD_GROUP}" \
+	"${BITCREDSD_PIDDIR}"
+
+	checkpath -f \
+	-o ${BITCREDSD_USER}:${BITCREDSD_GROUP} \
+	-m 0660 \
+	${BITCREDSD_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${BITCREDSD_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run bitcredsd."
+		eerror "The setting must appear in ${BITCREDSD_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following"
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is also recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Bitcreds Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}
