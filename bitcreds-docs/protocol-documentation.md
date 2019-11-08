@@ -1,7 +1,7 @@
 Protocol Documentation - 1.0.0.0
 =====================================
 
-This document describes the protocol extensions for all additional functionality build into the Credits protocol. This doesn't include any of the Bitcoin procotol, which has been left in tact in the Credits project. For more information about the core protocol, please see https://en.bitcoin.it/w/index.php?title#Protocol_documentation&action#edit
+This document describes the protocol extensions for all additional functionality build into the Bitcreds protocol. This doesn't include any of the Bitcoin procotol, which has been left in tact in the Bitcreds project. For more information about the core protocol, please see https://en.bitcoin.it/w/index.php?title#Protocol_documentation&action#edit
 
 ## Common Structures
 
@@ -59,9 +59,9 @@ Whenever a Masternode comes online or a client is syncing, they will send this m
 
 | Field Size | Field Name | Data type | Description |
 | ---------- | ----------- | --------- | -------- |
-| 41 | vin | CTxIn | The unspent output which is holding 500 Credits
-| # | addr | CService | Address of the main 500 Credits unspent output
-| 33-65 | pubKeyCollateralAddress | CPubKey | CPubKey of the main 500 Credits unspent output
+| 41 | vin | CTxIn | The unspent output which is holding 5000 Bitcreds
+| # | addr | CService | Address of the main 5000 Bitcreds unspent output
+| 33-65 | pubKeyCollateralAddress | CPubKey | CPubKey of the main 5000 Bitcreds unspent output
 | 33-65 | pubKeyMasternode | CPubKey | CPubKey of the secondary signing key (For all other messaging other than announce message)
 | 71-73 | sig | char[] | Signature of this message
 | 8 | sigTime | int64_t | Time which the signature was created

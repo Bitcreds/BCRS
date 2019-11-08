@@ -1,4 +1,4 @@
-dnl Copyright (c) 2017 Credits developers
+dnl Copyright (c) 2019 Bitcreds developers
 dnl Distributed under the MIT software license, see the accompanying
 dnl file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
