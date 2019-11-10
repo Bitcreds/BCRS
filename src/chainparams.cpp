@@ -100,7 +100,7 @@ static void MineGenesis(CBlockHeader& genesisBlock, const uint256& powLimit, boo
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "17th of June 2017: Bitcreds(BCRS) Launched";
+    const char* pszTimestamp = "17th of June 2017: Credits(CRDS) Launched";
     const CScript genesisOutputScript = CScript() << ParseHex("") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -177,8 +177,8 @@ public:
             assert(genesis.hashMerkleRoot == uint256S("0x1df9b425c9a06de51b3fb210ffd2e051e05718e264e8ee4692592746c1566a0c"));
 	}
 
-        vSeeds.push_back(CDNSSeedData("bcrs.co", "dnsseed1.bcrs.org"));
-        vSeeds.push_back(CDNSSeedData("bcrs.co", "dnsseed2.bcrs.org"));
+        vSeeds.push_back(CDNSSeedData("bitcreds.org", "dnsseed1.bitcreds.org"));
+        vSeeds.push_back(CDNSSeedData("bitcreds.org", "dnsseed2.bitcreds.org"));
 
         // Bitcreds addresses start with 'C'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,28);
