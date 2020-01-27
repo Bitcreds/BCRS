@@ -861,7 +861,8 @@ bool CMasternodePaymentVote::IsValid(CNode* pnode, int nValidationHeight, std::s
         if(nRank > MNPAYMENTS_SIGNATURES_TOTAL*2 && nBlockHeight > nValidationHeight) {
             strError = strprintf("Masternode is not in the top %d (%d)", MNPAYMENTS_SIGNATURES_TOTAL*2, nRank);
             LogPrintf("CMasternodePaymentVote::IsValid -- Error: %s\n", strError);
-            Misbehaving(pnode->GetId(), 20);
+       //  Commenting out below line as it causes regular (non masternode) wallets to be banned on the network. Effect is still that false is returned and comment exists in debuglog.
+       //  Misbehaving(pnode->GetId(), 20);
         }
         // Still invalid however
         return false;
