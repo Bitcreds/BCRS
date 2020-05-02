@@ -41,6 +41,7 @@ struct Params {
     int nHardForkTwo; // block
     int nHardForkThree; //block
 	int nHardForkFour; //block
+	int nHardForkFive; //block
     int nTempDevFundIncreaseEnd; //block height for temporal Dev fund increase ending
     int nMasternodePaymentsStartBlock;
     int nInstantSendKeepLock; // in blocks

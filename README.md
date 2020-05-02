@@ -1,8 +1,8 @@
-# **Bitcreds (BCRS) v1.5.0.0**
+# **Bitcreds (BCRS) v1.6.0.0**
 
 ![BCRS logo](https://github.com/Bitcreds/BCRS/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/Bitcreds/BCRS.svg?branch=master)](https://travis-ci.org/Bitcreds/BCRS)
 
-**Copyright (c) 2017-2019 Bitcreds Developers**
+**Copyright (c) 2017-2020 Bitcreds Developers**
 
 What are Bitcreds?
 ----------------
@@ -13,7 +13,7 @@ What are Bitcreds?
 * PoW Reward per Block: See Below
 * Maturity: 10 Blocks
 * PoW Blocks: ~675 per day
-* Masternode Collateral Amount: 5,000 BCRS
+* Masternode Collateral Amount: 50,000 BCRS
 * Masternode Min Confirmation: 16 Blocks
 * Masternode Reward: See Below
 * Total Coins (until 2 PoW / 2 MN reward): 18,987,500* (~6 Years)
@@ -21,7 +21,7 @@ What are Bitcreds?
 
 *Until block 375,000 all transaction fees get burned.
 
-Bitcreds uses peer-to-peer technology to operate securly with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
+Bitcreds uses peer-to-peer technology to operate securely with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
 Bitcreds utilises Masternodes, Privatesend and InstantSend to provide anonymous and near instant transaction confirmations.
 

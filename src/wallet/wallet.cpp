@@ -2402,22 +2402,45 @@ void CWallet::AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed, 
 
             for (unsigned int i = 0; i < pcoin->vout.size(); i++) {
                 bool found = false;
-                if(nCoinType == ONLY_DENOMINATED) {
-                    found = IsDenominatedAmount(pcoin->vout[i].nValue);
-                } else if(nCoinType == ONLY_NOT500IFMN) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == 5000*COIN);
-                } else if(nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
-                    if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
-                    found = !IsDenominatedAmount(pcoin->vout[i].nValue);
-                    if(found && fMasterNode)
-                        found = pcoin->vout[i].nValue != 5000*COIN; // do not use Hot MN funds
-                } else if(nCoinType == ONLY_500) {
-                    found = pcoin->vout[i].nValue == 5000*COIN;
-                } else if(nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
-                    found = IsCollateralAmount(pcoin->vout[i].nValue);
-                } else {
-                    found = true;
-                }
+                
+				
+                if (chainActive.Height() <= Params().GetConsensus().nHardForkFive) {
+					if(nCoinType == ONLY_DENOMINATED) {
+						found = IsDenominatedAmount(pcoin->vout[i].nValue);	
+					} else if(nCoinType == ONLY_NOT500IFMN) {
+						found = !(fMasterNode && pcoin->vout[i].nValue == 5000*COIN);
+					} else if(nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
+						if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
+						found = !IsDenominatedAmount(pcoin->vout[i].nValue);
+						if(found && fMasterNode)
+							found = pcoin->vout[i].nValue != 5000*COIN; // do not use Hot MN funds
+					} else if(nCoinType == ONLY_500) {
+						found = pcoin->vout[i].nValue == 5000*COIN;
+					} else if(nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
+						found = IsCollateralAmount(pcoin->vout[i].nValue);
+					} else {
+						found = true;
+					}
+				} else {		
+						if(nCoinType == ONLY_DENOMINATED) {
+						found = IsDenominatedAmount(pcoin->vout[i].nValue);	
+					} else if(nCoinType == ONLY_NOT500IFMN) {
+						found = !(fMasterNode && pcoin->vout[i].nValue == 50000*COIN);
+					} else if(nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
+						if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
+						found = !IsDenominatedAmount(pcoin->vout[i].nValue);
+						if(found && fMasterNode)
+							found = pcoin->vout[i].nValue != 50000*COIN; // do not use Hot MN funds
+					} else if(nCoinType == ONLY_500) {
+						found = pcoin->vout[i].nValue == 50000*COIN;
+					} else if(nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
+						found = IsCollateralAmount(pcoin->vout[i].nValue);
+					} else {
+						found = true;
+					}
+				}
+				
+				
                 if(!found) continue;
 
                 isminetype mine = IsMine(pcoin->vout[i]);
@@ -3311,9 +3334,15 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                 if (!SelectCoins(nValueToSelect, setCoins, nValueIn, coinControl, nCoinType, fUseInstantSend))
                 {
                     if (nCoinType == ONLY_NOT500IFMN) {
-                        strFailReason = _("Unable to locate enough funds for this transaction that are not equal 5000 BCRS.");
+                        if (chainActive.Height() < Params().GetConsensus().nHardForkFive)
+                            strFailReason = _("Unable to locate enough funds for this transaction that are not equal 5000 BCRS.");
+                        else
+                            strFailReason = _("Unable to locate enough funds for this transaction that are not equal 50000 BCRS.");
                     } else if (nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
-                        strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 5000 BCRS.");
+                                                if (chainActive.Height() < Params().GetConsensus().nHardForkFive)
+                            strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 5000 BCRS.");
+                        else
+                            strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 50000 BCRS.");
                     } else if (nCoinType == ONLY_DENOMINATED) {
                         strFailReason = _("Unable to locate enough PrivateSend denominated funds for this transaction.");
                         strFailReason += " " + _("PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.");
