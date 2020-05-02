@@ -646,7 +646,7 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
                 LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 50000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
                 return false;
             }
-
+		}
         if(chainActive.Height() - coins.nHeight + 1 < Params().GetConsensus().nMasternodeMinimumConfirmations) {
             LogPrintf("CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO must have at least %d confirmations, Masternode=%s\n",
                     Params().GetConsensus().nMasternodeMinimumConfirmations, vin.prevout.ToStringShort());
