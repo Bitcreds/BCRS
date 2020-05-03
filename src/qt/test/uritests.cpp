@@ -1,5 +1,5 @@
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Bitcreds Developers
+// Copyright (c) 2017-2020 Bitcreds Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
