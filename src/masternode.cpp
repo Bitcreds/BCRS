@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2019 Bitcreds Developers
+// Copyright (c) 2017-2020 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -636,11 +636,17 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
             return false;
         }
 
-        if(coins.vout[vin.prevout.n].nValue != 5000 * COIN) {
-            LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 5000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
-            return false;
-        }
-
+        if (chainActive.Height() < Params().GetConsensus().nHardForkFive) {
+            if(coins.vout[vin.prevout.n].nValue != 5000 * COIN) {
+                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 5000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
+                return false;
+            }
+        } else {
+            if(coins.vout[vin.prevout.n].nValue != 50000 * COIN) {
+                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 50000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
+                return false;
+            }
+		}
         if(chainActive.Height() - coins.nHeight + 1 < Params().GetConsensus().nMasternodeMinimumConfirmations) {
             LogPrintf("CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO must have at least %d confirmations, Masternode=%s\n",
                     Params().GetConsensus().nMasternodeMinimumConfirmations, vin.prevout.ToStringShort());
@@ -661,7 +667,7 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
     }
 
     // verify that sig time is legit in past
-    // should be at least not earlier than block when 5000 BCRS tx got nMasternodeMinimumConfirmations
+    // should be at least not earlier than block when 5000 BCRS (50000 BCRS after HardForkFive) tx got nMasternodeMinimumConfirmations
     uint256 hashBlock = uint256();
     CTransaction tx2;
     GetTransaction(vin.prevout.hash, tx2, Params().GetConsensus(), hashBlock, true);
@@ -669,7 +675,7 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
         LOCK(cs_main);
         BlockMap::iterator mi = mapBlockIndex.find(hashBlock);
         if (mi != mapBlockIndex.end() && (*mi).second) {
-            CBlockIndex* pMNIndex = (*mi).second; // block for 5,000 tx -> 1 confirmation
+            CBlockIndex* pMNIndex = (*mi).second; // block for 5,000 (50,000 after HardForkFive)tx -> 1 confirmation
             CBlockIndex* pConfIndex = chainActive[pMNIndex->nHeight + Params().GetConsensus().nMasternodeMinimumConfirmations - 1]; // block where tx got nMasternodeMinimumConfirmations
             if(pConfIndex->GetBlockTime() > sigTime) {
                 LogPrintf("CMasternodeBroadcast::CheckOutpoint -- Bad sigTime %d (%d conf block is at %d) for Masternode %s %s\n",
@@ -690,8 +696,13 @@ bool CMasternodeBroadcast::IsVinAssociatedWithPubkey(const CTxIn& txin, const CP
     CTransaction tx;
     uint256 hash;
     if(GetTransaction(txin.prevout.hash, tx, Params().GetConsensus(), hash, true)) {
-        BOOST_FOREACH(CTxOut out, tx.vout)
-                if(out.nValue == 5000*COIN && out.scriptPubKey == payee) return true;
+        if (chainActive.Height() < Params().GetConsensus().nHardForkFive) {
+            BOOST_FOREACH(CTxOut out, tx.vout)
+                    if(out.nValue == 5000*COIN && out.scriptPubKey == payee) return true;
+        } else {
+            BOOST_FOREACH(CTxOut out, tx.vout)
+                    if(out.nValue == 50000*COIN && out.scriptPubKey == payee) return true;
+        }
     }
 
     return false;
