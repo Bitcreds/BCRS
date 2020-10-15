@@ -306,21 +306,22 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
     txoutMasternodeRet = CTxOut();
 
     CBlockIndex* pindexPrev = chainActive.Tip();
-    if(!pindexPrev) return;
+    if (!pindexPrev) return;
 
+    int nNextHeight = pindexPrev->nHeight + 1;
     bool hasPayment = true;
     CScript payee;
 
     if (chainActive.Height() <= Params().GetConsensus().nMasternodePaymentsStartBlock) {
-            if (fDebug)
-                LogPrintf("CreateNewBlock: No Masternode payments prior to block 101\n");
-            hasPayment = false;
+        if (fDebug)
+            LogPrintf("CreateNewBlock: No Masternode payments prior to block 101\n");
+        hasPayment = false;
     }
 
-    if (!mnpayments.GetBlockPayee(pindexPrev->nHeight+1, payee)){
+    if (!mnpayments.GetBlockPayee(nNextHeight, payee)) {
         //Checks whether or not there is a Masternode to be paid
         CMasternode* winningNode = mnodeman.Find(payee);
-        if(winningNode){
+        if (winningNode) {
             payee = GetScriptForDestination(winningNode->pubKeyCollateralAddress.GetID());
         } else {
             if (fDebug)
@@ -329,135 +330,56 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
         }
     }
 
-    CAmount PoWPayment = GetPoWBlockPayment(pindexPrev->nHeight, nFees);;
-    CAmount MNPayment = GetMasternodePayment(hasPayment);
-    CAmount devPayment = 0.5 * COIN;
-    CAmount tempDevPayment = 1 * COIN;
-    int nNextHeight = chainActive.Height() + 1;
+    CAmount PoWPayment = GetPoWBlockPayment(nNextHeight);
 
     txNew.vout[0].nValue = PoWPayment;
 
-    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
-    if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
-        txNew.vout.resize(2);
-        txNew.vout[0].nValue = PoWPayment;
-
-        std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-        txNew.vout[1].scriptPubKey = devScriptPubKey;
-        txNew.vout[1].nValue = devPayment;
-
-        LogPrintf("CMasternodePayments::FillBlockPayee -- 1st Check Development Fund payment %lld to %s\n", devPayment, intAddress.ToString());
-    }
-
-    // 1 BCRS reward to Dev fund from 550001 until block 625000
-    if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
-        txNew.vout.resize(2);
-        txNew.vout[0].nValue = PoWPayment;
-
-        std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-        txNew.vout[1].scriptPubKey = devScriptPubKey;
-        txNew.vout[1].nValue = tempDevPayment;
-
-        LogPrintf("CMasternodePayments::FillBlockPayee -- 1st Check Development Fund payment %lld to %s\n", tempDevPayment, intAddress.ToString());
-    }
-
-    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
-    if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
-        txNew.vout.resize(2);
-        txNew.vout[0].nValue = PoWPayment;
-
-        std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-        txNew.vout[1].scriptPubKey = devScriptPubKey;
-        txNew.vout[1].nValue = devPayment;
-
-        LogPrintf("CMasternodePayments::FillBlockPayee -- 1st Check Development Fund payment %lld to %s\n", devPayment, intAddress.ToString());
-    }
-
     if (hasPayment) {
-        txNew.vout.resize(2);
+        CAmount MNPayment = GetMasternodePayment(nNextHeight);
 
+        txNew.vout.resize(2);
         txNew.vout[0].nValue = PoWPayment;
 
         txNew.vout[1].scriptPubKey = payee;
         txNew.vout[1].nValue = MNPayment;
 
-        if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
+        if (nNextHeight > Params().GetConsensus().nPhase1LastBlock) {
             txNew.vout.resize(3);
-
             txNew.vout[0].nValue = PoWPayment;
 
             txNew.vout[1].scriptPubKey = payee;
             txNew.vout[1].nValue = MNPayment;
-
-            std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-            CBitcredsAddress intAddress(strDevAddress.c_str());
-            CTxDestination devDestination = intAddress.Get();
-            CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-            txNew.vout[2].scriptPubKey = devScriptPubKey;
-            txNew.vout[2].nValue = devPayment;
-
-            LogPrintf("CMasternodePayments::FillBlockPayee -- 2nd Check Development Fund payment %lld to %s\n", devPayment, intAddress.ToString());
+            
+            txNew.vout[2].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
+            txNew.vout[2].nValue = GetDevelopmentFundPayment(nNextHeight);
         }
-
-        if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
-            txNew.vout.resize(3);
-
-            txNew.vout[0].nValue = PoWPayment;
-
-            txNew.vout[1].scriptPubKey = payee;
-            txNew.vout[1].nValue = MNPayment;
-
-            std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-            CBitcredsAddress intAddress(strDevAddress.c_str());
-            CTxDestination devDestination = intAddress.Get();
-            CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-            txNew.vout[2].scriptPubKey = devScriptPubKey;
-            txNew.vout[2].nValue = tempDevPayment;
-
-            LogPrintf("CMasternodePayments::FillBlockPayee -- 2nd Check Development Fund payment %lld to %s\n", tempDevPayment, intAddress.ToString());
-        }
-
-        if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
-            txNew.vout.resize(3);
-
-            txNew.vout[0].nValue = PoWPayment;
-
-            txNew.vout[1].scriptPubKey = payee;
-            txNew.vout[1].nValue = MNPayment;
-
-            std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
-            CBitcredsAddress intAddress(strDevAddress.c_str());
-            CTxDestination devDestination = intAddress.Get();
-            CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-            txNew.vout[2].scriptPubKey = devScriptPubKey;
-            txNew.vout[2].nValue = devPayment;
-
-            LogPrintf("CMasternodePayments::FillBlockPayee -- 2nd Check Development Fund payment %lld to %s\n", devPayment, intAddress.ToString());
-        }
-
-        CTxDestination address1;
-        ExtractDestination(payee, address1);
-        CBitcredsAddress address2(address1);
 
         txoutMasternodeRet = CTxOut(MNPayment, payee);
 
-        LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s\n", MNPayment, address2.ToString());
+        CTxDestination tempAddress1;
+        ExtractDestination(payee, tempAddress1);
+        CBitcredsAddress tempAddress2(tempAddress1);
+
+        LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s\n", MNPayment, tempAddress2.ToString());
+        
+    } else if (nNextHeight > Params().GetConsensus().nPhase1LastBlock) {
+        txNew.vout.resize(2);
+        txNew.vout[0].nValue = PoWPayment;
+
+        txNew.vout[1].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
+        txNew.vout[1].nValue = GetDevelopmentFundPayment(nNextHeight);
     }
+}
+
+CScript CMasternodePayments::GetDevFundScriptPubKey(const int& nBlockHeight) {
+    std::string strDevFundAddress;
+
+    if (nBlockHeight <= Params().GetConsensus().nHardForkThree)
+        strDevFundAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
+    else
+        strDevFundAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
+
+    return GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
 }
 
 int CMasternodePayments::GetMinMasternodePaymentsProto() {

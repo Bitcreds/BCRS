@@ -42,6 +42,7 @@ struct Params {
     int nHardForkThree; //block
 	int nHardForkFour; //block
 	int nHardForkFive; //block
+    int nHardForkSix; // block
     int nTempDevFundIncreaseEnd; //block height for temporal Dev fund increase ending
     int nMasternodePaymentsStartBlock;
     int nInstantSendKeepLock; // in blocks
@@ -64,6 +65,8 @@ struct Params {
     int nPhase2LastBlock;
     int nPhase3LastBlock;
     int nPhase4LastBlock;
+
+    int nBlocksPerYear;
 	
     /**
      * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargetting period,

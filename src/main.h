@@ -259,7 +259,8 @@ bool GetTransaction(const uint256 &hash, CTransaction &tx, const Consensus::Para
 bool ActivateBestChain(CValidationState& state, const CChainParams& chainparams, const CBlock* pblock = NULL);
 
 CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees);
-CAmount GetMasternodePayment(bool fMasternode = true);
+CAmount GetMasternodePayment(const int& nHeight);
+CAmount GetDevelopmentFundPayment(const int& nHeight);
 
 bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward);
 
