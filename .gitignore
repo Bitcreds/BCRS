@@ -134,3 +134,4 @@ dynamic-cli
 dynamicd
 dynamic-qt
 make
+.vscode/settings.json

@@ -642,6 +642,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
 
     // Update nTime
     UpdateTime(pblock, consensusParams, pindexPrev);
+    pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
     pblock->nNonce = 0;
 
     UniValue aCaps(UniValue::VARR);

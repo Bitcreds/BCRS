@@ -583,6 +583,7 @@ void static BitcredsMiner(const CChainParams& chainparams)
             int64_t nStart = GetTime();
             arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
             uint256 hash;
+            int nTargetSpacingCycles = 0;
             while (true)
             {
                 unsigned int nHashesDone = 0;
@@ -665,6 +666,12 @@ void static BitcredsMiner(const CChainParams& chainparams)
                 if (chainparams.GetConsensus().fPowAllowMinDifficultyBlocks)
                 {
                     // Changing pblock->nTime can change work required on testnet:
+                    hashTarget.SetCompact(pblock->nBits);
+                }
+
+                if (((GetTime() - nStart) / chainparams.GetConsensus().nPowTargetSpacing) > nTargetSpacingCycles) {
+                    nTargetSpacingCycles = (GetTime() - nStart) / chainparams.GetConsensus().nPowTargetSpacing;
+                    pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
                     hashTarget.SetCompact(pblock->nBits);
                 }
             }
