@@ -637,11 +637,13 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
         // Need to update only after we know CreateNewBlock succeeded
         pindexPrev = pindexPrevNew;
     }
+
     CBlock* pblock = &pblocktemplate->block; // pointer for convenience
     const Consensus::Params& consensusParams = Params().GetConsensus();
 
     // Update nTime
     UpdateTime(pblock, consensusParams, pindexPrev);
+    // Update nBits accordingly with the latest DELTA difficulty retarget.
     pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
     pblock->nNonce = 0;
 

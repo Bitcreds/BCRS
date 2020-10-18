@@ -114,10 +114,6 @@ int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParam
     if (nOldTime < nNewTime)
         pblock->nTime = nNewTime;
 
-    // Updating time can change work required on testnet:
-    if (consensusParams.fPowAllowMinDifficultyBlocks)
-        pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
-
     return nNewTime - nOldTime;
 }
 
@@ -583,7 +579,6 @@ void static BitcredsMiner(const CChainParams& chainparams)
             int64_t nStart = GetTime();
             arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
             uint256 hash;
-            int nTargetSpacingCycles = 0;
             while (true)
             {
                 unsigned int nHashesDone = 0;
@@ -663,17 +658,10 @@ void static BitcredsMiner(const CChainParams& chainparams)
                 if (UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev) < 0)
                     break; // Recreate the block if the clock has run backwards,
                            // so that we can use the correct time.
-                if (chainparams.GetConsensus().fPowAllowMinDifficultyBlocks)
-                {
-                    // Changing pblock->nTime can change work required on testnet:
-                    hashTarget.SetCompact(pblock->nBits);
-                }
 
-                if (((GetTime() - nStart) / chainparams.GetConsensus().nPowTargetSpacing) > nTargetSpacingCycles) {
-                    nTargetSpacingCycles = (GetTime() - nStart) / chainparams.GetConsensus().nPowTargetSpacing;
-                    pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
-                    hashTarget.SetCompact(pblock->nBits);
-                }
+                // Update nBits and hashTarget accordingly with the latest DELTA difficulty retarget.
+                pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+                hashTarget.SetCompact(pblock->nBits);
             }
         }
     }
