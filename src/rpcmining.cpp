@@ -643,9 +643,11 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
 
     // Update nTime
     UpdateTime(pblock, consensusParams, pindexPrev);
-    // Update nBits accordingly with the latest DELTA difficulty retarget.
-    pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
     pblock->nNonce = 0;
+
+    if (GetTime() - nStart > 4)
+        // Update nBits in accordance with the latest DELTA difficulty retarget if the current block is older than 4 seconds.
+        pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, consensusParams);
 
     UniValue aCaps(UniValue::VARR);
     aCaps.push_back("proposal");

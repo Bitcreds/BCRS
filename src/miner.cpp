@@ -576,7 +576,7 @@ void static BitcredsMiner(const CChainParams& chainparams)
             //
             // Search
             //
-            int64_t nStart = GetTime();
+            int64_t nStart = GetTime(), nUpdateCycleStart = GetTimeMillis();
             arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
             uint256 hash;
             while (true)
@@ -654,14 +654,18 @@ void static BitcredsMiner(const CChainParams& chainparams)
                 if (pindexPrev != chainActive.Tip())
                     break;
 
-                // Update nTime every few seconds
-                if (UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev) < 0)
-                    break; // Recreate the block if the clock has run backwards,
-                           // so that we can use the correct time.
+                if (GetTimeMillis() - nUpdateCycleStart > 4000) {
+                    nUpdateCycleStart = GetTimeMillis();
 
-                // Update nBits and hashTarget accordingly with the latest DELTA difficulty retarget.
-                pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
-                hashTarget.SetCompact(pblock->nBits);
+                    // Update nTime every few seconds
+                    if (UpdateTime(pblock, chainparams.GetConsensus(), pindexPrev) < 0)
+                        break; // Recreate the block if the clock has run backwards,
+                               // so that we can use the correct time.
+
+                    // Update nBits and hashTarget in accordance with the latest DELTA difficulty retarget.
+                    pblock->nBits = GetNextWorkRequired(pindexPrev, pblock, chainparams.GetConsensus());
+                    hashTarget.SetCompact(pblock->nBits);
+                }
             }
         }
     }
