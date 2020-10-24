@@ -1,4 +1,4 @@
-# **Bitcreds (BCRS) v1.6.0.0**
+# **Bitcreds (BCRS) v1.6.1.0**
 
 ![BCRS logo](https://github.com/Bitcreds/BCRS/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/Bitcreds/BCRS.svg?branch=master)](https://travis-ci.org/Bitcreds/BCRS)
 
