@@ -343,7 +343,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
         txNew.vout[1].scriptPubKey = payee;
         txNew.vout[1].nValue = MNPayment;
 
-        if (nNextHeight > Params().GetConsensus().nPhase1LastBlock) {
+        if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
             txNew.vout.resize(3);
             txNew.vout[0].nValue = PoWPayment;
 
@@ -362,7 +362,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
 
         LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s\n", MNPayment, tempAddress2.ToString());
         
-    } else if (nNextHeight > Params().GetConsensus().nPhase1LastBlock) {
+    } else if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
         txNew.vout.resize(2);
         txNew.vout[0].nValue = PoWPayment;
 
