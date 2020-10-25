@@ -40,8 +40,8 @@ struct Params {
     int nHardForkOne; // block
     int nHardForkTwo; // block
     int nHardForkThree; //block
-	int nHardForkFour; //block
-	int nHardForkFive; //block
+    int nHardForkFour; //block
+    int nHardForkFive; //block
     int nHardForkSix; // block
     int nTempDevFundIncreaseEnd; //block height for temporal Dev fund increase ending
     int nMasternodePaymentsStartBlock;
@@ -75,6 +75,7 @@ struct Params {
     uint256 powLimit;
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
+    int64_t nDifficultyAdjustmentInterval;
     int64_t nOldPowTargetSpacing;
     int64_t nNewPowTargetSpacing;
     int64_t GetCurrentPowTargetSpacing(const int& nHeight) const {
@@ -83,7 +84,6 @@ struct Params {
         else
             return nOldPowTargetSpacing;
     }
-    int64_t nDifficultyAdjustmentInterval;
 };
 } // namespace Consensus
 

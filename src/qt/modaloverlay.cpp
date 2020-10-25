@@ -130,7 +130,7 @@ void ModalOverlay::tipUpdate(int count, const QDateTime& blockDate, double nVeri
     int estimateNumHeadersLeft = bestHeaderDate.secsTo(currentDate) / Params().GetConsensus().GetCurrentPowTargetSpacing(bestHeaderHeight);
 
     bool hasBestHeader = bestHeaderHeight >= count;
-
+    
     // show remaining number of blocks
     if (estimateNumHeadersLeft < HEADER_HEIGHT_DELTA_SYNC && hasBestHeader) {
         ui->numberOfBlocksLeft->setText(QString::number(bestHeaderHeight - count));

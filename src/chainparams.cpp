@@ -116,8 +116,8 @@ public:
         consensus.nHardForkOne = 250000; // block
         consensus.nHardForkTwo = 375000; // block
         consensus.nHardForkThree = 550000; //block
-		consensus.nHardForkFour = 665000; //block
-		consensus.nHardForkFive = 850000; //block
+        consensus.nHardForkFour = 665000; //block
+        consensus.nHardForkFive = 850000; //block
         consensus.nHardForkSix = 1000000; //block
         consensus.nTempDevFundIncreaseEnd = 625000; //block
         consensus.nMasternodePaymentsStartBlock = 100; // Masternode Payments begin on block 100.
@@ -230,8 +230,8 @@ public:
         consensus.nHardForkOne = 25000; // block
         consensus.nHardForkTwo = 37500; // block
         consensus.nHardForkThree = 55000; //block
-		consensus.nHardForkFour = 66500; //block
-		consensus.nHardForkFive = 85000; //block
+        consensus.nHardForkFour = 66500; //block
+        consensus.nHardForkFive = 85000; //block
         consensus.nHardForkSix = 100000; //block
         consensus.nTempDevFundIncreaseEnd = 62500; //block
         consensus.nMasternodePaymentsStartBlock = 0;
@@ -325,7 +325,7 @@ public:
             1000        // * estimated number of transactions per day after checkpoint
         };
 
-	    consensus.nIntPhaseTotalBlocks = 12500;
+        consensus.nIntPhaseTotalBlocks = 12500;
         consensus.nBlocksPerYear = 8760; // mock year for testnet
     }
 };
@@ -341,8 +341,8 @@ public:
         consensus.nHardForkOne = 25000; // block
         consensus.nHardForkTwo = 37500; // block
         consensus.nHardForkThree = 55000; //block
-		consensus.nHardForkFour = 66500; //block
-		consensus.nHardForkFive = 85000; //block
+        consensus.nHardForkFour = 66500; //block
+        consensus.nHardForkFive = 85000; //block
         consensus.nHardForkSix = 100000; //block
         consensus.nTempDevFundIncreaseEnd = 62500; //block
         consensus.nMasternodePaymentsStartBlock = 0;
@@ -423,8 +423,8 @@ public:
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
         // Regtest Bitcreds BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
-
-	    consensus.nIntPhaseTotalBlocks = 12500;
+        
+        consensus.nIntPhaseTotalBlocks = 12500;
         consensus.nBlocksPerYear = 8760; // mock year for regtest
     }
 };

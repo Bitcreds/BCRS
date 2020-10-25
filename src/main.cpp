@@ -456,7 +456,17 @@ void UpdateBlockAvailability(NodeId nodeid, const uint256 &hash) {
 // Requires cs_main
 bool CanDirectFetch(const Consensus::Params &consensusParams)
 {
-    return chainActive.Tip()->GetBlockTime() > GetAdjustedTime() - consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight) * 20;
+    int64_t timeDifference;
+
+    if (chainActive.Tip()->nHeight > consensusParams.nHardForkSix - 20 && chainActive.Tip()->nHeight < consensusParams.nHardForkSix) {
+        int nBlocksOldTargetSpacing = consensusParams.nHardForkSix - chainActive.Tip()->nHeight;
+
+        timeDifference = nBlocksOldTargetSpacing * consensusParams.GetCurrentPowTargetSpacing(1) + // after HardForkSix the target spacing changed
+                         (20 - nBlocksOldTargetSpacing) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1);
+    } else
+        timeDifference = consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight) * 20;
+
+    return chainActive.Tip()->GetBlockTime() > GetAdjustedTime() - timeDifference;
 }
 
 // Requires cs_main
@@ -5811,7 +5821,17 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
             }
             // If pruning, don't inv blocks unless we have on disk and are likely to still have
             // for some reasonable time window (1 hour) that block relay might require.
-            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - 3600 / chainparams.GetConsensus().GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
+            
+            int nBlocksInPastHour;
+            Consensus::Params consensusParams = chainparams.GetConsensus();
+
+            if (chainActive.Tip()->nHeight > consensusParams.nHardForkSix && chainActive.Tip()->nHeight < consensusParams.nHardForkSix + 10)
+                nBlocksInPastHour = (chainActive.Tip()->nHeight - consensusParams.nHardForkSix) + // after HardForkSix the target spacing increased so before the fork block there were more blocks than 10 per hour
+                                    (consensusParams.nHardForkSix + 10 - chainActive.Tip()->nHeight) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1) / consensusParams.GetCurrentPowTargetSpacing(1);
+            else
+                nBlocksInPastHour = 3600 / consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
+            
+            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - nBlocksInPastHour;
             if (fPruneMode && (!(pindex->nStatus & BLOCK_HAVE_DATA) || pindex->nHeight <= chainActive.Tip()->nHeight - nPrunedBlocksLikelyToHave))
             {
                 LogPrint("net", " getblocks stopping, pruned or too old block at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
