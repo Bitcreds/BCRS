@@ -64,7 +64,7 @@ Magic Bytes = 0x1f 0x22 0x05 0x2f
  2021 |  1,043,801 - 1,087,600  |  5 BCRS |    5 BCRS    |      2 BCRS      |     12 BCRS       |
  2022 |  1,087,601 - 1,131,400  |  4 BCRS |    4 BCRS    |      2 BCRS      |     10 BCRS       |
  2022 |  1,131,401 - 1,175,200  |  3 BCRS |    3 BCRS    |      2 BCRS      |      8 BCRS       |
- 2023 |  2,175,200 - ∞          |  2 BCRS |    2 BCRS    |      2 BCRS      |      6 BCRS       |
+ 2023 |  1,175,201 - ∞          |  2 BCRS |    2 BCRS    |      2 BCRS      |      6 BCRS       |
 
 UNIX BUILD NOTES
 ====================

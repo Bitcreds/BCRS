@@ -2,6 +2,7 @@
 *.sublime-workspace
 todo.txt
 reset-files.bash
+.vscode/settings.json
 
 *.tar.gz
 
@@ -134,4 +135,3 @@ dynamic-cli
 dynamicd
 dynamic-qt
 make
-.vscode/settings.json

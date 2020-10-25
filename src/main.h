@@ -262,7 +262,7 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees);
 CAmount GetMasternodePayment(const int& nHeight);
 CAmount GetDevelopmentFundPayment(const int& nHeight);
 
-bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward);
+bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward, const int& nHeight);
 
 /**
  * Prune block and undo files (blk???.dat and undo???.dat) so that the disk space used is less than a user-defined target.
