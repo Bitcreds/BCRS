@@ -1774,10 +1774,10 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
         LogPrint("premine creation", "GetPoWBlockPayment() : create=%s Premine=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
         return nIntPoWReward;
     }
-    else if (nHeight >= 1 && nHeight <= consensusParmas.nHardForkTwo)
+    else if (nHeight >= 1 && nHeight <= consensusParams.nHardForkTwo)
         nIntPoWReward = 10 * COIN;
-    else if (nHeight > consensusParmas.nHardForkTwo && nHeight <= consensusParmas.nHardForkSix) {
-        int nIntPhase = (nHeight - consensusParmas.nHardForkTwo) / consensusParmas.nIntPhaseTotalBlocks;
+    else if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkTwo) / consensusParams.nIntPhaseTotalBlocks;
 
         switch (nIntPhase) {
             case 0: nIntPoWReward = 8 * COIN;
@@ -1793,8 +1793,8 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
 
         nIntPoWReward += nFees;
     }
-    else if (nHeight > consensusParmas.nHardForkSix && nHeight <= consensusParmas.nHardForkSix + 2 * consensusParmas.nBlocksPerYear) {
-        int nIntPhase = (nHeight - consensusParmas.nHardForkSix) / (consensusParmas.nBlocksPerYear / 2);
+    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
 
         switch (nIntPhase) {
             case 0: nIntPoWReward = 6 * COIN;
@@ -1819,10 +1819,10 @@ CAmount GetMasternodePayment(const int& nHeight) {
     CAmount nIntMNReward = 0 * COIN;
     Consensus::Params consensusParams = Params().GetConsensus();
 
-    if (nHeight > consensusParmas.nMasternodePaymentsStartBlock && nHeight <= consensusParmas.nHardForkTwo)
+    if (nHeight > consensusParams.nMasternodePaymentsStartBlock && nHeight <= consensusParams.nHardForkTwo)
         nIntMNReward = 1 * COIN;
-    else if (nHeight > consensusParmas.nHardForkTwo && nHeight <= consensusParmas.nHardForkSix) {
-        int nIntPhase = (nHeight - consensusParmas.nHardForkTwo) / consensusParmas.nIntPhaseTotalBlocks;
+    else if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkTwo) / consensusParams.nIntPhaseTotalBlocks;
         
         switch(nIntPhase) {
             case 0: nIntMNReward = 2 * COIN;
@@ -1836,8 +1836,8 @@ CAmount GetMasternodePayment(const int& nHeight) {
             case 4: nIntMNReward = 6 * COIN;
         }
     }
-    else if (nHeight > consensusParmas.nHardForkSix && nHeight <= consensusParmas.nHardForkSix + 2 * consensusParmas.nBlocksPerYear) {
-        int nIntPhase = (nHeight - consensusParmas.nHardForkSix) / (consensusParmas.nBlocksPerYear / 2);
+    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
 
         switch (nIntPhase) {
             case 0: nIntMNReward = 6 * COIN;
@@ -1861,13 +1861,13 @@ CAmount GetDevelopmentFundPayment(const int& nHeight) {
     Consensus::Params consensusParams = Params().GetConsensus();
 
     // 0.5 BCRS reward to old Dev fund from 375,001 until block 550,000
-    if (nHeight > consensusParmas.nHardForkTwo && nHeight <= consensusParmas.nHardForkThree)
+    if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkThree)
         nIntDevFundReward = 0.5 * COIN;
     // Temporal increase 1 BCRS reward to Dev fund from 550,001 until block 625,000
-    else if (nHeight > consensusParmas.nHardForkThree && nHeight <= consensusParmas.nTempDevFundIncreaseEnd)
+    else if (nHeight > consensusParams.nHardForkThree && nHeight <= consensusParams.nTempDevFundIncreaseEnd)
         nIntDevFundReward = 1 * COIN;
     // 0.5 BCRS reward to Dev fund from 625,001 until block 1,000,000
-    else if (nHeight > consensusParmas.nTempDevFundIncreaseEnd && nHeight <= consensusParmas.nHardForkSix)
+    else if (nHeight > consensusParams.nTempDevFundIncreaseEnd && nHeight <= consensusParams.nHardForkSix)
         nIntDevFundReward = 0.5 * COIN;
     else
         nIntDevFundReward = 2 * COIN;
@@ -2615,7 +2615,7 @@ bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward, const int&
     if (nHeight > Params().GetConsensus().nHardForkThree)
         strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
     //Use the old Dev Fund address starting from HardForkTwo until HardForkThree
-    else if (nHeight > Params().GetConsensus().nHardForkTwo && nNextHeight <= Params().GetConsensus().nHardForkThree)
+    else if (nHeight > Params().GetConsensus().nHardForkTwo && nHeight <= Params().GetConsensus().nHardForkThree)
         strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
     else if (txNew.vout.size() <= 2) // before HardForkTwo there should be at most 2 outgoing transanctions, PoW and MN rewards
         return true;
@@ -5822,19 +5822,20 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
                 LogPrint("net", "  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
                 break;
             }
+            
             // If pruning, don't inv blocks unless we have on disk and are likely to still have
             // for some reasonable time window (1 hour) that block relay might require.
             
-            int nBlocksInPastHour;
+            int nBlocksPastHour;
             Consensus::Params consensusParams = chainparams.GetConsensus();
 
             if (chainActive.Tip()->nHeight > consensusParams.nHardForkSix && chainActive.Tip()->nHeight < consensusParams.nHardForkSix + 10)
-                nBlocksInPastHour = (chainActive.Tip()->nHeight - consensusParams.nHardForkSix) + // after HardForkSix the target spacing increased so before the fork block there were more blocks than 10 per hour
-                                    (consensusParams.nHardForkSix + 10 - chainActive.Tip()->nHeight) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1) / consensusParams.GetCurrentPowTargetSpacing(1);
+                nBlocksPastHour = (chainActive.Tip()->nHeight - consensusParams.nHardForkSix) + // after HardForkSix the target spacing increased so before it more than 10 blocks per hour were produced
+                                  (consensusParams.nHardForkSix + 10 - chainActive.Tip()->nHeight) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1) / consensusParams.GetCurrentPowTargetSpacing(1);
             else
-                nBlocksInPastHour = 3600 / consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
+                nBlocksPastHour = 3600 / consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
             
-            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - nBlocksInPastHour;
+            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - nBlocksPastHour;
             if (fPruneMode && (!(pindex->nStatus & BLOCK_HAVE_DATA) || pindex->nHeight <= chainActive.Tip()->nHeight - nPrunedBlocksLikelyToHave))
             {
                 LogPrint("net", " getblocks stopping, pruned or too old block at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
