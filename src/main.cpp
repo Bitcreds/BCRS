@@ -2620,7 +2620,7 @@ bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward, const int&
     else if (txNew.vout.size() <= 2) // before HardForkTwo there should be at most 2 outgoing transanctions, PoW and MN rewards
         return true;
 
-    CScript devScriptPubKey = GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()));
+    CScript devScriptPubKey = GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
 
     if ((txNew.vout[2].scriptPubKey == devScriptPubKey && txNew.vout[2].nValue == fundReward) || (txNew.vout[1].scriptPubKey == devScriptPubKey && txNew.vout[1].nValue == fundReward))
         return true;
