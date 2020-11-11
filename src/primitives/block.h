@@ -6,11 +6,15 @@
 #ifndef BITCREDS_PRIMITIVES_BLOCK_H
 #define BITCREDS_PRIMITIVES_BLOCK_H
 
+#include "main.h"
+#include "chain.h"
 #include "hash.h"
 #include "serialize.h"
 #include "primitives/transaction.h"
 #include "uint256.h"
 #include "utilstrencodings.h"
+
+extern BlockMap mapBlockIndex;
 
 /** Nodes collect new transactions into a block, hash them into a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work
