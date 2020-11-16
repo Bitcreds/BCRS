@@ -67,15 +67,10 @@ public:
 
     uint256 GetHash() const
     {
-        if (mapBlockIndex.count(hashPrevBlock) == 0)
-            return hash_Argon2d(BEGIN(nVersion), END(nNonce), 1);
-
-        CBlockIndex* pblockindex = mapBlockIndex[hashPrevBlock];
-
-        if (pblockindex->nHeight + 1 <= Params().GetConsensus().nHardForkSix)
-            return hash_Argon2d(BEGIN(nVersion), END(nNonce), 1);
-        else
+        if (nTime > 1609459200)
             return hash_Argon2d(BEGIN(nVersion), END(nNonce), 2);
+        else
+            return hash_Argon2d(BEGIN(nVersion), END(nNonce), 1);
     }
 
     int64_t GetBlockTime() const
