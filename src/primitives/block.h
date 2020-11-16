@@ -72,7 +72,7 @@ public:
 
         CBlockIndex* pblockindex = mapBlockIndex[hashPrevBlock];
 
-        if (pblockindex->nHeight + 1 <= consensusParams.nHardForkSix)
+        if (pblockindex->nHeight + 1 <= Params().GetConsensus().nHardForkSix)
             return hash_Argon2d(BEGIN(nVersion), END(nNonce), 1);
         else
             return hash_Argon2d(BEGIN(nVersion), END(nNonce), 2);
