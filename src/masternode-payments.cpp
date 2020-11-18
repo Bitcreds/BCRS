@@ -330,7 +330,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
         }
     }
 
-    CAmount PoWPayment = GetPoWBlockPayment(nNextHeight);
+    CAmount PoWPayment = GetPoWBlockPayment(nNextHeight, nFees);
 
     txNew.vout[0].nValue = PoWPayment;
 
@@ -379,7 +379,7 @@ CScript CMasternodePayments::GetDevFundScriptPubKey(const int& nBlockHeight) {
     else
         strDevFundAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
 
-    return GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
+    return GetScriptForDestination(CBitcredsAddress(strDevFundAddress.c_str()).Get());
 }
 
 int CMasternodePayments::GetMinMasternodePaymentsProto() {
@@ -636,7 +636,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransaction& txNew)
     int nMaxSignatures = 0;
     std::string strPayeesPossible = "";
 
-    CAmount nMasternodePayment = GetMasternodePayment();
+    CAmount nMasternodePayment = GetMasternodePayment(nBlockHeight);
 
     //require at least MNPAYMENTS_SIGNATURES_REQUIRED signatures
 
