@@ -380,7 +380,7 @@ public:
     bool SimpleCheck(int& nDos);
     bool Update(CMasternode* pmn, int& nDos);
     bool CheckOutpoint(int& nDos);
-    /// Is the input associated with this public key? (and there is 5000 BCRS (50,000 after HardForkFive) - checking if valid Masternode)
+    /// Is the input associated with this public key? (and there is 50000 BCRS (10,000 after HardForkSix) - checking if valid Masternode)
     bool IsVinAssociatedWithPubkey(const CTxIn& vin, const CPubKey& pubkey);
 
     bool Sign(CKey& keyCollateralAddress);
