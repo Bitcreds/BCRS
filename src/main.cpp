@@ -1860,22 +1860,20 @@ CAmount GetDevelopmentFundPayment(const int& nHeight) {
     CAmount nIntDevFundReward = 0 * COIN;
     Consensus::Params consensusParams = Params().GetConsensus();
 
-    // 0.5 BCRS reward to old Dev fund from 375,001 until block 550,000
-    if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkThree)
-        nIntDevFundReward = 0.5 * COIN;
-    // Temporal increase 1 BCRS reward to Dev fund from 550,001 until block 625,000
-    else if (nHeight > consensusParams.nHardForkThree && nHeight <= consensusParams.nTempDevFundIncreaseEnd)
-        nIntDevFundReward = 1 * COIN;
-    // 0.5 BCRS reward to Dev fund from 625,001 until block 1,000,000
-    else if (nHeight > consensusParams.nTempDevFundIncreaseEnd && nHeight <= consensusParams.nHardForkSix)
-        nIntDevFundReward = 0.5 * COIN;
-    else
+    // 0.5 BCRS reward to DevFund from 375,001 until block 1,000,000
+    if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        // Temporal increase to 1 BCRS reward to DevFund from 550,001 until block 625,000
+        if (nHeight > consensusParams.nHardForkThree && nHeight <= consensusParams.nTempDevFundIncreaseEnd)
+            nIntDevFundReward = 1 * COIN;
+        else
+            nIntDevFundReward = 0.5 * COIN;
+    } 
+    else if (nHeight > consensusParams.nHardForkSix)
         nIntDevFundReward = 2 * COIN;
 
     LogPrint("creation", "GetDevelopmentFundPayment(): create=%s Dev Fund Payment=%d\n", FormatMoney(nIntDevFundReward), nIntDevFundReward);
     return nIntDevFundReward;
 }
-
 
 bool IsInitialBlockDownload()
 {
