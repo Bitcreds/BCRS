@@ -1,13 +1,13 @@
 # **Bitcreds (BCRS) v1.7.0.0**
 
-![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
+![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
 **Copyright (c) 2017-2020 Bitcreds Developers**
 
 What are Bitcreds?
 ----------------
 * Coin Suffix: BCRS
-* PoW Mining Algorithm: Argon2d250 until block 1,000,000; Argon2d2000 afterwards
+* PoW Mining Algorithm: Argon2d250 until block 1,000,000; Argon2d16000 afterwards
 * PoW Difficulty Algorithm: DELTA
 * PoW Target Spacing: 128 Seconds until block 1,000,000; 360 Seconds afterwards
 * PoW Reward per Block: See Below
