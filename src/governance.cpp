@@ -839,7 +839,7 @@ bool CGovernanceManager::MasternodeRateCheck(const CGovernanceObject& govobj, bo
 
     int64_t nTimestamp = govobj.GetCreationTime();
     int64_t nNow = GetTime();
-    int64_t nSuperblockCycleSeconds = Params().GetConsensus().nSuperblockCycle * Params().GetConsensus().nPowTargetSpacing;
+    int64_t nSuperblockCycleSeconds = Params().GetConsensus().nSuperblockCycle * Params().GetConsensus().GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
 
     const CTxIn& vin = govobj.GetMasternodeVin();
 

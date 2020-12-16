@@ -255,7 +255,7 @@ void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char he
     /// Associated data length: 0
     /// Memory cost: 250 kibibytes
     /// Lanes: 4 parallel threads
-    /// Threads: 2 threads
+    /// Threads: 1 thread
     /// Time Constraint: 1 iteration
 inline int Argon2d_Phase1_Hash(const void *in,const size_t size, const void *out) {
     argon2_context context;
@@ -292,10 +292,10 @@ inline int Argon2d_Phase1_Hash(const void *in,const size_t size, const void *out
     /// Secret length: 0
     /// Associated data: None
     /// Associated data length: 0
-    /// Memory cost: 1000 kibibytes
-    /// Lanes: 64 parallel threads
-    /// Threads: 4 threads
-    /// Time Constraint: 8 iterations
+    /// Memory cost: 16000 kibibytes
+    /// Lanes: 1 parallel threads
+    /// Threads: 1 threads
+    /// Time Constraint: 1 iterations
 inline int Argon2d_Phase2_Hash(const void *in, const size_t size, const void *out) {
     argon2_context context;
     context.out = (uint8_t *)out;
@@ -312,9 +312,9 @@ inline int Argon2d_Phase2_Hash(const void *in, const size_t size, const void *ou
     context.free_cbk = NULL;
     context.flags = DEFAULT_ARGON2_FLAG; // = ARGON2_DEFAULT_FLAGS
     // main configurable Argon2 hash parameters
-    context.m_cost = 250; // Memory in KiB (~250KB)
-    context.lanes = 64;    // Degree of Parallelism
-    context.threads = 2;  // Threads
+    context.m_cost = 16000; // Memory in KiB (~16384KB)
+    context.lanes = 1;    // Degree of Parallelism
+    context.threads = 1;   // Threads
     context.t_cost = 1;    // Iterations
 
     return argon2_ctx(&context, Argon2_d);

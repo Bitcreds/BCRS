@@ -116,8 +116,9 @@ public:
         consensus.nHardForkOne = 250000; // block
         consensus.nHardForkTwo = 375000; // block
         consensus.nHardForkThree = 550000; //block
-		consensus.nHardForkFour = 665000; //block
-		consensus.nHardForkFive = 850000; //block
+        consensus.nHardForkFour = 665000; //block
+        consensus.nHardForkFive = 850000; //block
+        consensus.nHardForkSix = 1000000; //block
         consensus.nTempDevFundIncreaseEnd = 625000; //block
         consensus.nMasternodePaymentsStartBlock = 100; // Masternode Payments begin on block 100.
         consensus.nInstantSendKeepLock = 24;
@@ -134,16 +135,14 @@ public:
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
-        consensus.nPowTargetSpacing = 2 * 64; // Bitcreds: 128 seconds
-        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
-        consensus.nPowAveragingWindow = 17;
-        assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
+        consensus.nOldPowTargetSpacing = 2 * 64; // old Bitcreds: 128 seconds
+        consensus.nNewPowTargetSpacing = 6 * 60; // new Bitcreds: 360 seconds
+        consensus.nDifficultyAdjustmentInterval = 576; // biggest time frame used by the DELTA retargeting algo
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 321; // 95% of nMinerConfirmationWindow
-        consensus.nMinerConfirmationWindow = 338; // nPowTargetTimespan / nPowTargetSpacing
+        consensus.nMinerConfirmationWindow = 338; // in Bitcoin and Dash this was nPowTargetTimespan / nPowTargetSpacing; 
+                                                  // should be updated as nPowTargetTimespan has been removed due to usage of DELTA algo
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
@@ -176,7 +175,7 @@ public:
         if(!startNewChain) {
             assert(consensus.hashGenesisBlock == uint256S("0x0000dea5d2c92cf3f1dce5031cc2b368b2a5e3ebea73ea1278fef673d10b1345"));
             assert(genesis.hashMerkleRoot == uint256S("0x1df9b425c9a06de51b3fb210ffd2e051e05718e264e8ee4692592746c1566a0c"));
-	}
+	    }
 
         vSeeds.push_back(CDNSSeedData("bitcreds.org", "dnsseed1.bitcreds.org"));
         vSeeds.push_back(CDNSSeedData("bitcreds.org", "dnsseed2.bitcreds.org"));
@@ -215,12 +214,8 @@ public:
             //   (the tx=... number in the SetBestChain debug.log lines)
             2000        // * estimated number of transactions per day after checkpoint
         };
-
-	consensus.nIntPhaseTotalBlocks = 125000;
-  consensus.nPhase1LastBlock = 375000;
-	consensus.nPhase2LastBlock = 1125000;
-	consensus.nPhase3LastBlock = 1375000;
-	consensus.nPhase4LastBlock = 2000000;
+        consensus.nIntPhaseTotalBlocks = 125000;
+        consensus.nBlocksPerYear = 87600;
     }
 };
 static CMainParams mainParams;
@@ -232,12 +227,13 @@ class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = "test";
-        consensus.nHardForkOne = 5000;
-        consensus.nHardForkTwo = 30000;
-        consensus.nHardForkThree = 50000;
-		consensus.nHardForkFour = 60000;
-		consensus.nHardForkFive = 70000;
-        consensus.nTempDevFundIncreaseEnd = 55000;
+        consensus.nHardForkOne = 25000; // block
+        consensus.nHardForkTwo = 37500; // block
+        consensus.nHardForkThree = 55000; //block
+        consensus.nHardForkFour = 66500; //block
+        consensus.nHardForkFive = 85000; //block
+        consensus.nHardForkSix = 100000; //block
+        consensus.nTempDevFundIncreaseEnd = 62500; //block
         consensus.nMasternodePaymentsStartBlock = 0;
         consensus.nInstantSendKeepLock = 24;
         consensus.nBudgetPaymentsStartBlock = 200;
@@ -253,16 +249,13 @@ public:
         consensus.nMajorityRejectBlockOutdated = 750;
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowAveragingWindow = 17;
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
-        consensus.nPowTargetSpacing = 10; // Bitcreds Testnet: 10 seconds
-        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
-        assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
+        consensus.nOldPowTargetSpacing = 10; // old Bitcreds: 10 seconds
+        consensus.nNewPowTargetSpacing = 30; // new Bitcreds: 30 seconds
+        consensus.nDifficultyAdjustmentInterval = 576;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 254; // 75% of nMinerConfirmationWindow
-        consensus.nMinerConfirmationWindow = 338; // nPowTargetTimespan / nPowTargetSpacing
+        consensus.nMinerConfirmationWindow = 338;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
@@ -332,11 +325,8 @@ public:
             1000        // * estimated number of transactions per day after checkpoint
         };
 
-	consensus.nIntPhaseTotalBlocks = 5000;
-  consensus.nPhase1LastBlock = 30000;
-	consensus.nPhase2LastBlock = 60000;
-	consensus.nPhase3LastBlock = 80000;
-	consensus.nPhase4LastBlock = 105000;
+        consensus.nIntPhaseTotalBlocks = 12500;
+        consensus.nBlocksPerYear = 8760; // mock year for testnet
     }
 };
 static CTestNetParams testNetParams;
@@ -348,12 +338,13 @@ class CRegTestParams : public CChainParams {
 public:
     CRegTestParams() {
         strNetworkID = "regtest";
-		consensus.nHardForkOne = 5000;
-        consensus.nHardForkTwo = 30000;
-        consensus.nHardForkThree = 50000;
-		consensus.nHardForkFour = 60000;
-		consensus.nHardForkFive = 70000;
-        consensus.nTempDevFundIncreaseEnd = 55000;
+        consensus.nHardForkOne = 25000; // block
+        consensus.nHardForkTwo = 37500; // block
+        consensus.nHardForkThree = 55000; //block
+        consensus.nHardForkFour = 66500; //block
+        consensus.nHardForkFive = 85000; //block
+        consensus.nHardForkSix = 100000; //block
+        consensus.nTempDevFundIncreaseEnd = 62500; //block
         consensus.nMasternodePaymentsStartBlock = 0;
         consensus.nInstantSendKeepLock = 24;
         consensus.nBudgetPaymentsStartBlock = 1000;
@@ -369,11 +360,9 @@ public:
         consensus.nMajorityRejectBlockOutdated = 950;
         consensus.nMajorityWindow = 1000;
         consensus.powLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Bitcreds: 24 hours
-        consensus.nPowTargetSpacing = 2 * 64; // Bitcreds: 256 seconds
-        consensus.nPowMaxAdjustDown = 32; // Bitcreds: 32% adjustment down
-        consensus.nPowMaxAdjustUp = 16; // Bitcreds: 16% adjustment up
-        assert(maxUint/UintToArith256(consensus.powLimit) >= consensus.nPowAveragingWindow);
+        consensus.nOldPowTargetSpacing = 2 * 64; // old Bitcreds: 128 seconds
+        consensus.nNewPowTargetSpacing = 6 * 60; // new Bitcreds: 360 seconds
+        consensus.nDifficultyAdjustmentInterval = 576;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 254; // 75% of nMinerConfirmationWindow
@@ -434,12 +423,9 @@ public:
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
         // Regtest Bitcreds BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
-
-	consensus.nIntPhaseTotalBlocks = 125000;
-  consensus.nPhase1LastBlock = 375000;
-	consensus.nPhase2LastBlock = 1125000;
-	consensus.nPhase3LastBlock = 1375000;
-	consensus.nPhase4LastBlock = 2000000;
+        
+        consensus.nIntPhaseTotalBlocks = 12500;
+        consensus.nBlocksPerYear = 8760; // mock year for regtest
     }
 };
 static CRegTestParams regTestParams;

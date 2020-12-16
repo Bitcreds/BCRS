@@ -229,14 +229,14 @@ void CActiveMasternode::ManageStateInitial()
         return;
     }
 
-	if (chainActive.Height() < Params().GetConsensus().nHardForkFive) {
-        if(pwalletMain->GetBalance() < 5000*COIN) {
-            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 5000 BCRS\n", GetStateString());
+	if (chainActive.Height() < Params().GetConsensus().nHardForkSix) {
+        if (pwalletMain->GetBalance() < 50000 * COIN) {
+            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 50000 BCRS\n", GetStateString());
             return;
         }
     } else {
-        if(pwalletMain->GetBalance() < 50000*COIN) {
-            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 50000 BCRS\n", GetStateString());
+        if (pwalletMain->GetBalance() < 10000 * COIN) {
+            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 10000 BCRS\n", GetStateString());
             return;
         }
     }

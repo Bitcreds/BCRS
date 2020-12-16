@@ -384,7 +384,7 @@ void CMasternode::UpdateLastPaid(const CBlockIndex *pindex, int nMaxBlocksToScan
             if(!ReadBlockFromDisk(block, BlockReading, Params().GetConsensus())) // shouldn't really happen
                 continue;
 
-            CAmount nMasternodePayment = GetMasternodePayment();
+            CAmount nMasternodePayment = GetMasternodePayment(BlockReading->nHeight);
 
             BOOST_FOREACH(CTxOut txout, block.vtx[0].vout)
                 if(mnpayee == txout.scriptPubKey && nMasternodePayment == txout.nValue) {
@@ -636,14 +636,14 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
             return false;
         }
 
-        if (chainActive.Height() < Params().GetConsensus().nHardForkFive) {
-            if(coins.vout[vin.prevout.n].nValue != 5000 * COIN) {
-                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 5000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
+        if (chainActive.Height() < Params().GetConsensus().nHardForkSix) {
+            if (coins.vout[vin.prevout.n].nValue != 50000 * COIN) {
+                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 50000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
                 return false;
             }
         } else {
-            if(coins.vout[vin.prevout.n].nValue != 50000 * COIN) {
-                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 50000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
+            if (coins.vout[vin.prevout.n].nValue != 10000 * COIN) {
+                LogPrint("Masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 10000 BCRS, Masternode=%s\n", vin.prevout.ToStringShort());
                 return false;
             }
 		}
@@ -696,12 +696,12 @@ bool CMasternodeBroadcast::IsVinAssociatedWithPubkey(const CTxIn& txin, const CP
     CTransaction tx;
     uint256 hash;
     if(GetTransaction(txin.prevout.hash, tx, Params().GetConsensus(), hash, true)) {
-        if (chainActive.Height() < Params().GetConsensus().nHardForkFive) {
+        if (chainActive.Height() < Params().GetConsensus().nHardForkSix) {
             BOOST_FOREACH(CTxOut out, tx.vout)
-                    if(out.nValue == 5000*COIN && out.scriptPubKey == payee) return true;
+                    if (out.nValue == 50000 * COIN && out.scriptPubKey == payee) return true;
         } else {
             BOOST_FOREACH(CTxOut out, tx.vout)
-                    if(out.nValue == 50000*COIN && out.scriptPubKey == payee) return true;
+                    if (out.nValue == 10000 * COIN && out.scriptPubKey == payee) return true;
         }
     }
 

@@ -1,6 +1,6 @@
 TEMPLATE = app
 TARGET = bitcreds
-VERSION = 1.6.0.0
+VERSION = 1.7.0.0
 INCLUDEPATH += src \
                src/crypto \
                src/crypto/heavyhash \

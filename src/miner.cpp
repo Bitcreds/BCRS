@@ -397,7 +397,6 @@ std::unique_ptr<CBlockTemplate> CreateNewBlock(const CChainParams& chainparams, 
             }
         }
 
-
         CAmount blockReward = GetPoWBlockPayment(nHeight, nFees);
 
         // Compute regular coinbase transaction.

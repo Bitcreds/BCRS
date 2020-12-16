@@ -456,7 +456,17 @@ void UpdateBlockAvailability(NodeId nodeid, const uint256 &hash) {
 // Requires cs_main
 bool CanDirectFetch(const Consensus::Params &consensusParams)
 {
-    return chainActive.Tip()->GetBlockTime() > GetAdjustedTime() - consensusParams.nPowTargetSpacing * 20;
+    int64_t timeDifference;
+
+    if (chainActive.Tip()->nHeight > consensusParams.nHardForkSix - 20 && chainActive.Tip()->nHeight < consensusParams.nHardForkSix) {
+        int nBlocksOldTargetSpacing = consensusParams.nHardForkSix - chainActive.Tip()->nHeight;
+
+        timeDifference = nBlocksOldTargetSpacing * consensusParams.GetCurrentPowTargetSpacing(1) + // after HardForkSix the target spacing changed
+                         (20 - nBlocksOldTargetSpacing) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1);
+    } else
+        timeDifference = consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight) * 20;
+
+    return chainActive.Tip()->GetBlockTime() > GetAdjustedTime() - timeDifference;
 }
 
 // Requires cs_main
@@ -1755,25 +1765,21 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex)
     return ReadBlockFromDisk(block, pindex, Params().GetConsensus());
 }
 
-CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees)
-{
-    // TODO: The next version should use the nHeight parameter rather than chainActive.Height().
+CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
+    CAmount nIntPoWReward = 0 * COIN;
+    Consensus::Params consensusParams = Params().GetConsensus();
 
-    CAmount nIntPoWReward;
-    int nIntPhase, nNextHeight = chainActive.Height() + 1;
-    if (chainActive.Height() == 0) {
-        CAmount nSubsidy = 475000 * COIN;
-        LogPrint("superblock creation", "GetPoWBlockPayment() : create=%s nSubsidy=%d\n", FormatMoney(nSubsidy), nSubsidy);
-        return nSubsidy;
-    }
-    else if (chainActive.Height() >= 1 && nNextHeight <= Params().GetConsensus().nPhase1LastBlock) {
-        nIntPoWReward = 10 * COIN;
-        LogPrint("creation", "GetPoWBlockPayment() : create=%s PoW Reward=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
+    if (nHeight == 0) {
+        nIntPoWReward = 475000 * COIN;
+        LogPrint("premine creation", "GetPoWBlockPayment() : create=%s Premine=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
         return nIntPoWReward;
     }
-    else if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nPhase2LastBlock) {
-        nIntPhase = (nNextHeight - Params().GetConsensus().nPhase1LastBlock) / Params().GetConsensus().nIntPhaseTotalBlocks;
-        switch(nIntPhase) {
+    else if (nHeight >= 1 && nHeight <= consensusParams.nHardForkTwo)
+        nIntPoWReward = 10 * COIN;
+    else if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkTwo) / consensusParams.nIntPhaseTotalBlocks;
+
+        switch (nIntPhase) {
             case 0: nIntPoWReward = 8 * COIN;
                     break;
             case 1: nIntPoWReward = 7 * COIN;
@@ -1783,30 +1789,41 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees)
             case 3: nIntPoWReward = 5 * COIN;
                     break;
             case 4: nIntPoWReward = 4 * COIN;
-                    break;
-            case 5: nIntPoWReward = 3 * COIN;
         }
-        LogPrint("creation", "GetPoWBlockPayment() : create=%s PoW Reward=%d\n", FormatMoney(nIntPoWReward + nFees), nIntPoWReward + nFees);
-        return nIntPoWReward + nFees;
+
+        nIntPoWReward += nFees;
     }
-    else {
-        nIntPoWReward = 2 * COIN;
-        LogPrint("creation", "GetPoWBlockPayment() : create=%s PoW Reward=%d\n", FormatMoney(nIntPoWReward + nFees), nIntPoWReward + nFees);
-        return nIntPoWReward + nFees;
+    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
+
+        switch (nIntPhase) {
+            case 0: nIntPoWReward = 6 * COIN;
+                    break;
+            case 1: nIntPoWReward = 5 * COIN;
+                    break;
+            case 2: nIntPoWReward = 4 * COIN;
+                    break;
+            case 3: nIntPoWReward = 3 * COIN;
+        }
+
+        nIntPoWReward += nFees;
     }
+    else
+        nIntPoWReward = 2 * COIN + nFees;
+
+    LogPrint("creation", "GetPoWBlockPayment(): create=%s PoW Reward=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
+    return nIntPoWReward;
 }
 
-CAmount GetMasternodePayment(bool fMasternode)
-{
-    CAmount nIntMNReward;
-    int nIntPhase, nNextHeight = chainActive.Height() + 1;;
-    if (fMasternode && chainActive.Height() > Params().GetConsensus().nMasternodePaymentsStartBlock && nNextHeight <= Params().GetConsensus().nPhase1LastBlock) {
+CAmount GetMasternodePayment(const int& nHeight) {
+    CAmount nIntMNReward = 0 * COIN;
+    Consensus::Params consensusParams = Params().GetConsensus();
+
+    if (nHeight > consensusParams.nMasternodePaymentsStartBlock && nHeight <= consensusParams.nHardForkTwo)
         nIntMNReward = 1 * COIN;
-        LogPrint("creation", "GetMasternodePayment() : create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
-        return nIntMNReward;
-    }
-    else if (fMasternode && nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nPhase2LastBlock) {
-        nIntPhase = (nNextHeight - Params().GetConsensus().nPhase1LastBlock) / Params().GetConsensus().nIntPhaseTotalBlocks;
+    else if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkTwo) / consensusParams.nIntPhaseTotalBlocks;
+        
         switch(nIntPhase) {
             case 0: nIntMNReward = 2 * COIN;
                     break;
@@ -1817,39 +1834,45 @@ CAmount GetMasternodePayment(bool fMasternode)
             case 3: nIntMNReward = 5 * COIN;
                     break;
             case 4: nIntMNReward = 6 * COIN;
-                    break;
-            case 5: nIntMNReward = 7 * COIN;
         }
-        LogPrint("creation", "GetMasternodePayment() : create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
-        return nIntMNReward;
     }
-    else if (fMasternode && nNextHeight > Params().GetConsensus().nPhase2LastBlock && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
-        nIntMNReward = 8 * COIN;
-        LogPrint("creation", "GetMasternodePayment() : create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
-        return nIntMNReward;
-    }
-    else if (fMasternode && nNextHeight > Params().GetConsensus().nPhase3LastBlock && nNextHeight <= Params().GetConsensus().nPhase4LastBlock) {
-        nIntPhase = (nNextHeight - Params().GetConsensus().nPhase3LastBlock) / Params().GetConsensus().nIntPhaseTotalBlocks;
-        switch(nIntPhase) {
-            case 0: nIntMNReward = 7 * COIN;
+    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+        int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
+
+        switch (nIntPhase) {
+            case 0: nIntMNReward = 6 * COIN;
                     break;
-            case 1: nIntMNReward = 6 * COIN;
+            case 1: nIntMNReward = 5 * COIN;
                     break;
-            case 2: nIntMNReward = 5 * COIN;
+            case 2: nIntMNReward = 4 * COIN;
                     break;
-            case 3: nIntMNReward = 4 * COIN;
-                    break;
-            case 4: nIntMNReward = 3 * COIN;
-                    break;
+            case 3: nIntMNReward = 3 * COIN;
         }
-        LogPrint("creation", "GetMasternodePayment() : create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
-        return nIntMNReward;
     }
-    else {
+    else
         nIntMNReward = 2 * COIN;
-        LogPrint("creation", "GetMasternodePayment() : create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
-        return nIntMNReward;
-    }
+
+    LogPrint("creation", "GetMasternodePayment(): create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
+    return nIntMNReward;
+}
+
+CAmount GetDevelopmentFundPayment(const int& nHeight) {
+    CAmount nIntDevFundReward = 0 * COIN;
+    Consensus::Params consensusParams = Params().GetConsensus();
+
+    // 0.5 BCRS reward to DevFund from 375,001 until block 1,000,000
+    if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
+        // Temporal increase to 1 BCRS reward to DevFund from 550,001 until block 625,000
+        if (nHeight > consensusParams.nHardForkThree && nHeight <= consensusParams.nTempDevFundIncreaseEnd)
+            nIntDevFundReward = 1 * COIN;
+        else
+            nIntDevFundReward = 0.5 * COIN;
+    } 
+    else if (nHeight > consensusParams.nHardForkSix)
+        nIntDevFundReward = 2 * COIN;
+
+    LogPrint("creation", "GetDevelopmentFundPayment(): create=%s Dev Fund Payment=%d\n", FormatMoney(nIntDevFundReward), nIntDevFundReward);
+    return nIntDevFundReward;
 }
 
 bool IsInitialBlockDownload()
@@ -2472,7 +2495,7 @@ void PartitionCheck(bool (*initialDownloadCheck)(), CCriticalSection& cs, const 
     int64_t now = GetAdjustedTime();
     if (lastAlertTime > now-60*60*24) return; // Alert at most once per day
 
-    const int SPAN_HOURS=1; // was 4h in bitcoin but we have 4x faster blocks
+    const int SPAN_HOURS=3; // was 4h in bitcoin but we have 1.6 times faster blocks
     const int SPAN_SECONDS=SPAN_HOURS*60*60;
     int BLOCKS_EXPECTED = SPAN_SECONDS / nPowTargetSpacing;
 
@@ -2583,26 +2606,23 @@ static int64_t nTimeIndex = 0;
 static int64_t nTimeCallbacks = 0;
 static int64_t nTimeTotal = 0;
 
-bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward) {
-
+bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward, const int& nHeight) {
     std::string strDevAddress;
-    int nNextHeight = chainActive.Height() + 1;
     
-    //Use new dev Fund address from block 550001 to 1375000
-    if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
+    //Use the new Dev Fund address after HardForkThree (block 550,001)
+    if (nHeight > Params().GetConsensus().nHardForkThree)
         strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-    }
-    //Use old Dev Fund address until block 550000
-    if (nNextHeight > Params().GetConsensus().nHardForkTwo && nNextHeight <= Params().GetConsensus().nHardForkThree) {
+    //Use the old Dev Fund address starting from HardForkTwo until HardForkThree
+    else if (nHeight > Params().GetConsensus().nHardForkTwo && nHeight <= Params().GetConsensus().nHardForkThree)
         strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
-    }
+    else if (txNew.vout.size() <= 2) // before HardForkTwo there should be at most 2 outgoing transanctions, PoW and MN rewards
+        return true;
 
-    CBitcredsAddress intAddress(strDevAddress.c_str());
-    CTxDestination devDestination = intAddress.Get();
-    CScript devScriptPubKey = GetScriptForDestination(devDestination);
+    CScript devScriptPubKey = GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
 
     if ((txNew.vout[2].scriptPubKey == devScriptPubKey && txNew.vout[2].nValue == fundReward) || (txNew.vout[1].scriptPubKey == devScriptPubKey && txNew.vout[1].nValue == fundReward))
         return true;
+
     return false;
 }
 
@@ -2856,46 +2876,21 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     // the peer who sent us this block is missing some data and wasn't able
     // to recognize that block is actually invalid.
     // TODO: resync data (both ways?) and try to reprocess this block later.
-    bool fMasternodePaid = false;
 
-    if(chainActive.Height() > Params().GetConsensus().nMasternodePaymentsStartBlock) {
-        fMasternodePaid = true;
-    }
-    else if (chainActive.Height() <= Params().GetConsensus().nMasternodePaymentsStartBlock) {
-        fMasternodePaid = false;
-    }
+    CAmount nExpectedBlockValue;
 
-    CAmount fundReward = 0 * COIN;
-    int nNextHeight = chainActive.Height() + 1;
+    if (pindex->nHeight > Params().GetConsensus().nMasternodePaymentsStartBlock)
+        nExpectedBlockValue = GetPoWBlockPayment(pindex->nHeight, nFees) + GetMasternodePayment(pindex->nHeight);
+    else if (pindex->nHeight <= Params().GetConsensus().nMasternodePaymentsStartBlock)
+        nExpectedBlockValue = GetPoWBlockPayment(pindex->nHeight, nFees);
 
-    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
-    if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
-        fundReward = 0.5 * COIN;
+    CAmount fundReward = GetDevelopmentFundPayment(pindex->nHeight);
 
-        if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
-        }
-    }
-
-    // Temporal increase 1 BCRS reward to Dev fund from 550001 until block 625000
-    if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
-        fundReward = 1 * COIN;
-
-        if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
-        }
-    }
+    if (!IsFundRewardValid(block.vtx[0], fundReward, pindex->nHeight))
+        return state.DoS(0, error("ConnectBlock(BCRS): Didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
     
-    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
-    if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
-        fundReward = 0.5 * COIN;
+    nExpectedBlockValue += fundReward;
 
-        if (!IsFundRewardValid(block.vtx[0], fundReward)) {
-        return state.DoS(0, error("ConnectBlock(BCRS): didn't pay the Development Fund"), REJECT_INVALID, "bad-cb-amount");
-        }
-    }
-
-    CAmount nExpectedBlockValue = GetMasternodePayment(fMasternodePaid) + GetPoWBlockPayment(pindex->pprev->nHeight, nFees) + fundReward;
     std::string strError = "";
 
     if(!IsBlockValueValid(block, pindex->nHeight, nExpectedBlockValue, strError)){
@@ -2907,6 +2902,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
         return state.DoS(0, error("ConnectBlock(BCRS): couldn't find Masternode or Superblock payments"),
                                 REJECT_INVALID, "bad-cb-payee");
     }
+
     // END BITCREDS
 
     if (!control.Wait())
@@ -5824,9 +5820,20 @@ bool static ProcessMessage(CNode* pfrom, std::string strCommand, CDataStream& vR
                 LogPrint("net", "  getblocks stopping at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
                 break;
             }
+            
             // If pruning, don't inv blocks unless we have on disk and are likely to still have
             // for some reasonable time window (1 hour) that block relay might require.
-            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - 3600 / chainparams.GetConsensus().nPowTargetSpacing;
+            
+            int nBlocksPastHour;
+            Consensus::Params consensusParams = chainparams.GetConsensus();
+
+            if (chainActive.Tip()->nHeight > consensusParams.nHardForkSix && chainActive.Tip()->nHeight < consensusParams.nHardForkSix + 10)
+                nBlocksPastHour = (chainActive.Tip()->nHeight - consensusParams.nHardForkSix) + // after HardForkSix the target spacing increased so before it more than 10 blocks per hour were produced
+                                  (consensusParams.nHardForkSix + 10 - chainActive.Tip()->nHeight) * consensusParams.GetCurrentPowTargetSpacing(consensusParams.nHardForkSix + 1) / consensusParams.GetCurrentPowTargetSpacing(1);
+            else
+                nBlocksPastHour = 3600 / consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight);
+            
+            const int nPrunedBlocksLikelyToHave = MIN_BLOCKS_TO_KEEP - nBlocksPastHour;
             if (fPruneMode && (!(pindex->nStatus & BLOCK_HAVE_DATA) || pindex->nHeight <= chainActive.Tip()->nHeight - nPrunedBlocksLikelyToHave))
             {
                 LogPrint("net", " getblocks stopping, pruned or too old block at %d %s\n", pindex->nHeight, pindex->GetBlockHash().ToString());
@@ -7015,7 +7022,7 @@ bool SendMessages(CNode* pto)
         if (!pto->fDisconnect && state.vBlocksInFlight.size() > 0) {
             QueuedBlock &queuedBlock = state.vBlocksInFlight.front();
             int nOtherPeersWithValidatedDownloads = nPeersWithValidatedDownloads - (state.nBlocksInFlightValidHeaders > 0);
-            if (nNow > state.nDownloadingSince + consensusParams.nPowTargetSpacing * (BLOCK_DOWNLOAD_TIMEOUT_BASE + BLOCK_DOWNLOAD_TIMEOUT_PER_PEER * nOtherPeersWithValidatedDownloads)) {
+            if (nNow > state.nDownloadingSince + consensusParams.GetCurrentPowTargetSpacing(chainActive.Tip()->nHeight + 1) * (BLOCK_DOWNLOAD_TIMEOUT_BASE + BLOCK_DOWNLOAD_TIMEOUT_PER_PEER * nOtherPeersWithValidatedDownloads)) {
                 LogPrintf("Timeout downloading block %s from peer=%d, disconnecting\n", queuedBlock.hash.ToString(), pto->id);
                 pto->fDisconnect = true;
             }

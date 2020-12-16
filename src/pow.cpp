@@ -34,7 +34,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 unsigned int DeriveNextWorkRequired(const INDEX_TYPE pindexLast, const BLOCK_TYPE block,
                                     const Consensus::Params& params)
 {
-    int64_t nRetargetTimespan = params.nPowTargetSpacing;
+    int64_t nRetargetTimespan = params.GetCurrentPowTargetSpacing(pindexLast->nHeight + 1);
     const unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();
 
     unsigned int initalBlock = 0;
@@ -242,7 +242,8 @@ int64_t GetBlockProofEquivalentTime(const CBlockIndex& to, const CBlockIndex& fr
         r = from.nChainWork - to.nChainWork;
         sign = -1;
     }
-    r = r * arith_uint256(params.nPowTargetSpacing) / GetBlockProof(tip);
+
+    r = r * arith_uint256(params.GetCurrentPowTargetSpacing(tip.nHeight)) / GetBlockProof(tip);
     if (r.bits() > 63) {
         return sign * std::numeric_limits<int64_t>::max();
     }

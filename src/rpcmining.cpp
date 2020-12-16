@@ -83,7 +83,7 @@ UniValue GetNetworkHashPS(int lookup, int height) {
 
     // If lookup is -1, then use blocks since last difficulty change.
     if (lookup <= 0)
-        lookup = pb->nHeight % Params().GetConsensus().DifficultyAdjustmentInterval() + 1;
+        lookup = pb->nHeight % Params().GetConsensus().nDifficultyAdjustmentInterval + 1;
 
     // If lookup is larger than chain, then set it to chain length.
     if (lookup > pb->nHeight)
@@ -758,14 +758,17 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].GetValueOut()));
     result.push_back(Pair("longpollid", chainActive.Tip()->GetBlockHash().GetHex() + i64tostr(nTransactionsUpdatedLast)));
     result.push_back(Pair("target", hashTarget.GetHex()));
-    result.push_back(Pair("mintime", (int64_t)pindexPrev->GetMedianTimePast()+1));
+    result.push_back(Pair("mintime", (int64_t)pindexPrev->GetMedianTimePast() + 1));
     result.push_back(Pair("mutable", aMutable));
     result.push_back(Pair("noncerange", "00000000ffffffff"));
     result.push_back(Pair("sigoplimit", (int64_t)MAX_BLOCK_SIGOPS));
     result.push_back(Pair("sizelimit", (int64_t)MAX_BLOCK_SIZE));
     result.push_back(Pair("curtime", pblock->GetBlockTime()));
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
-    result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
+
+    int nNextHeight = pindexPrev->nHeight + 1;
+
+    result.push_back(Pair("height", (int64_t)nNextHeight));
 
     UniValue masternodeObj(UniValue::VOBJ);
     if(pblock->txoutMasternode != CTxOut()) {
@@ -776,61 +779,32 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
         masternodeObj.push_back(Pair("script", HexStr(pblock->txoutMasternode.scriptPubKey.begin(), pblock->txoutMasternode.scriptPubKey.end())));
         masternodeObj.push_back(Pair("amount", pblock->txoutMasternode.nValue));
     }
+
     result.push_back(Pair("masternode", masternodeObj));
-    result.push_back(Pair("masternode_payments_started", pindexPrev->nHeight + 1 > Params().GetConsensus().nMasternodePaymentsStartBlock));
+    result.push_back(Pair("masternode_payments_started", nNextHeight > Params().GetConsensus().nMasternodePaymentsStartBlock));
     
     // Masternodes must be paid with every block after block nHardForkTwo up to nHardForkFour which caused chain to fork
-    if ((pindexPrev->nHeight+1) <= consensusParams.nHardForkFour) {
+    if (nNextHeight > consensusParams.nHardForkTwo && nNextHeight <= consensusParams.nHardForkFour)
         result.push_back(Pair("masternode_payments_enforced", true));
-    }
-    
-    // Else use Spork 8 to determine whether or not the Masternode payment is enforced.
-    else {
+    // else use Spork 8 to determine whether or not the Masternode payment is enforced.
+    else
         result.push_back(Pair("masternode_payments_enforced", sporkManager.IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)));
-    }
-    
-    int nNextHeight = chainActive.Height() + 1;
 
-    // 0.5 BCRS reward to Dev fund from 625001 until block 1375000
-    if (nNextHeight > Params().GetConsensus().nTempDevFundIncreaseEnd && nNextHeight <= Params().GetConsensus().nPhase3LastBlock) {
+    if (nNextHeight > consensusParams.nHardForkTwo) {
+        std::string strDevAddress; 
+        CAmount fundReward = GetDevelopmentFundPayment(nNextHeight);
+
+        if (nNextHeight <= consensusParams.nHardForkThree)
+            strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V"; // old Dev Fund address
+        else
+            strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm"; // new Dev Fund address
+
         UniValue fundRewardObj(UniValue::VOBJ);
-        std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
+        CScript devScriptPubKey = GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
 
         fundRewardObj.push_back(Pair("payee", strDevAddress.c_str()));
         fundRewardObj.push_back(Pair("script", HexStr(devScriptPubKey.begin(), devScriptPubKey.end())));
-        fundRewardObj.push_back(Pair("amount", 0.5 * COIN));
-
-        result.push_back(Pair("fundreward", fundRewardObj));
-    }
-
-    // 1 BCRS reward to Dev fund from 550001 until block 625000
-    if (nNextHeight > Params().GetConsensus().nHardForkThree && nNextHeight <= Params().GetConsensus().nTempDevFundIncreaseEnd) {
-        UniValue fundRewardObj(UniValue::VOBJ);
-        std::string strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-        fundRewardObj.push_back(Pair("payee", strDevAddress.c_str()));
-        fundRewardObj.push_back(Pair("script", HexStr(devScriptPubKey.begin(), devScriptPubKey.end())));
-        fundRewardObj.push_back(Pair("amount", 1 * COIN));
-
-        result.push_back(Pair("fundreward", fundRewardObj));
-    }
-    // 0.5 BCRS reward to old Dev fund from 375001 until block 550000
-    if (nNextHeight > Params().GetConsensus().nPhase1LastBlock && nNextHeight <= Params().GetConsensus().nHardForkThree) {
-        UniValue fundRewardObj(UniValue::VOBJ);
-        std::string strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V"; //old Dev fund address
-        CBitcredsAddress intAddress(strDevAddress.c_str());
-        CTxDestination devDestination = intAddress.Get();
-        CScript devScriptPubKey = GetScriptForDestination(devDestination);
-
-        fundRewardObj.push_back(Pair("payee", strDevAddress.c_str()));
-        fundRewardObj.push_back(Pair("script", HexStr(devScriptPubKey.begin(), devScriptPubKey.end())));
-        fundRewardObj.push_back(Pair("amount", 0.5 * COIN));
+        fundRewardObj.push_back(Pair("amount", fundReward));
 
         result.push_back(Pair("fundreward", fundRewardObj));
     }
@@ -848,8 +822,9 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
             superblockObjArray.push_back(entry);
         }
     }
+
     result.push_back(Pair("superblock", superblockObjArray));
-    result.push_back(Pair("superblocks_started", pindexPrev->nHeight + 1 > Params().GetConsensus().nSuperblockStartBlock));
+    result.push_back(Pair("superblocks_started", nNextHeight > Params().GetConsensus().nSuperblockStartBlock));
     result.push_back(Pair("superblocks_enabled", sporkManager.IsSporkActive(SPORK_9_SUPERBLOCKS_ENABLED)));
 
     return result;

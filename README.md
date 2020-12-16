@@ -1,25 +1,25 @@
-# **Bitcreds (BCRS) v1.6.1.0**
+# **Bitcreds (BCRS) v1.7.0.0**
 
-![BCRS logo](https://github.com/Bitcreds/BCRS/blob/master/src/qt/res/icons/light/about.png) [![Build Status](https://travis-ci.org/Bitcreds/BCRS.svg?branch=master)](https://travis-ci.org/Bitcreds/BCRS)
+![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
 **Copyright (c) 2017-2020 Bitcreds Developers**
 
 What are Bitcreds?
 ----------------
 * Coin Suffix: BCRS
-* PoW Mining Algorithm: Argon2d
+* PoW Mining Algorithm: Argon2d250 until block 1,000,000; Argon2d16000 afterwards
 * PoW Difficulty Algorithm: DELTA
-* PoW Target Spacing: 128 Seconds
+* PoW Target Spacing: 128 Seconds until block 1,000,000; 360 Seconds afterwards
 * PoW Reward per Block: See Below
 * Maturity: 10 Blocks
-* PoW Blocks: ~675 per day
-* Masternode Collateral Amount: 50,000 BCRS
+* PoW Blocks: ~675 per day until block 1,000,000; ~240 per day afterwards
+* Masternode Collateral Amount: 10,000 BCRS
 * Masternode Min Confirmation: 16 Blocks
 * Masternode Reward: See Below
-* Total Coins (until 2 PoW / 2 MN reward): 18,987,500* (~6 Years)
+* Total Coins (until 2 PoW / 2 MN / 2 DevFund reward): ~13,914,700* (after ~5 Years from Genesis)
 * Min TX Fee: 0.0001 BCRS
 
-*Until block 375,000 all transaction fees get burned.
+*Until block 375,000 all transaction fees got burned. Some blocks did not include a Masternode reward.
 
 Bitcreds uses peer-to-peer technology to operate securely with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
@@ -53,21 +53,18 @@ Magic Bytes = 0x1f 0x22 0x05 0x2f
 
  Year |           Blocks        |   PoW   | Masternodes  | Development Fund |  Total Generated  |
 ------|-------------------------|---------|--------------|------------------|-------------------|
- 2017 |           0 - 375,000   | 10 BCRS |    1 BCRS    |      0 BCRS      |     11 BCRS       |
- 2018 |     375,001 - 500,000   |  8 BCRS |    2 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2018 |     500,001 - 550,000   |  7 BCRS |    3 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2019 |     550,001 - 625,000   |  7 BCRS |    3 BCRS    |      1 BCRS      |     11 BCRS       |
- 2019 |     625,001 - 750,000   |  6 BCRS |    4 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2019 |     750,001 - 875,000   |  5 BCRS |    5 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2017 |          0 - 375,000    | 10 BCRS |    1 BCRS    |      0 BCRS      |     11 BCRS       |
+ 2018 |    375,001 - 500,000    |  8 BCRS |    2 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2018 |    500,001 - 550,000    |  7 BCRS |    3 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2019 |    550,001 - 625,000    |  7 BCRS |    3 BCRS    |      1 BCRS      |     11 BCRS       |
+ 2019 |    625,001 - 750,000    |  6 BCRS |    4 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
+ 2019 |    750,001 - 875,000    |  5 BCRS |    5 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
  2020 |    875,001 - 1,000,000  |  4 BCRS |    6 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2020 |  1,000,001 - 1,125,000  |  3 BCRS |    7 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2021 |  1,125,001 - 1,375,000  |  2 BCRS |    8 BCRS    |      0.5 BCRS    |     10.5 BCRS     |
- 2022 |  1,375,001 - 1,500,000  |  2 BCRS |    7 BCRS    |      0 BCRS      |      9 BCRS       |
- 2022 |  1,500,001 - 1,625,000  |  2 BCRS |    6 BCRS    |      0 BCRS      |      8 BCRS       |
- 2023 |  1,625,001 - 1,750,000  |  2 BCRS |    5 BCRS    |      0 BCRS      |      7 BCRS       |
- 2023 |  1,750,001 - 1,875,000  |  2 BCRS |    4 BCRS    |      0 BCRS      |      6 BCRS       |
- 2024 |  1,875,001 - 2,000,000  |  2 BCRS |    3 BCRS    |      0 BCRS      |      5 BCRS       |
- 2024 |  2,000,001 - ∞          |  2 BCRS |    2 BCRS    |      0 BCRS      |      4 BCRS       |
+ 2021 |  1,000,001 - 1,043,800  |  6 BCRS |    6 BCRS    |      2 BCRS      |     14 BCRS       |
+ 2021 |  1,043,801 - 1,087,600  |  5 BCRS |    5 BCRS    |      2 BCRS      |     12 BCRS       |
+ 2022 |  1,087,601 - 1,131,400  |  4 BCRS |    4 BCRS    |      2 BCRS      |     10 BCRS       |
+ 2022 |  1,131,401 - 1,175,200  |  3 BCRS |    3 BCRS    |      2 BCRS      |      8 BCRS       |
+ 2023 |  1,175,201 - ∞          |  2 BCRS |    2 BCRS    |      2 BCRS      |      6 BCRS       |
 
 UNIX BUILD NOTES
 ====================
