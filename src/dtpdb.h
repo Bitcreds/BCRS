@@ -18,7 +18,7 @@ public:
 
     std::string GetIPFSofDTP(const std::string &dtpAddress);
     bool ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
-    bool WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
+    bool WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int blockHeight);
     bool UpdateDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash);
     bool EraseDTPAssociation(const std::string &dtpAddress);
 };

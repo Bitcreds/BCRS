@@ -4163,11 +4163,17 @@ static bool AcceptBlock(const CBlock& block, CValidationState& state, const CCha
         if (!ReceivedBlockTransactions(block, state, pindex, blockPos))
             return error("AcceptBlock(): ReceivedBlockTransactions failed");
         // check for DTP-IPFS registrations
+        CTransaction inputTx;
+        uint256 hashBlock;
         for (unsigned int i = 1; i < block.vtx.size(); i++)
-            if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && 
-                block.vtx[i].vin[0].nValue == block.vtx[i].vout[1].nValue + 1 * CENT &&
-                block.vtx[i].vout[0].nValue == 0.5 * CENT)
+            if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && block.vtx[i].vout[0].nValue == 0.5 * CENT) {
+                if (!GetTransaction(block.vtx[i].vin[0].prevout.hash, inputTx, Params().GetConsensus(), hashBlock, true))
+                    LogPrintf("DTP-IPFS: No information available about transaction %s\n", block.vtx[i].vin[0].prevout.hash);
+                else if (inputTx.vout[block.vtx[i].vin[0].prevout.n].nValue == block.vtx[i].vout[1].nValue + 1 * CENT)
                     ProcessPossibleDtpIpfsRegistration(block.vtx[i].vout[0].scriptPubKey);
+                else
+                    LogPrintf("DTP-IPFS: Miners were not paid enough for the DTP-IPFS registration in transaction %s\n", inputTx.GetHash());
+            }
     } catch (const std::runtime_error& e) {
         return AbortNode(state, std::string("System error: ") + e.what());
     }

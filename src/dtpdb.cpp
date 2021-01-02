@@ -30,7 +30,7 @@ bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfs
     return false;
 }
 
-bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight) {
+bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int blockHeight) {
     CDBBatch batch(&GetObfuscateKey());
     batch.Write(dtpAddress, std::make_pair(ipfsHash, blockHeight));
     return WriteBatch(batch);
