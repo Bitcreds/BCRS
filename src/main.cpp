@@ -2883,7 +2883,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     if (pindex->nHeight > Params().GetConsensus().nMasternodePaymentsStartBlock)
         nExpectedBlockValue = GetPoWBlockPayment(pindex->nHeight, nFees) + GetMasternodePayment(pindex->nHeight);
-    else if (pindex->nHeight <= Params().GetConsensus().nMasternodePaymentsStartBlock)
+    else
         nExpectedBlockValue = GetPoWBlockPayment(pindex->nHeight, nFees);
 
     CAmount fundReward = GetDevelopmentFundPayment(pindex->nHeight);
@@ -7102,15 +7102,18 @@ bool SendMessages(CNode* pto)
             }
         }
 
-        //
-        // Message: getdata (non-blocks)
-        //
+        /*
         int64_t nFirst = -1;
         if(!pto->mapAskFor.empty()) {
             nFirst = (*pto->mapAskFor.begin()).first;
         }
         // debug=1, seems to produce mostly this message
-        //LogPrint("net", "SendMessages (mapAskFor) -- before loop: nNow = %d, nFirst = %d\n", nNow, nFirst);
+        LogPrint("net", "SendMessages (mapAskFor) -- before loop: nNow = %d, nFirst = %d\n", nNow, nFirst);
+        */
+
+        //
+        // Message: getdata (non-blocks)
+        //
         while (!pto->fDisconnect && !pto->mapAskFor.empty() && (*pto->mapAskFor.begin()).first <= nNow)
         {
             const CInv& inv = (*pto->mapAskFor.begin()).second;

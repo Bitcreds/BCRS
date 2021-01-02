@@ -21,6 +21,7 @@
 #include "txmempool.h"
 #include "util.h"
 #include "utilstrencodings.h"
+#include "core_io.h"
 #include "dtpdb.h"
 
 #ifdef ENABLE_WALLET
