@@ -21,6 +21,8 @@
 #include "txmempool.h"
 #include "util.h"
 #include "utilstrencodings.h"
+#include "dtpdb.h"
+
 #ifdef ENABLE_WALLET
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
@@ -1035,4 +1037,125 @@ UniValue getspentinfo(const UniValue& params, bool fHelp)
     obj.push_back(Pair("height", value.blockHeight));
 
     return obj;
+}
+
+UniValue registerdtpipfs(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 3)
+        throw std::runtime_error(
+            "registerdtpipfs \"bitcredsaddress\" \"dtpurl\" \"ipfshash\"\n"
+            "\nRegisters a DTP address with a corresponding IPFS or IPNS hash and pays for it with the required amount.\n"
+            "It creates the DTP-IPFS register transaction, signs it and then sends it to the network.\n"
+            "The wallet must be unlocked by passphrase before registering.\n"
+            "Returns the hex-encoded hash of the registration transaction if it was completed successfully.\n"
+            "\nArguments:\n"
+            "1. \"creditsaddress\" (string, required) The Bitcreds address used to pay for the registration."
+            "2. \"dtpurl\" (string, required) The DTP domain name that will be registered. It must not contain \"/\" character.\n"
+            "3. \"ipfshash\" (string, required) The IPFS hash where the DTP name will point to.\n"
+            "\nResult:\n"
+            "\"hex\" (string) The hex-encoded hash of the registration transaction.\n"
+            "\nExample:\n"
+            "registerdtpipfs \"CXAMcudgejBnG5P5z6ENNGtQxdKD1sZRAo\" \"ipfs.org\" \"QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG\""
+        );
+
+    if (params[0].isNull() || params[1].isNull() || params[2].isNull())
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, arguments 1, 2 and 3 must be non-null.");
+
+    if (params[0].get_str().length() != 34)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 1 does not have the required length of a Bitcreds address (34 characters).");
+
+    if (params[1].get_str().length() > 30)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 2 must have at most 30 characters.");
+
+    if (params[2].get_str().length() != 46)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 3 does not have the required length of an IPFS hash (46 characters).");
+
+    std::string dtpUrl = params[1].get_str();
+    std::string ipfsHash = params[2].get_str();
+    CBitcredsAddress payingAddress(params[0].get_str());
+
+    if (!payingAddress.IsValid())
+      throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Bitcreds address: ") + payingAddress.ToString());
+
+    CMutableTransaction rawTx;
+    CTxIn in;
+    CAmount change;
+
+    std::vector<COutput> vecOutputs;
+    assert(pwalletMain != NULL);
+
+#ifdef ENABLE_WALLET
+    LOCK2(cs_main, pwalletMain ? &pwalletMain->cs_wallet : NULL);
+#else
+    LOCK(cs_main);
+#endif
+
+    pwalletMain->AvailableCoins(vecOutputs, false, NULL, true);
+
+    // going through all unspent outputs
+    BOOST_FOREACH(const COutput& out, vecOutputs) {
+        CTxDestination address;
+        if (!ExtractDestination(out.tx->vout[out.i].scriptPubKey, address))
+            continue;
+        // if an unsepent output corresponding to the parameter address is found
+        // we can try to use it
+        if (!(payingAddress == CBitcredsAddress(address)))
+            continue;
+
+        CAmount nValue = out.tx->vout[out.i].nValue;
+
+        // price of registering is 0.01 Bitcreds or 1 Cent so the output has to hold at least that amount
+        // half of it gets burned and the other goes to the miners as transaction fee
+        if (nValue >= CENT) {
+            change = nValue - CENT;
+            in = CTxIn(out.tx->GetHash(), out.i);
+            rawTx.vin.push_back(in);
+            break;
+        }
+    }
+
+    // if CTxIn exists only then we can register
+    if (rawTx.vin.size() == 1) {
+        std::string hexToRegister = HexStr("di/" + dtpUrl + std::string("/") + ipfsHash);
+        CTxOut outRegister(0.5 * CENT, CScript() << OP_RETURN << ParseHex(hexToRegister));
+
+        rawTx.vout.push_back(outRegister);
+
+        CScript scriptPubKey = GetScriptForDestination(payingAddress.Get());
+        CTxOut outChange(change, scriptPubKey);
+
+        rawTx.vout.push_back(outChange);
+    } else
+        throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "The specified address is invalid or it does not have enough funds.");
+
+
+    UniValue toSign = UniValue(UniValue::VType::VARR);
+    toSign.push_back(UniValue(EncodeHexTx(rawTx)));
+
+    UniValue signedResult = UniValue(UniValue::VType::VARR);
+    signedResult.push_back(signrawtransaction(toSign, false).getValues().at(0));
+
+    return sendrawtransaction(signedResult, false);
+}
+
+UniValue getipfsofdtp(const UniValue& params, bool fHelp) {
+    if (fHelp || params.size() != 1)
+        throw std::runtime_error(
+            "getipfsofdtp \"dtpurl\"\n"
+            "\nGet the corresponding IPFS or IPNS hash of a registered DTP address.\n"
+            "\nArguments:\n"
+            "1. \"dtpurl\" (string, required) The DTP domain name.\n"
+            "\nResult:\n"
+            "\n (string) The IPFS or IPNS hash of the registered domain.\n"
+            "\nExample:\n"
+            "getipfsofdtp \"ipfs.org\""
+    );
+    
+    if (params[0].isNull())
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 1 must be non-null.");
+
+    if (params[0].get_str().length() > 30)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 1 can have at most 30 characters.");
+
+    return pdtpdb->GetIPFSofDTP(params[0].get_str());
 }

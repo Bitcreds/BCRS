@@ -353,8 +353,10 @@ static const CRPCCommand vRPCCommands[] =
     { "Bitcreds",                "mnsync",                 &mnsync,                 true  },
     { "Bitcreds",                "spork",                  &spork,                  true  },
     { "Bitcreds",                "getpoolinfo",            &getpoolinfo,            true  },
+    { "Bitcreds",                "getipfsofdtp",           &getipfsofdtp,           true  },
 #ifdef ENABLE_WALLET
     { "Bitcreds",                "privatesend",            &privatesend,            false },
+    { "Bitcreds",                "registerdtpipfs",        &registerdtpipfs,        false },
 
     /* Wallet */
     { "Wallet",             "keepass",                &keepass,                true },

@@ -375,6 +375,33 @@ int LogPrintStr(const std::string &str)
     return ret;
 }
 
+void WriteDtpIpfsToXmlFile(const std::string& dtpAddress, const std::string& ipfsHash, const int& height) 
+{
+    boost::filesystem::path pathDebug = GetDataDir() / "dtp.xml";
+    std::string dtpToWrite;
+    FILE* dtpFile;
+
+    // checks if the file exists
+    if (dtpFile = fopen(pathDebug.string().c_str(), "r+")) {
+        // if does that means we are appending data
+        // therefore we must replace the last row which is the one closing the root level of the XML
+        fseek(dtpFile, -16, SEEK_END); // for the 16 characters in </registrations>
+    } else {
+        // if it doesn't then we must append these three lines first
+        dtpFile = fopen(pathDebug.string().c_str(), "a");
+        dtpToWrite = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<registrations>\n";
+    }
+
+    dtpToWrite = dtpToWrite + "\t<dtp>\n\t\t<address>" + dtpAddress + 
+                              "</address>\n\t\t<hash>" + ipfsHash +
+                              "</hash>\n\t\t<height>" + to_string(height) +
+                              "</height>\n\t</dtp>\n</registrations>";
+
+    fwrite(dtpToWrite.data(), sizeof(char), dtpToWrite.size(), dtpFile);
+
+    fclose(dtpFile);
+}
+
 /** Interpret string as boolean, for argument parsing */
 static bool InterpretBool(const std::string& strValue)
 {

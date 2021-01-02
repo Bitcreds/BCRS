@@ -46,6 +46,7 @@
 #include "consensus/validation.h"
 #include "validationinterface.h"
 #include "versionbits.h"
+#include "dtpdb.h"
 
 #include <atomic>
 #include <sstream>
@@ -634,6 +635,7 @@ CBlockIndex* FindForkInGlobalIndex(const CChain& chain, const CBlockLocator& loc
 
 CCoinsViewCache *pcoinsTip = NULL;
 CBlockTreeDB *pblocktree = NULL;
+CDTPDB *pdtpdb = NULL;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -4018,6 +4020,44 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, CBlockIn
     return true;
 }
 
+void ProcessPossibleDtpIpfsRegistration(CScript scriptPubKey) {
+    std::string hexString = HexStr(scriptPubKey);
+
+    LogPrintf("DTP-IPFS: in %s scriptPubKey in hexadecimal: %s\n", __func__, hexString);
+
+    std::string byte, decodedData;
+    char chr;
+
+    for(std::size_t i = 0; i < hexString.length(); i += 2) {
+        byte = hexString.substr(i, 2);
+        chr = (char)(int)strtol(byte.c_str(), NULL, 16);
+        decodedData.push_back(chr);
+    }
+
+    std::size_t posRegistration = decodedData.find("di/");
+
+    if (posRegistration == std::string::npos) {
+        LogPrintf("DTP-IPFS: in %s the start of the DTP-IPFS registration was not found\n", __func__);
+        return;
+    }
+
+    std::size_t posSeparator = decodedData.find("/", posRegistration + 3);
+
+    if (posSeparator == std::string::npos) {
+        LogPrintf("DTP-IPFS: in %s the separator inside the DTP-IPFS registration was not found\n", __func__);
+        return;
+    }
+
+    std::string dtpAddress = decodedData.substr(posRegistration + 3, posSeparator - posRegistration - 3);
+    std::string ipfsHash = decodedData.substr(posSeparator + 1);
+
+    LogPrintf("DTP-IPFS: in %s dtpAddress = %s and ipfsHash = %s\n", __func__, dtpAddress, ipfsHash);
+
+    pdtpdb->WriteDTPAssociation(dtpAddress, ipfsHash, chainActive.Height() + 1);
+
+    return;
+}
+
 static bool AcceptBlockHeader(const CBlockHeader& block, CValidationState& state, const CChainParams& chainparams, CBlockIndex** ppindex=NULL)
 {
     AssertLockHeld(cs_main);
@@ -4122,6 +4162,12 @@ static bool AcceptBlock(const CBlock& block, CValidationState& state, const CCha
                 AbortNode(state, "Failed to write block");
         if (!ReceivedBlockTransactions(block, state, pindex, blockPos))
             return error("AcceptBlock(): ReceivedBlockTransactions failed");
+        // check for DTP-IPFS registrations
+        for (unsigned int i = 1; i < block.vtx.size(); i++)
+            if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && 
+                block.vtx[i].vin[0].nValue == block.vtx[i].vout[1].nValue + 1 * CENT &&
+                block.vtx[i].vout[0].nValue == 0.5 * CENT)
+                    ProcessPossibleDtpIpfsRegistration(block.vtx[i].vout[0].scriptPubKey);
     } catch (const std::runtime_error& e) {
         return AbortNode(state, std::string("System error: ") + e.what());
     }

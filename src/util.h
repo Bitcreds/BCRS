@@ -97,6 +97,9 @@ bool LogAcceptCategory(const char* category);
 /** Send a string to the log output */
 int LogPrintStr(const std::string &str);
 
+/** Writes the DTP-IPFS association to a file */
+void WriteDtpIpfsToFile(const std::string& dtpAddress, const std::string& ipfsHash, const int& height);
+
 #define LogPrintf(...) LogPrint(NULL, __VA_ARGS__)
 
 /**

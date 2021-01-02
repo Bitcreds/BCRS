@@ -373,6 +373,7 @@ HEADERS += \
     src/core_io.h \
     src/core_memusage.h \
     src/dbwrapper.h \
+    src/dtpdb.h \
     src/flat-database.h \
     src/governance-classes.h \
     src/governance-exceptions.h \
@@ -549,6 +550,7 @@ SOURCES += \
     src/core_read.cpp \
     src/core_write.cpp \
     src/dbwrapper.cpp \
+    src/dtpdb.cpp \
     src/governance-classes.cpp \
     src/governance-object.cpp \
     src/governance-vote.cpp \

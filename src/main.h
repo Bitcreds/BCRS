@@ -21,6 +21,7 @@
 #include "spentindex.h"
 #include "sync.h"
 #include "versionbits.h"
+#include "dtpdb.h"
 
 #include <algorithm>
 #include <exception>
@@ -35,6 +36,7 @@
 class CBloomFilter;
 class CBlockIndex;
 class CBlockTreeDB;
+class CDTPDB;
 class CChainParams;
 class CInv;
 class CScriptCheck;
@@ -755,6 +757,9 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, bool fCheckPOW = true);
 bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW = true, bool fCheckMerkleRoot = true);
 
+/** Processing of possible DTP-IPFS registrations*/
+void ProcessPossibleDtpIpfsRegistration(CScript scriptPubKey);
+
 /** Context-dependent validity checks */
 bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& state, CBlockIndex *pindexPrev);
 bool ContextualCheckBlock(const CBlock& block, CValidationState& state, CBlockIndex *pindexPrev);
@@ -842,6 +847,9 @@ extern CCoinsViewCache *pcoinsTip;
 
 /** Global variable that points to the active block tree (protected by cs_main) */
 extern CBlockTreeDB *pblocktree;
+
+/** Global variable that points to the active DTP-IPFS database (protected by cs_main) */
+extern CDTPDB *pdtpdb;
 
 /**
  * Return the spend height, which is one more than the inputs.GetBestBlock().

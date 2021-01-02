@@ -272,6 +272,9 @@ extern UniValue sendrawtransaction(const UniValue& params, bool fHelp);
 extern UniValue gettxoutproof(const UniValue& params, bool fHelp);
 extern UniValue verifytxoutproof(const UniValue& params, bool fHelp);
 
+extern UniValue registerdtpipfs(const UniValue& params, bool fHelp); // register DTP-IPFS association
+extern UniValue getipfsofdtp(const UniValue& params, bool fHelp);
+
 extern UniValue privatesend(const UniValue& params, bool fHelp);
 extern UniValue getpoolinfo(const UniValue& params, bool fHelp);
 extern UniValue spork(const UniValue& params, bool fHelp);

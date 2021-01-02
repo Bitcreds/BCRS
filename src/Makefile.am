@@ -99,6 +99,7 @@ BITCREDS_CORE_H = \
   core_io.h \
   core_memusage.h \
   dbwrapper.h \
+  dtpdb.h \
   masternode.h \
   masternode-payments.h \
   masternode-sync.h \
@@ -205,6 +206,7 @@ libbitcreds_server_a_SOURCES = \
   chain.cpp \
   checkpoints.cpp \
   dbwrapper.cpp \
+  dtpdb.cpp \
   governance.cpp \
   governance-classes.cpp \
   governance-object.cpp \
