@@ -16,11 +16,11 @@ class CDTPDB : public CDBWrapper
 public:
     CDTPDB(size_t nCacheSize, bool fMemory = false, bool fWipe = false);
 
-    std::string CDTPDB::GetIPFSofDTP(const std::string &dtpAddress);
-    bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
-    bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
-    bool CDTPDB::UpdateDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash);
-    bool CDTPDB::EraseDTPAssociation(const std::string &dtpAddress);
+    std::string GetIPFSofDTP(const std::string &dtpAddress);
+    bool ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
+    bool WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
+    bool UpdateDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash);
+    bool EraseDTPAssociation(const std::string &dtpAddress);
 };
 
 #endif // BITCREDS_DTPDB_H
