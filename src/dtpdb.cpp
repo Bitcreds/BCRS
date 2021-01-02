@@ -9,16 +9,25 @@
 CDTPDB::CDTPDB(size_t nCacheSize, bool fMemory, bool fWipe) : CDBWrapper(GetDataDir() / "dtp", nCacheSize, fMemory, fWipe) {}
 
 std::string CDTPDB::GetIPFSofDTP(const std::string &dtpAddress) {
-    std::string ipfsHash;
-    int blockHeight;
+    std::pair<std::string, int> storedValue;
+    
+    if (Read(dtpAddress, storedValue))
+        return storedValue.first;
 
-    ReadDTPAssociation(dtpAddress, ipfsHash, blockHeight);
-
-    return ipfsHash;
+    return "Not Found";
 }
 
 bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight) {
-    return Read(dtpAddress, std::make_pair(ipfsHash, blockHeight));
+    std::pair<std::string, int> storedValue;
+
+    if (Read(dtpAddress, storedValue)) {
+        ipfsHash = storedValue.first;
+        blockHeight = storedValue.second;
+        
+        return true;
+    }
+
+    return false;
 }
 
 bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight) {
@@ -28,14 +37,15 @@ bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipf
 }
 
 bool CDTPDB::UpdateDTPAssociation(const std::string &dtpAddress, std::string &newIpfsHash) {
-    int &blockHeight;
-    std::string &oldIpfsHash;
+    std::pair<std::string, int> storedValue;
+    
+    if (Read(dtpAddress, storedValue)) {
+        CDBBatch batch(&GetObfuscateKey());
+        batch.Write(dtpAddress, std::make_pair(newIpfsHash, storedValue.second));
+        return WriteBatch(batch);
+    }
 
-    Read(dtpAddress, std::make_pair(oldIpfsHash, blockHeight));
-
-    CDBBatch batch(&GetObfuscateKey());
-    batch.Write(dtpAddress, std::make_pair(newIpfsHash, blockHeight));
-    return WriteBatch(batch);
+    return false;
 }
 
 bool CDTPDB::EraseDTPAssociation(const std::string &dtpAddress) {
