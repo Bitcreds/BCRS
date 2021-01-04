@@ -7,7 +7,7 @@
 What are Bitcreds?
 ----------------
 * Coin Suffix: BCRS
-* PoW Mining Algorithm: Argon2d250 until block 1,000,000; Argon2d16000 afterwards
+* PoW Mining Algorithm: Argon2d250 until January 30, 2021 6:00:00 PM UTC; Argon2d16000 afterwards
 * PoW Difficulty Algorithm: DELTA
 * PoW Target Spacing: 128 Seconds until block 1,000,000; 360 Seconds afterwards
 * PoW Reward per Block: See Below
