@@ -2,7 +2,7 @@
 
 ![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
-**Copyright (c) 2017-2020 Bitcreds Developers**
+**Copyright (c) 2017-2021 Bitcreds Developers**
 
 What are Bitcreds?
 ----------------
