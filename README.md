@@ -1,4 +1,4 @@
-# **Bitcreds (BCRS) v1.7.0.0**
+# **Bitcreds (BCRS) v1.7.1.0**
 
 ![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
@@ -19,7 +19,7 @@ What are Bitcreds?
 * Total Coins (until 2 PoW / 2 MN / 2 DevFund reward): ~13,914,700* (after ~5 Years from Genesis)
 * Min TX Fee: 0.0001 BCRS
 
-*Until block 375,000 all transaction fees got burned. Some blocks did not include a Masternode reward.
+*Until block 375,000 all transaction fees got burned. Not all blocks include a Masternode reward.
 
 Bitcreds uses peer-to-peer technology to operate securely with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
@@ -310,11 +310,15 @@ AVX2 Mining Optimisations
 -------------------------
 For increased performance when mining, AVX2 optimisations can be enabled.
 
-Prior to running the build commands:
+This can be done either prior to running the build commands by setting:
 
     CPPFLAGS=-march=native
 
-CPU's with AVX2 support:
+or at configure time:
+
+    --enable-avx2
+
+CPUs with AVX2 support:
 
     Intel
         Haswell processor, Q2 2013
@@ -323,11 +327,13 @@ CPU's with AVX2 support:
         Broadwell E processor, Q3 2016
         Skylake processor, Q3 2015
         Kaby Lake processor, Q3 2016(ULV mobile)/Q1 2017(desktop/mobile)
-        Coffee Lake processor, expected in 2017
-        Cannonlake processor, expected in 2017
+        Coffee Lake processors, 2017
+        Cannon Lake processors, 2018
+        Ice Lake processors, 2019
+        Comet Lake processors, 2019
     AMD
-        Carrizo processor, Q2 2015
-        Ryzen processor, Q1 2017
+        Carrizo processors, Q2 2015
+        Ryzen processors, Q1 2017
 
 AVX512F Mining Optimisations
 -------------------------
@@ -337,15 +343,20 @@ At configure time:
 
     --enable-avx512f
 
-CPU's with AVX512F support:
+CPUs with AVX512F support:
 
     Intel
-        Xeon Phi x200/Knights Landing processor, 2016
-        Knights Mill processor, 2017
-        Skylake-SP processor, 2017
-        Skylake-X processor, 2017
-        Cannonlake processor, expected in 2018
-        Ice Lake processor, expected in 2018
+        Xeon Phi x200/Knights Landing processors, 2016
+        Knights Mill processors, 2017
+        Skylake-SP processors, 2017
+        Skylake-X processors, 2017
+        Cannon Lake processors, 2018
+        Cascade Lake processors, 2019
+        Ice Lake processor, 2019
+        Cooper Lake processors, 2020
+        Tiger Lake processor, 2020
+
+Whether or not your CPU has AVX2 and AVX512F support is, in general, easily available information on the Web so we recommend looking it up yourself as not all compatibile processors are shown in the lists above. These two Wikipedia articles https://en.wikipedia.org/wiki/Advanced_Vector_Extensions and https://en.wikipedia.org/wiki/AVX-512 offer quite a bit of information in this sense.
 
 Example Build Command
 --------------------

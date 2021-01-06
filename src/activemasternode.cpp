@@ -230,7 +230,7 @@ void CActiveMasternode::ManageStateInitial()
     }
 
     if (pwalletMain->GetBalance() < Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN) {
-        LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < %d BCRS\n", GetStateString(), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height());
+        LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < %d BCRS\n", GetStateString(), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
         return;
     }
 
