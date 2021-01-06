@@ -3313,9 +3313,9 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                 if (!SelectCoins(nValueToSelect, setCoins, nValueIn, coinControl, nCoinType, fUseInstantSend))
                 {
                     if (nCoinType == ONLY_NOT_MN_COLLATERAL) {
-                        strFailReason = strprintf(_("Unable to locate enough funds for this transaction that are not equal to %d BCRS.", Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height())));
+                        strFailReason = strprintf(_("Unable to locate enough funds for this transaction that are not equal to %d BCRS."), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
                     } else if (nCoinType == ONLY_NONDENOMINATED_NOT_MN_COLLATERAL) {
-                        strFailReason = strprintf(_("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal to %d BCRS.", Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height())));
+                        strFailReason = strprintf(_("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal to %d BCRS."), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
                     } else if (nCoinType == ONLY_DENOMINATED) {
                         strFailReason = _("Unable to locate enough PrivateSend denominated funds for this transaction.");
                         strFailReason += " " + _("PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.");
