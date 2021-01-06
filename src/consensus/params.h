@@ -54,6 +54,8 @@ struct Params {
     int nSuperblockCycle; // in blocks
     int nGovernanceMinQuorum; // Min absolute vote count to trigger an action
     int nGovernanceFilterElements;
+    int nOldMasternodeCollateral;
+    int nNewMasternodeCollateral;
     int nMasternodeMinimumConfirmations;
     /** Used to check majorities for block version upgrade */
     int nMajorityEnforceBlockUpgrade;
@@ -83,6 +85,13 @@ struct Params {
             return nNewPowTargetSpacing;
         else
             return nOldPowTargetSpacing;
+    }
+
+    int GetCurrentMasternodeCollateral(const int& nHeight) const {
+        if (nHeight > nHardForkSix)
+            return nNewMasternodeCollateral;
+        else
+            return nOldMasternodeCollateral;
     }
 };
 } // namespace Consensus
