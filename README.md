@@ -19,7 +19,7 @@ What are Bitcreds?
 * Total Coins (until 2 PoW / 2 MN / 2 DevFund reward): ~13,914,700* (after ~5 Years from Genesis)
 * Min TX Fee: 0.0001 BCRS
 
-*Until block 375,000 all transaction fees got burned. Not all blocks include a Masternode reward.
+*Until block 375,000 all transaction fees got burned. Some blocks did not include a Masternode reward.
 
 Bitcreds uses peer-to-peer technology to operate securely with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
