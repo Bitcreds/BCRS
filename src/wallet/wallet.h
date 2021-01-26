@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -104,9 +104,9 @@ enum AvailableCoinsType
 {
     ALL_COINS = 1,
     ONLY_DENOMINATED = 2,
-    ONLY_NOT500IFMN = 3,
-    ONLY_NONDENOMINATED_NOT500IFMN = 4,
-    ONLY_500 = 5, // find Masternode outputs including locked ones (use with caution)
+    ONLY_NOT_MN_COLLATERAL = 3,
+    ONLY_NONDENOMINATED_NOT_MN_COLLATERAL = 4,
+    ONLY_MN_COLLATERAL = 5, // find Masternode outputs including locked ones (use with caution)
     ONLY_PRIVATESEND_COLLATERAL = 6
 };
 
