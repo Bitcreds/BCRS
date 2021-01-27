@@ -2406,14 +2406,14 @@ void CWallet::AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed, 
                 if (nCoinType == ONLY_DENOMINATED) {
                     found = IsDenominatedAmount(pcoin->vout[i].nValue);	
                 } else if (nCoinType == ONLY_NOT_MN_COLLATERAL) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
+                    found = !(fMasterNode && pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN);
                 } else if (nCoinType == ONLY_NONDENOMINATED_NOT_MN_COLLATERAL) {
                     if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
                         found = !IsDenominatedAmount(pcoin->vout[i].nValue);
                     if (found && fMasterNode)
-                        found = pcoin->vout[i].nValue != Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()); // do not use Hot MN funds
+                        found = pcoin->vout[i].nValue != Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN; // do not use Hot MN funds
                 } else if (nCoinType == ONLY_MN_COLLATERAL) {
-                    found = pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height());
+                    found = pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN;
                 } else if (nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
                     found = IsCollateralAmount(pcoin->vout[i].nValue);
                 } else {
