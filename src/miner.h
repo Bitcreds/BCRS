@@ -53,6 +53,5 @@ void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
 
 extern double dHashesPerSec;
-extern int64_t nHPSTimerStart;
 
 #endif // BITCREDS_MINER_H
