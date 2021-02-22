@@ -3537,6 +3537,9 @@ bool ActivateBestChain(CValidationState &state, const CChainParams& chainparams,
         // When we reach this point, we switched to a new tip (stored in pindexNewTip).
 
         // Notifications/callbacks that can run without cs_main
+
+        GetMainSignals().UpdatedBlockTip(pindexNewTip, pindexFork, fInitialDownload);
+
         // Always notify the UI if a new block tip was connected
         if (pindexFork != pindexNewTip) {
             uiInterface.NotifyBlockTip(fInitialDownload, pindexNewTip);
@@ -3567,11 +3570,6 @@ bool ActivateBestChain(CValidationState &state, const CChainParams& chainparams,
                             }
                         }
                     }
-                }
-                
-                // Notify external listeners about the new tip.
-                if (!vHashes.empty()) {
-                    GetMainSignals().UpdatedBlockTip(pindexNewTip, fInitialDownload);
                 }
             }
         }

@@ -247,7 +247,7 @@ void CMasternodeSync::ProcessTick()
                     // b) we waited for at least MASTERNODE_SYNC_TIMEOUT_SECONDS since we reached
                     //    the headers tip the last time (i.e. since we switched from
                     //     MASTERNODE_SYNC_INITIAL to MASTERNODE_SYNC_WAITING and bumped time);
-                    // c) there were no blocks (NotifyHeaderTip) or headers (AcceptedBlockHeader)
+                    // c) there were no blocks (UpdatedBlockTip, NotifyHeaderTip) or headers (AcceptedBlockHeader)
                     //    for at least MASTERNODE_SYNC_TIMEOUT_SECONDS.
                     // We must be at the tip already, let's move to the next asset.
                     SwitchToNextAsset();
@@ -421,8 +421,7 @@ void CMasternodeSync::AcceptedBlockHeader(const CBlockIndex *pindexNew)
 
 void CMasternodeSync::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload)
 {
-    if (fDebug)
-        LogPrintf("CMasternodeSync::NotifyHeaderTip -- pindexNew->nHeight: %d fInitialDownload=%d\n", pindexNew->nHeight, fInitialDownload);
+    LogPrint("mnsync", "CMasternodeSync::NotifyHeaderTip -- pindexNew->nHeight: %d fInitialDownload=%d\n", pindexNew->nHeight, fInitialDownload);
 
     if (IsFailed() || IsSynced() || !pindexBestHeader)
         return;
@@ -431,8 +430,26 @@ void CMasternodeSync::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitia
         // Postpone timeout each time new block arrives while we are still syncing blockchain
         BumpAssetLastTime("CMasternodeSync::NotifyHeaderTip");
     }
+}
+
+void CMasternodeSync::UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitialDownload)
+{
+    LogPrint("mnsync", "CMasternodeSync::UpdatedBlockTip -- pindexNew->nHeight: %d fInitialDownload=%d\n", pindexNew->nHeight, fInitialDownload);
+
+    if (IsFailed() || IsSynced() || !pindexBestHeader)
+        return;
+
+    if (!IsBlockchainSynced()) {
+        // Postpone timeout each time new block arrives while we are still syncing blockchain
+        BumpAssetLastTime("CMasternodeSync::UpdatedBlockTip");
+    }
 
     if (fInitialDownload) {
+        // switched too early
+        if (IsBlockchainSynced()) {
+            Reset();
+        }
+
         // no need to check any further while still in IBD mode
         return;
     }
@@ -452,8 +469,7 @@ void CMasternodeSync::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitia
 
     fReachedBestHeader = fReachedBestHeaderNew;
 
-    if (fDebug)
-        LogPrintf("CMasternodeSync::NotifyHeaderTip -- pindexNew->nHeight: %d pindexBestHeader->nHeight: %d fInitialDownload=%d fReachedBestHeader=%d\n",
+    LogPrint("mnsync", "CMasternodeSync::UpdatedBlockTip -- pindexNew->nHeight: %d pindexBestHeader->nHeight: %d fInitialDownload=%d fReachedBestHeader=%d\n",
                 pindexNew->nHeight, pindexBestHeader->nHeight, fInitialDownload, fReachedBestHeader);
 
     if (!IsBlockchainSynced() && fReachedBestHeader) {
