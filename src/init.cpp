@@ -1970,11 +1970,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     // force UpdatedBlockTip to initialize pCurrentBlockIndex for PS, MN payments and budgets
     // but don't call it directly to prevent triggering of other listeners like zmq etc.
     // GetMainSignals().UpdatedBlockTip(chainActive.Tip());
-    mnodeman.UpdatedBlockTip(chainActive.Tip());
-    privateSendPool.UpdatedBlockTip(chainActive.Tip());
-    mnpayments.UpdatedBlockTip(chainActive.Tip());
-    masternodeSync.UpdatedBlockTip(chainActive.Tip(), IsInitialBlockDownload());
-    governance.UpdatedBlockTip(chainActive.Tip());
+    ppsNotificationInterface->InitializeCurrentBlockTip();
 
     // ********************************************************* Step 11d: start bitcreds-privatesend thread
 

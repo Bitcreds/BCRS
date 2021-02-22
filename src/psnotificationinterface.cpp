@@ -21,6 +21,12 @@ CPSNotificationInterface::~CPSNotificationInterface()
 {
 }
 
+void CDSNotificationInterface::InitializeCurrentBlockTip()
+{
+    LOCK(cs_main);
+    UpdatedBlockTip(chainActive.Tip(), NULL, IsInitialBlockDownload());
+}
+
 void CPSNotificationInterface::AcceptedBlockHeader(const CBlockIndex *pindexNew)
 {
     masternodeSync.AcceptedBlockHeader(pindexNew);
@@ -39,6 +45,7 @@ void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindexNew, con
     masternodeSync.UpdatedBlockTip(pindexNew, fInitialDownload);
 
     if (fInitialDownload) // In IBD
+        return;
 
     mnodeman.UpdatedBlockTip(pindexNew);
     privateSendPool.UpdatedBlockTip(pindexNew);
