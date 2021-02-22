@@ -3489,6 +3489,7 @@ static void NotifyHeaderTip() {
     // Send block tip changed notifications without cs_main
     if (fNotify) {
         uiInterface.NotifyHeaderTip(fInitialBlockDownload, pindexHeader);
+        GetMainSignals().NotifyHeaderTip(pindexHeader, fInitialBlockDownload);
     }
 }
 
@@ -3567,9 +3568,10 @@ bool ActivateBestChain(CValidationState &state, const CChainParams& chainparams,
                         }
                     }
                 }
+                
                 // Notify external listeners about the new tip.
                 if (!vHashes.empty()) {
-                    GetMainSignals().UpdatedBlockTip(pindexNewTip, IsInitialBlockDownload());
+                    GetMainSignals().UpdatedBlockTip(pindexNewTip, fInitialDownload);
                 }
             }
         }
@@ -4103,6 +4105,9 @@ static bool AcceptBlockHeader(const CBlockHeader& block, CValidationState& state
 
     if (ppindex)
         *ppindex = pindex;
+
+    // Notify external listeners about accepted block header
+    GetMainSignals().AcceptedBlockHeader(pindex);
 
     return true;
 }

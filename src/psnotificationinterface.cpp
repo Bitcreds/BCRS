@@ -21,6 +21,16 @@ CPSNotificationInterface::~CPSNotificationInterface()
 {
 }
 
+void CPSNotificationInterface::AcceptedBlockHeader(const CBlockIndex *pindexNew)
+{
+    masternodeSync.AcceptedBlockHeader(pindexNew);
+}
+
+void CPSNotificationInterface::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload)
+{
+    masternodeSync.NotifyHeaderTip(pindexNew, fInitialDownload);
+}
+
 void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindex, bool fInitialDownload)
 {
     mnodeman.UpdatedBlockTip(pindex);
@@ -28,7 +38,6 @@ void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindex, bool f
     instantsend.UpdatedBlockTip(pindex);
     mnpayments.UpdatedBlockTip(pindex);
     governance.UpdatedBlockTip(pindex);
-    masternodeSync.UpdatedBlockTip(pindex, fInitialDownload);
 }
 
 void CPSNotificationInterface::SyncTransaction(const CTransaction &tx, const CBlock *pblock)

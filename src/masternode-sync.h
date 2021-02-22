@@ -16,6 +16,7 @@ class CMasternodeSync;
 
 static const int MASTERNODE_SYNC_FAILED          = -1;
 static const int MASTERNODE_SYNC_INITIAL         = 0; // sync just started, was reset recently or still in IDB
+static const int MASTERNODE_SYNC_WAITING         = 1; // waiting after initial to see if we can get more headers/blocks
 static const int MASTERNODE_SYNC_LIST            = 2;
 static const int MASTERNODE_SYNC_MNW             = 3;
 static const int MASTERNODE_SYNC_GOVERNANCE      = 4;
@@ -51,9 +52,6 @@ private:
     // ... or failed
     int64_t nTimeLastFailure;
 
-    // How many times we failed
-    int nCountFailures;
-
     // Keep track of current block index
     const CBlockIndex *pCurrentBlockIndex;
 
@@ -66,7 +64,7 @@ public:
     void SendGovernanceSyncRequest(CNode* pnode);
 
     bool IsFailed() { return nRequestedMasternodeAssets == MASTERNODE_SYNC_FAILED; }
-    bool IsBlockchainSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_INITIAL; }
+    bool IsBlockchainSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_WAITING; }
     bool IsMasternodeListSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_LIST; }
     bool IsWinnersListSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_MNW; }
     bool IsSynced() { return nRequestedMasternodeAssets == MASTERNODE_SYNC_FINISHED; }
@@ -83,7 +81,8 @@ public:
     void ProcessMessage(CNode* pfrom, std::string& strCommand, CDataStream& vRecv);
     void ProcessTick();
 
-    void UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitialDownload);
+    void AcceptedBlockHeader(const CBlockIndex *pindexNew);
+    void NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload);
 };
 
 #endif // BITCREDS_MASTERNODE_SYNC_H
