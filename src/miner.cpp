@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -458,7 +458,6 @@ void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned
 //
 //
 double dHashesPerSec = 0.0;
-int64_t nHPSTimerStart = 0;
 
 // ScanHash scans nonces looking for a hash with at least some zero bits.
 // The nonce is usually preserved between calls, but periodically or if the
@@ -522,6 +521,8 @@ void static BitcredsMiner(const CChainParams& chainparams)
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
     RenameThread("bitcreds-miner");
 
+    int nThreadHashrate = 0;
+    int64_t nThreadStartTime = GetTime(), nLastHashrateTime = GetTimeMillis();
     unsigned int nExtraNonce = 0;
 
     boost::shared_ptr<CReserveScript> coinbaseScript;
@@ -575,6 +576,7 @@ void static BitcredsMiner(const CChainParams& chainparams)
             //
             // Search
             //
+            int nOldThreadHashrate = 0;
             int64_t nStart = GetTime(), nUpdateCycleStart = GetTimeMillis();
             arith_uint256 hashTarget = arith_uint256().SetCompact(pblock->nBits);
             uint256 hash;
@@ -611,32 +613,34 @@ void static BitcredsMiner(const CChainParams& chainparams)
                         break;
                 }
 
-                // Meter hashes/seconds
-                static int64_t nHashCounter = 0;
+                nOldThreadHashrate = nThreadHashrate;
+                nThreadHashrate = nHashesDone * 1000 / (GetTimeMillis() - nLastHashrateTime);
+                nLastHashrateTime = GetTimeMillis();
+
+                // Periodic Logging of Hashrate
                 static int64_t nLogTime = 0;
 
-                if (nHPSTimerStart == 0)
-                {
-                    nHPSTimerStart = GetTimeMillis();
-                    nHashCounter = 0;
+                if (GetTime() - nThreadStartTime < 12) { // wait for previous threads to terminate and then start recording hashrates
+                    nOldThreadHashrate = 0;
+                    nThreadHashrate = 0;
                 }
-                else
-                    nHashCounter += nHashesDone;
-                if (GetTimeMillis() - nHPSTimerStart > 4000)
+
+                {
+                    static CCriticalSection cs;
+                    LOCK(cs);
+                    dHashesPerSec -= nOldThreadHashrate;
+                    dHashesPerSec += nThreadHashrate;
+                }
+
+                if (GetTime() - nLogTime > 30 * 60)
                 {
                     static CCriticalSection cs;
                     {
                         LOCK(cs);
-                        if (GetTimeMillis() - nHPSTimerStart > 4000)
+                        if (GetTime() - nLogTime > 30 * 60)
                         {
-                            dHashesPerSec = 1000.0 * nHashCounter / (GetTimeMillis() - nHPSTimerStart);
-                            nHPSTimerStart = GetTimeMillis();
-                            nHashCounter = 0;
-                            if (GetTime() - nLogTime > 30 * 60)
-                            {
-                                nLogTime = GetTime();
-                                LogPrintf("hashmeter %6.0f khash/s\n", dHashesPerSec/1000.0);
-                            }
+                            nLogTime = GetTime();
+                            LogPrintf("BitcredsMiner: hashmeter %6.0f hash/s\n", dHashesPerSec);
                         }
                     }
                 }
@@ -653,7 +657,7 @@ void static BitcredsMiner(const CChainParams& chainparams)
                 if (pindexPrev != chainActive.Tip())
                     break;
 
-                if (GetTimeMillis() - nUpdateCycleStart > 4000) {
+                if (GetTimeMillis() - nUpdateCycleStart > 6000) {
                     nUpdateCycleStart = GetTimeMillis();
 
                     // Update nTime every few seconds
@@ -670,6 +674,7 @@ void static BitcredsMiner(const CChainParams& chainparams)
     }
     catch (const boost::thread_interrupted&)
     {
+        dHashesPerSec = 0;
         LogPrintf("BitcredsMiner -- terminated\n");
         throw;
     }

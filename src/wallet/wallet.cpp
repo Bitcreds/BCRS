@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -2402,37 +2402,29 @@ void CWallet::AvailableCoins(std::vector<COutput>& vCoins, bool fOnlyConfirmed, 
 
             for (unsigned int i = 0; i < pcoin->vout.size(); i++) {
                 bool found = false;
-                CAmount masternodeCollateral;
-                
-                if (chainActive.Height() <= Params().GetConsensus().nHardForkSix) {
-                    masternodeCollateral = 50000 * COIN;
-                } else {
-                    masternodeCollateral = 10000 * COIN;
-                }
                 
                 if (nCoinType == ONLY_DENOMINATED) {
                     found = IsDenominatedAmount(pcoin->vout[i].nValue);	
-                } else if (nCoinType == ONLY_NOT500IFMN) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == masternodeCollateral);
-                } else if (nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
+                } else if (nCoinType == ONLY_NOT_MN_COLLATERAL) {
+                    found = !(fMasterNode && pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN);
+                } else if (nCoinType == ONLY_NONDENOMINATED_NOT_MN_COLLATERAL) {
                     if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
                         found = !IsDenominatedAmount(pcoin->vout[i].nValue);
                     if (found && fMasterNode)
-                        found = pcoin->vout[i].nValue != masternodeCollateral; // do not use Hot MN funds
-                } else if (nCoinType == ONLY_500) {
-                    found = pcoin->vout[i].nValue == masternodeCollateral;
+                        found = pcoin->vout[i].nValue != Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN; // do not use Hot MN funds
+                } else if (nCoinType == ONLY_MN_COLLATERAL) {
+                    found = pcoin->vout[i].nValue == Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN;
                 } else if (nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
                     found = IsCollateralAmount(pcoin->vout[i].nValue);
                 } else {
                     found = true;
                 }
 				
-				
                 if(!found) continue;
 
                 isminetype mine = IsMine(pcoin->vout[i]);
                 if (!(IsSpent(wtxid, i)) && mine != ISMINE_NO &&
-                    (!IsLockedCoin((*it).first, i) || nCoinType == ONLY_500) &&
+                    (!IsLockedCoin((*it).first, i) || nCoinType == ONLY_MN_COLLATERAL) &&
                     (pcoin->vout[i].nValue > 0 || fIncludeZeroValue) &&
                     (!coinControl || !coinControl->HasSelected() || coinControl->fAllowOtherInputs || coinControl->IsSelected((*it).first, i)))
                         vCoins.push_back(COutput(pcoin, i, nDepth,
@@ -2964,7 +2956,7 @@ bool CWallet::SelectCoinsMix(CAmount nValueMin, const CAmount nValueMax, std::ve
     nValueRet = 0;
 
     std::vector<COutput> vCoins;
-    AvailableCoins(vCoins, true, coinControl, false, nPrivateSendRoundsMin < 0 ? ONLY_NONDENOMINATED_NOT500IFMN : ONLY_DENOMINATED);
+    AvailableCoins(vCoins, true, coinControl, false, nPrivateSendRoundsMin < 0 ? ONLY_NONDENOMINATED_NOT_MN_COLLATERAL : ONLY_DENOMINATED);
 
     //order the array so largest nondenom are first, then denominations, then very small inputs.
     sort(vCoins.rbegin(), vCoins.rend(), CompareByPriority());
@@ -3022,7 +3014,7 @@ bool CWallet::GetMasternodeVinAndKeys(CTxIn& txinRet, CPubKey& pubKeyRet, CKey& 
 
     // Find possible candidates
     std::vector<COutput> vPossibleCoins;
-    AvailableCoins(vPossibleCoins, true, NULL, false, ONLY_500);
+    AvailableCoins(vPossibleCoins, true, NULL, false, ONLY_MN_COLLATERAL);
     if(vPossibleCoins.empty()) {
         LogPrintf("CWallet::GetMasternodeVinAndKeys -- Could not locate any valid Masternode vin\n");
         return false;
@@ -3320,16 +3312,10 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
 
                 if (!SelectCoins(nValueToSelect, setCoins, nValueIn, coinControl, nCoinType, fUseInstantSend))
                 {
-                    if (nCoinType == ONLY_NOT500IFMN) {
-                        if (chainActive.Height() < Params().GetConsensus().nHardForkSix)
-                            strFailReason = _("Unable to locate enough funds for this transaction that are not equal 50000 BCRS.");
-                        else
-                            strFailReason = _("Unable to locate enough funds for this transaction that are not equal 10000 BCRS.");
-                    } else if (nCoinType == ONLY_NONDENOMINATED_NOT500IFMN) {
-                        if (chainActive.Height() < Params().GetConsensus().nHardForkSix)
-                            strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 50000 BCRS.");
-                        else
-                            strFailReason = _("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal 10000 BCRS.");
+                    if (nCoinType == ONLY_NOT_MN_COLLATERAL) {
+                        strFailReason = strprintf(_("Unable to locate enough funds for this transaction that are not equal to %d BCRS."), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
+                    } else if (nCoinType == ONLY_NONDENOMINATED_NOT_MN_COLLATERAL) {
+                        strFailReason = strprintf(_("Unable to locate enough PrivateSend non-denominated funds for this transaction that are not equal to %d BCRS."), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
                     } else if (nCoinType == ONLY_DENOMINATED) {
                         strFailReason = _("Unable to locate enough PrivateSend denominated funds for this transaction.");
                         strFailReason += " " + _("PrivateSend uses exact denominated amounts to send funds, you might simply need to anonymize some more coins.");

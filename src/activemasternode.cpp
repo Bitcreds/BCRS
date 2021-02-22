@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -229,16 +229,9 @@ void CActiveMasternode::ManageStateInitial()
         return;
     }
 
-	if (chainActive.Height() < Params().GetConsensus().nHardForkSix) {
-        if (pwalletMain->GetBalance() < 50000 * COIN) {
-            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 50000 BCRS\n", GetStateString());
-            return;
-        }
-    } else {
-        if (pwalletMain->GetBalance() < 10000 * COIN) {
-            LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < 10000 BCRS\n", GetStateString());
-            return;
-        }
+    if (pwalletMain->GetBalance() < Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()) * COIN) {
+        LogPrintf("CActiveMasternode::ManageStateInitial -- %s: Wallet balance is < %d BCRS\n", GetStateString(), Params().GetConsensus().GetCurrentMasternodeCollateral(chainActive.Height()));
+        return;
     }
 
     // Choose coins to use

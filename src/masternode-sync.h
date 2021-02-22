@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -15,8 +15,7 @@
 class CMasternodeSync;
 
 static const int MASTERNODE_SYNC_FAILED          = -1;
-static const int MASTERNODE_SYNC_INITIAL         = 0;
-static const int MASTERNODE_SYNC_SPORKS          = 1;
+static const int MASTERNODE_SYNC_INITIAL         = 0; // sync just started, was reset recently or still in IDB
 static const int MASTERNODE_SYNC_LIST            = 2;
 static const int MASTERNODE_SYNC_MNW             = 3;
 static const int MASTERNODE_SYNC_GOVERNANCE      = 4;
@@ -46,10 +45,9 @@ private:
     // Time when current Masternode asset sync started
     int64_t nTimeAssetSyncStarted;
 
-    // Last time when we received some Masternode asset ...
-    int64_t nTimeLastMasternodeList;
-    int64_t nTimeLastPaymentVote;
-    int64_t nTimeLastGovernanceItem;
+    // ... last bumped
+    int64_t nTimeLastBumped;
+
     // ... or failed
     int64_t nTimeLastFailure;
 
@@ -59,27 +57,23 @@ private:
     // Keep track of current block index
     const CBlockIndex *pCurrentBlockIndex;
 
-    bool CheckNodeHeight(CNode* pnode, bool fDisconnectStuckNodes = false);
     void Fail();
     void ClearFulfilledRequests();
 
 public:
     CMasternodeSync() { Reset(); }
 
-    void AddedMasternodeList() { nTimeLastMasternodeList = GetTime(); }
-    void AddedPaymentVote() { nTimeLastPaymentVote = GetTime(); }
-    void AddedGovernanceItem() { nTimeLastGovernanceItem = GetTime(); };
-
     void SendGovernanceSyncRequest(CNode* pnode);
 
     bool IsFailed() { return nRequestedMasternodeAssets == MASTERNODE_SYNC_FAILED; }
-    bool IsBlockchainSynced(bool fBlockAccepted = false);
+    bool IsBlockchainSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_INITIAL; }
     bool IsMasternodeListSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_LIST; }
     bool IsWinnersListSynced() { return nRequestedMasternodeAssets > MASTERNODE_SYNC_MNW; }
     bool IsSynced() { return nRequestedMasternodeAssets == MASTERNODE_SYNC_FINISHED; }
 
     int GetAssetID() { return nRequestedMasternodeAssets; }
     int GetAttempt() { return nRequestedMasternodeAttempt; }
+    void BumpAssetLastTime(std::string strFuncName);
     std::string GetAssetName();
     std::string GetSyncStatus();
 
@@ -89,7 +83,7 @@ public:
     void ProcessMessage(CNode* pfrom, std::string& strCommand, CDataStream& vRecv);
     void ProcessTick();
 
-    void UpdatedBlockTip(const CBlockIndex *pindex);
+    void UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitialDownload);
 };
 
 #endif // BITCREDS_MASTERNODE_SYNC_H

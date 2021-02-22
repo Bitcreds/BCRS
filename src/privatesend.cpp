@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -1839,16 +1839,16 @@ bool CPrivatesendPool::MakeCollateralAmounts(const CompactTallyItem& tallyItem)
         coinControl.Select(txin.prevout);
 
     bool fSuccess = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-            nFeeRet, nChangePosRet, strFail, &coinControl, true, ONLY_NONDENOMINATED_NOT500IFMN);
+            nFeeRet, nChangePosRet, strFail, &coinControl, true, ONLY_NONDENOMINATED_NOT_MN_COLLATERAL);
     if(!fSuccess) {
         // if we failed (most likeky not enough funds), try to use all coins instead -
         // MN-like funds should not be touched in any case and we can't mix denominated without collaterals anyway
-        LogPrintf("CPrivatesendPool::MakeCollateralAmounts -- ONLY_NONDENOMINATED_NOT500IFMN Error: %s\n", strFail);
+        LogPrintf("CPrivatesendPool::MakeCollateralAmounts -- ONLY_NONDENOMINATED_NOT_MN_COLLATERAL Error: %s\n", strFail);
         CCoinControl *coinControlNull = NULL;
         fSuccess = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-                nFeeRet, nChangePosRet, strFail, coinControlNull, true, ONLY_NOT500IFMN);
+                nFeeRet, nChangePosRet, strFail, coinControlNull, true, ONLY_NOT_MN_COLLATERAL);
         if(!fSuccess) {
-            LogPrintf("CPrivatesendPool::MakeCollateralAmounts -- ONLY_NOT500IFMN Error: %s\n", strFail);
+            LogPrintf("CPrivatesendPool::MakeCollateralAmounts -- ONLY_NOT_MN_COLLATERAL Error: %s\n", strFail);
             reservekeyCollateral.ReturnKey();
             return false;
         }
@@ -1987,7 +1987,7 @@ bool CPrivatesendPool::CreateDenominated(const CompactTallyItem& tallyItem, bool
     CReserveKey reservekeyChange(pwalletMain);
 
     bool fSuccess = pwalletMain->CreateTransaction(vecSend, wtx, reservekeyChange,
-            nFeeRet, nChangePosRet, strFail, &coinControl, true, ONLY_NONDENOMINATED_NOT500IFMN);
+            nFeeRet, nChangePosRet, strFail, &coinControl, true, ONLY_NONDENOMINATED_NOT_MN_COLLATERAL);
     if(!fSuccess) {
         LogPrintf("CPrivatesendPool::CreateDenominated -- Error: %s\n", strFail);
         // TODO: return reservekeyDenom here

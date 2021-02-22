@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -231,7 +231,7 @@ void CGovernanceManager::ProcessMessage(CNode* pfrom, std::string& strCommand, C
             mapSeenGovernanceObjects.insert(std::make_pair(nHash, SEEN_OBJECT_IS_VALID));
         }
 
-        masternodeSync.AddedGovernanceItem();
+        masternodeSync.BumpAssetLastTime("CGovernanceManager::AddGovernanceObject");
 
 
         // WE MIGHT HAVE PENDING/ORPHAN VOTES FOR THIS OBJECT
@@ -268,7 +268,7 @@ void CGovernanceManager::ProcessMessage(CNode* pfrom, std::string& strCommand, C
         CGovernanceException exception;
         if(ProcessVote(pfrom, vote, exception)) {
             LogPrint("gobject", "MNGOVERNANCEOBJECTVOTE -- %s new\n", strHash);
-            masternodeSync.AddedGovernanceItem();
+            masternodeSync.BumpAssetLastTime("MNGOVERNANCEOBJECTVOTE");
             vote.Relay();
         }
         else {
@@ -676,6 +676,9 @@ void CGovernanceManager::DoMaintenance()
 
 bool CGovernanceManager::ConfirmInventoryRequest(const CInv& inv)
 {
+    // do not request objects until it's time to sync
+    if(!masternodeSync.IsWinnersListSynced()) return false;
+
     LOCK(cs);
 
     LogPrint("gobject", "CGovernanceManager::ConfirmInventoryRequest inv = %s\n", inv.ToString());
@@ -722,9 +725,6 @@ bool CGovernanceManager::ConfirmInventoryRequest(const CInv& inv)
         setHash->insert(inv.hash);
         LogPrint("gobject", "CGovernanceManager::ConfirmInventoryRequest added inv to requested set\n");
     }
-
-    // Keep sync alive
-    masternodeSync.AddedGovernanceItem();
 
     LogPrint("gobject", "CGovernanceManager::ConfirmInventoryRequest reached end, returning true\n");
     return true;

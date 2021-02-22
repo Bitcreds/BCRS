@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2019 The Bitcoin Developers
 // Copyright (c) 2014-2019 The Dash Core Developers
 // Copyright (c) 2016-2019 Duality Blockchain Solutions Developers
-// Copyright (c) 2017-2020 Bitcreds Developers
+// Copyright (c) 2017-2021 Bitcreds Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,13 +20,13 @@
 //! These need to be macros, as clientversion.cpp's and bitcreds*-res.rc's voodoo requires it
 #define CLIENT_VERSION_MAJOR 1
 #define CLIENT_VERSION_MINOR 7
-#define CLIENT_VERSION_REVISION 0
+#define CLIENT_VERSION_REVISION 1
 #define CLIENT_VERSION_BUILD 0
 
 //! Set to true for release, false for prerelease or test build
 #define CLIENT_VERSION_IS_RELEASE true
 
-#define COPYRIGHT_YEAR 2020
+#define COPYRIGHT_YEAR 2021
 
 #endif //HAVE_CONFIG_H
 
