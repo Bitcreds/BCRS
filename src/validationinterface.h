@@ -35,6 +35,8 @@ void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL);
 
 class CValidationInterface {
 protected:
+    virtual void AcceptedBlockHeader(const CBlockIndex *pindexNew) {}
+    virtual void NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload) {}
     virtual void UpdatedBlockTip(const CBlockIndex *pindex, bool fInitialDownload) {}
     virtual void SyncTransaction(const CTransaction &tx, const CBlock *pblock) {}
     virtual void NotifyTransactionLock(const CTransaction &tx) {}
@@ -51,6 +53,10 @@ protected:
 };
 
 struct CMainSignals {
+    /** Notifies listeners of accepted block header */
+    boost::signals2::signal<void (const CBlockIndex *)> AcceptedBlockHeader;
+    /** Notifies listeners of updated block header tip */
+    boost::signals2::signal<void (const CBlockIndex *, bool fInitialDownload)> NotifyHeaderTip;
     /** Notifies listeners of updated block chain tip */
     boost::signals2::signal<void (const CBlockIndex *, bool fInitialDownload)> UpdatedBlockTip;
     /** Notifies listeners of updated transaction data (transaction, and optionally the block it is found in. */
