@@ -1973,6 +1973,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     mnodeman.UpdatedBlockTip(chainActive.Tip());
     privateSendPool.UpdatedBlockTip(chainActive.Tip());
     mnpayments.UpdatedBlockTip(chainActive.Tip());
+    masternodeSync.UpdatedBlockTip(chainActive.Tip(), IsInitialBlockDownload());
     governance.UpdatedBlockTip(chainActive.Tip());
 
     // ********************************************************* Step 11d: start bitcreds-privatesend thread

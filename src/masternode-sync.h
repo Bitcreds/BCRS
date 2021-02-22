@@ -83,6 +83,7 @@ public:
 
     void AcceptedBlockHeader(const CBlockIndex *pindexNew);
     void NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload);
+    void UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitialDownload);
 };
 
 #endif // BITCREDS_MASTERNODE_SYNC_H

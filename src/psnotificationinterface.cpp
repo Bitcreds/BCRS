@@ -31,13 +31,20 @@ void CPSNotificationInterface::NotifyHeaderTip(const CBlockIndex *pindexNew, boo
     masternodeSync.NotifyHeaderTip(pindexNew, fInitialDownload);
 }
 
-void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindex, bool fInitialDownload)
+void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindexNew, const CBlockIndex *pindexFork, bool fInitialDownload)
 {
-    mnodeman.UpdatedBlockTip(pindex);
-    privateSendPool.UpdatedBlockTip(pindex);
-    instantsend.UpdatedBlockTip(pindex);
-    mnpayments.UpdatedBlockTip(pindex);
-    governance.UpdatedBlockTip(pindex);
+    if (pindexNew == pindexFork) // blocks were disconnected without any new ones
+        return;
+
+    masternodeSync.UpdatedBlockTip(pindexNew, fInitialDownload);
+
+    if (fInitialDownload) // In IBD
+
+    mnodeman.UpdatedBlockTip(pindexNew);
+    privateSendPool.UpdatedBlockTip(pindexNew);
+    instantsend.UpdatedBlockTip(pindexNew);
+    mnpayments.UpdatedBlockTip(pindexNew);
+    governance.UpdatedBlockTip(pindexNew);
 }
 
 void CPSNotificationInterface::SyncTransaction(const CTransaction &tx, const CBlock *pblock)
