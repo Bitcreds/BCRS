@@ -21,7 +21,7 @@ CPSNotificationInterface::~CPSNotificationInterface()
 {
 }
 
-void CDSNotificationInterface::InitializeCurrentBlockTip()
+void CPSNotificationInterface::InitializeCurrentBlockTip()
 {
     LOCK(cs_main);
     UpdatedBlockTip(chainActive.Tip(), NULL, IsInitialBlockDownload());
