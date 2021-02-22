@@ -16,6 +16,9 @@ public:
     CPSNotificationInterface();
     virtual ~CPSNotificationInterface();
 
+    // a small helper to initialize current block height in sub-modules on startup
+    void InitializeCurrentBlockTip();
+
 protected:
     // CValidationInterface
     void AcceptedBlockHeader(const CBlockIndex *pindexNew) override;
