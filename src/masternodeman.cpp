@@ -1389,14 +1389,13 @@ void CMasternodeMan::UpdateMasternodeList(CMasternodeBroadcast mnb)
 
     CMasternode* pmn = Find(mnb.vin);
     if(pmn == NULL) {
-        CMasternode mn(mnb);
-        if(Add(mn)) {
-            masternodeSync.AddedMasternodeList();
+        if(Add(mnb)) {
+            masternodeSync.BumpAssetLastTime("CMasternodeMan::UpdateMasternodeList - new");
         }
     } else {
         CMasternodeBroadcast mnbOld = mapSeenMasternodeBroadcast[CMasternodeBroadcast(*pmn).GetHash()].second;
         if(pmn->UpdateFromNewBroadcast(mnb)) {
-            masternodeSync.AddedMasternodeList();
+            masternodeSync.BumpAssetLastTime("CMasternodeMan::UpdateMasternodeList - seen");
             mapSeenMasternodeBroadcast.erase(mnbOld.GetHash());
         }
     }
@@ -1417,7 +1416,7 @@ bool CMasternodeMan::CheckMnbAndUpdateMasternodeList(CNode* pfrom, CMasternodeBr
         if(GetTime() - mapSeenMasternodeBroadcast[hash].first > MASTERNODE_NEW_START_REQUIRED_SECONDS - MASTERNODE_MIN_MNP_SECONDS * 2) {
             LogPrint("Masternode", "CMasternodeMan::CheckMnbAndUpdateMasternodeList -- Masternode=%s seen update\n", mnb.vin.prevout.ToStringShort());
             mapSeenMasternodeBroadcast[hash].first = GetTime();
-            masternodeSync.AddedMasternodeList();
+            masternodeSync.BumpAssetLastTime("CMasternodeMan::CheckMnbAndUpdateMasternodeList - seen");
         }
         // did we ask this node for it?
         if(pfrom && IsMnbRecoveryRequested(hash) && GetTime() < mMnbRecoveryRequests[hash].first) {
@@ -1465,7 +1464,7 @@ bool CMasternodeMan::CheckMnbAndUpdateMasternodeList(CNode* pfrom, CMasternodeBr
     } else {
         if(mnb.CheckOutpoint(nDos)) {
             Add(mnb);
-            masternodeSync.AddedMasternodeList();
+            masternodeSync.BumpAssetLastTime("CMasternodeMan::CheckMnbAndUpdateMasternodeList - new");
             // if it matches our Masternode privkey...
             if(fMasterNode && mnb.pubKeyMasternode == activeMasternode.pubKeyMasternode) {
                 mnb.nPoSeBanScore = -MASTERNODE_POSE_BAN_MAX_SCORE;
@@ -1495,8 +1494,8 @@ void CMasternodeMan::UpdateLastPaid()
 {
     LOCK(cs);
 
-    if(fLiteMode) return;
-    if(!pCurrentBlockIndex) return;
+    if(fLiteMode || !pCurrentBlockIndex) return;
+    if(!masternodeSync.IsWinnersListSynced() || vMasternodes.empty()) return;
 
     static bool IsFirstRun = true;
     // Do full scan on first run or if we are not a Masternode
@@ -1510,7 +1509,7 @@ void CMasternodeMan::UpdateLastPaid()
     }
 
     // every time is like the first time if winners list is not synced
-    IsFirstRun = !masternodeSync.IsWinnersListSynced();
+    IsFirstRun = false;
 }
 
 void CMasternodeMan::CheckAndRebuildMasternodeIndex()

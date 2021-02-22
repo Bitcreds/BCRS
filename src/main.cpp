@@ -3567,7 +3567,7 @@ bool ActivateBestChain(CValidationState &state, const CChainParams& chainparams,
                 }
                 // Notify external listeners about the new tip.
                 if (!vHashes.empty()) {
-                    GetMainSignals().UpdatedBlockTip(pindexNewTip);
+                    GetMainSignals().UpdatedBlockTip(pindexNewTip, fInitialDownload);
                 }
             }
         }
@@ -4173,8 +4173,6 @@ bool ProcessNewBlock(CValidationState& state, const CChainParams& chainparams, c
 
     if (!ActivateBestChain(state, chainparams, pblock))
         return error("%s: ActivateBestChain failed", __func__);
-
-    masternodeSync.IsBlockchainSynced(true);
 
     LogPrintf("%s : ACCEPTED\n", __func__);
     return true;

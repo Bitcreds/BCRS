@@ -21,14 +21,14 @@ CPSNotificationInterface::~CPSNotificationInterface()
 {
 }
 
-void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindex)
+void CPSNotificationInterface::UpdatedBlockTip(const CBlockIndex *pindex, bool fInitialDownload)
 {
     mnodeman.UpdatedBlockTip(pindex);
     privateSendPool.UpdatedBlockTip(pindex);
     instantsend.UpdatedBlockTip(pindex);
     mnpayments.UpdatedBlockTip(pindex);
     governance.UpdatedBlockTip(pindex);
-    masternodeSync.UpdatedBlockTip(pindex);
+    masternodeSync.UpdatedBlockTip(pindex, fInitialDownload);
 }
 
 void CPSNotificationInterface::SyncTransaction(const CTransaction &tx, const CBlock *pblock)
