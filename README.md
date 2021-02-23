@@ -1,4 +1,4 @@
-# **Bitcreds (BCRS) v1.7.1.0**
+# **Bitcreds (BCRS) v1.7.2.0**
 
 ![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
@@ -19,7 +19,7 @@ What are Bitcreds?
 * Total Coins (until 2 PoW / 2 MN / 2 DevFund reward): ~13,914,700* (after ~5 Years from Genesis)
 * Min TX Fee: 0.0001 BCRS
 
-*Until block 375,000 all transaction fees got burned. Some blocks did not include a Masternode reward.
+*Some blocks did not pay full rewards therefore the actual total supply is lower.
 
 Bitcreds uses peer-to-peer technology to operate securely with no central authority (decentralisation): managing transactions and issuing currency (BCRS) are carried out collectively by the Bitcreds network. Bitcreds is the name of open source software which enables the use of the currency BCRS.
 
