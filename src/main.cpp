@@ -1771,12 +1771,12 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
     CAmount nIntPoWReward = 0 * COIN;
     Consensus::Params consensusParams = Params().GetConsensus();
 
-    if (nHeight == 0) {
+    if (nHeight == 1) {
         nIntPoWReward = 475000 * COIN;
         LogPrint("premine creation", "GetPoWBlockPayment() : create=%s Premine=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
         return nIntPoWReward;
     }
-    else if (nHeight >= 1 && nHeight <= consensusParams.nHardForkTwo)
+    else if (nHeight > 1 && nHeight <= consensusParams.nHardForkTwo)
         nIntPoWReward = 10 * COIN;
     else if (nHeight > consensusParams.nHardForkTwo && nHeight <= consensusParams.nHardForkSix) {
         int nIntPhase = (nHeight - consensusParams.nHardForkTwo) / consensusParams.nIntPhaseTotalBlocks;
@@ -1792,10 +1792,8 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
                     break;
             case 4: nIntPoWReward = 4 * COIN;
         }
-
-        nIntPoWReward += nFees;
     }
-    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+    else if (nHeight > consensusParams.nHardForkSix && nHeight < consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
         int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
 
         switch (nIntPhase) {
@@ -1807,14 +1805,12 @@ CAmount GetPoWBlockPayment(const int& nHeight, CAmount nFees) {
                     break;
             case 3: nIntPoWReward = 3 * COIN;
         }
-
-        nIntPoWReward += nFees;
     }
     else
-        nIntPoWReward = 2 * COIN + nFees;
+        nIntPoWReward = 2 * COIN;
 
     LogPrint("creation", "GetPoWBlockPayment(): create=%s PoW Reward=%d\n", FormatMoney(nIntPoWReward), nIntPoWReward);
-    return nIntPoWReward;
+    return nIntPoWReward + nFees;
 }
 
 CAmount GetMasternodePayment(const int& nHeight) {
@@ -1838,7 +1834,7 @@ CAmount GetMasternodePayment(const int& nHeight) {
             case 4: nIntMNReward = 6 * COIN;
         }
     }
-    else if (nHeight > consensusParams.nHardForkSix && nHeight <= consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
+    else if (nHeight > consensusParams.nHardForkSix && nHeight < consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
         int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
 
         switch (nIntPhase) {
