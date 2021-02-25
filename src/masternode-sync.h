@@ -25,7 +25,7 @@ static const int MASTERNODE_SYNC_GOVOBJ_VOTE     = 11;
 static const int MASTERNODE_SYNC_FINISHED        = 999;
 
 static const int MASTERNODE_SYNC_TICK_SECONDS    = 6;
-static const int MASTERNODE_SYNC_TIMEOUT_SECONDS = 10; // our blocks are 64 seconds, this needs to be fast
+static const int MASTERNODE_SYNC_TIMEOUT_SECONDS = 60; // Dash has a timeout of 30 seconds for blocks of 150 seconds, our blocks take 360 seconds so 60 should be fine
 
 static const int MASTERNODE_SYNC_ENOUGH_PEERS    = 10;
 
@@ -51,9 +51,6 @@ private:
 
     // ... or failed
     int64_t nTimeLastFailure;
-
-    // Keep track of current block index
-    const CBlockIndex *pCurrentBlockIndex;
 
     void Fail();
     void ClearFulfilledRequests();
