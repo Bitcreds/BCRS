@@ -50,7 +50,7 @@
 
 #include <atomic>
 #include <sstream>
-
+#include <chrono>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string/join.hpp>
@@ -1654,6 +1654,7 @@ bool GetTransaction(const uint256 &hash, CTransaction &txOut, const Consensus::P
             CAutoFile file(OpenBlockFile(postx, true), SER_DISK, CLIENT_VERSION);
             if (file.IsNull())
                 return error("%s: OpenBlockFile failed", __func__);
+
             CBlockHeader header;
             try {
                 file >> header;
@@ -1662,9 +1663,13 @@ bool GetTransaction(const uint256 &hash, CTransaction &txOut, const Consensus::P
             } catch (const std::exception& e) {
                 return error("%s: Deserialize or I/O error - %s", __func__, e.what());
             }
-            hashBlock = header.GetHash();
+
+            if (hashBlock != hash) // BCRS-TODO: use different approach for efficiency
+                hashBlock = header.GetHash();
+
             if (txOut.GetHash() != hash)
                 return error("%s: txid mismatch", __func__);
+
             return true;
         }
     }
@@ -1687,20 +1692,18 @@ bool GetTransaction(const uint256 &hash, CTransaction &txOut, const Consensus::P
             BOOST_FOREACH(const CTransaction &tx, block.vtx) {
                 if (tx.GetHash() == hash) {
                     txOut = tx;
-                    hashBlock = pindexSlow->GetBlockHash();
+                    if (hashBlock != hash)
+                        hashBlock = pindexSlow->GetBlockHash();
                     return true;
                 }
             }
         }
     }
 
+
+
     return false;
 }
-
-
-
-
-
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -4016,7 +4019,7 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, CBlockIn
     return true;
 }
 
-void ProcessPossibleDtpIpfsRegistration(CScript scriptPubKey) {
+bool ExtractDtpIpfsFromScript(const CScript& scriptPubKey, std::string& dtpAddress, std::string& ipfsHash) {
     std::string hexString = HexStr(scriptPubKey);
 
     LogPrintf("DTP-IPFS: in %s scriptPubKey in hexadecimal: %s\n", __func__, hexString);
@@ -4033,25 +4036,114 @@ void ProcessPossibleDtpIpfsRegistration(CScript scriptPubKey) {
     std::size_t posRegistration = decodedData.find("di/");
 
     if (posRegistration == std::string::npos) {
-        LogPrintf("DTP-IPFS: in %s the start of the DTP-IPFS registration was not found\n", __func__);
-        return;
+        LogPrintf("DTP-IPFS: in %s the start of the DTP-IPFS association was not found\n", __func__);
+        return false;
     }
 
     std::size_t posSeparator = decodedData.find("/", posRegistration + 3);
 
     if (posSeparator == std::string::npos) {
-        LogPrintf("DTP-IPFS: in %s the separator inside the DTP-IPFS registration was not found\n", __func__);
-        return;
+        LogPrintf("DTP-IPFS: in %s the separator inside the DTP-IPFS association was not found\n", __func__);
+        return false;
     }
 
-    std::string dtpAddress = decodedData.substr(posRegistration + 3, posSeparator - posRegistration - 3);
-    std::string ipfsHash = decodedData.substr(posSeparator + 1);
+    if (decodedData.substr(posSeparator + 1).length() != 46) {
+        LogPrintf("DTP-IPFS: in %s the IPFS hash does not have the required length\n", __func__);
+        return false;
+    }
+
+    dtpAddress = decodedData.substr(posRegistration + 3, posSeparator - posRegistration - 3);
+    ipfsHash = decodedData.substr(posSeparator + 1);
 
     LogPrintf("DTP-IPFS: in %s dtpAddress = %s and ipfsHash = %s\n", __func__, dtpAddress, ipfsHash);
+    return true;
+}
 
-    pdtpdb->WriteDTPAssociation(dtpAddress, ipfsHash, chainActive.Height() + 1);
+void ProcessPossibleDtpIpfsRegistration(const CScript& scriptPubKey, const int& nHeight, const int& nTxIndex) {
+    std::string dtpAddress, ipfsHash;
+
+    if (!ExtractDtpIpfsFromScript(scriptPubKey, dtpAddress, ipfsHash))
+        return;
+
+    pdtpdb->WriteDTPAssociation(dtpAddress, ipfsHash, nHeight, nTxIndex);
 
     return;
+}
+
+void ProcessPossibleDtpIpfsUpdate(const CTransaction& updateTx, const CTransaction& inputTx) {
+    std::string dtpAddress, newIpfsHash;
+
+    if (!ExtractDtpIpfsFromScript(updateTx.vout[0].scriptPubKey, dtpAddress, newIpfsHash))
+        return;
+
+    std::string oldIpfsHash;
+    int regBlockHeight, regTxIndex;
+
+    LogPrintf("DTP-IPFS: in %s oldIpfsHash = %s\n", __func__, pdtpdb->GetIPFSofDTP(dtpAddress));
+
+    if (!pdtpdb->ReadDTPAssociation(dtpAddress, oldIpfsHash, regBlockHeight, regTxIndex))
+        return;
+
+    LogPrintf("DTP-IPFS: in %s oldIpfsHash = %s, regBlockHeight = %d, regTxIndex = %d\n", __func__, oldIpfsHash, regBlockHeight, regTxIndex);
+
+    CScript updateAddress, regAddress;
+
+    CBlock block;
+    CBlockIndex* pblockindex = chainActive[regBlockHeight];
+
+    auto t1 = std::chrono::high_resolution_clock::now();
+    
+    if (!ReadBlockFromDisk(block, pblockindex, Params().GetConsensus())) // ~1 millisecond cost
+        LogPrintf("DTP-IPFS: in %s can't read block from disk\n", __func__);
+    
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+
+    LogPrintf("DTP-IPFS: reading block from disk took %d microseconds\n", duration);
+
+    regAddress = block.vtx[regTxIndex].vout[1].scriptPubKey;
+    updateAddress = inputTx.vout[updateTx.vin[0].prevout.n].scriptPubKey; // we get the scriptPubKey that pays for the update from the used output
+
+    LogPrintf("DTP-IPFS: in %s updateAddress and regAddress where the same: %s\n", __func__, (updateAddress == regAddress) ? "true" : "false");
+
+    if (updateAddress == regAddress)
+        if (pdtpdb->UpdateDTPAssociation(dtpAddress, newIpfsHash))
+            LogPrintf("DTP-IPFS: successfully updated domain name %s with IPFS hash %s\n", dtpAddress, newIpfsHash);
+        else
+            LogPrintf("DTP-IPFS: failed to update domain name %s with IPFS hash %s\n", dtpAddress, newIpfsHash);
+    else
+        LogPrintf("DTP-IPFS: the address used for updating the domain name is not the same as the one used for registration\n");
+
+    return;
+}
+
+void ProcessExpiredDtpIpfsRegistrations(const int& nHeight) {
+    CBlock block;
+    CBlockIndex* pblockindex = chainActive[nHeight];
+
+    if (!ReadBlockFromDisk(block, pblockindex, Params().GetConsensus()))
+        LogPrintf("DTP-IPFS: in %s can't read block from disk\n", __func__);
+
+    CTransaction inputTx;
+    uint256 txHash;
+    std::string dtpAddress, ipfsHash;
+
+    for (unsigned int i = 1; i < block.vtx.size(); i++)
+        if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && block.vtx[i].vout[0].nValue == 0.5 * CENT && block.vtx[i].vout.size() == 2) {
+            txHash = block.vtx[i].vin[0].prevout.hash;
+
+            if (!GetTransaction(block.vtx[i].vin[0].prevout.hash, inputTx, Params().GetConsensus(), txHash, true)) // used to check that miners are paid enough
+                LogPrintf("DTP-IPFS: No information available about transaction %s\n", txHash.ToString());
+            else if (inputTx.vout[block.vtx[i].vin[0].prevout.n].nValue >= block.vtx[i].vout[1].nValue + 1 * CENT) {
+                ExtractDtpIpfsFromScript(block.vtx[i].vout[0].scriptPubKey, dtpAddress, ipfsHash);
+                
+                if (pdtpdb->EraseDTPAssociation(dtpAddress))
+                    LogPrintf("DTP-IPFS: successfully deleted expired registration under domain name %s\n", dtpAddress);
+                else
+                    LogPrintf("DTP-IPFS: failed to delete expired registration under domain name %s\n", dtpAddress);
+            } else
+                LogPrintf("DTP-IPFS: Miners were not paid enough for the DTP-IPFS registration in transaction %s\n", inputTx.GetHash().ToString());
+        }
 }
 
 static bool AcceptBlockHeader(const CBlockHeader& block, CValidationState& state, const CChainParams& chainparams, CBlockIndex** ppindex=NULL)
@@ -4163,16 +4255,29 @@ static bool AcceptBlock(const CBlock& block, CValidationState& state, const CCha
             return error("AcceptBlock(): ReceivedBlockTransactions failed");
         // check for DTP-IPFS registrations
         CTransaction inputTx;
-        uint256 hashBlock;
+        uint256 txHash;
         for (unsigned int i = 1; i < block.vtx.size(); i++)
             if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && block.vtx[i].vout[0].nValue == 0.5 * CENT && block.vtx[i].vout.size() == 2) {
-                if (!GetTransaction(block.vtx[i].vin[0].prevout.hash, inputTx, Params().GetConsensus(), hashBlock, true))
-                    LogPrintf("DTP-IPFS: No information available about transaction %s\n", block.vtx[i].vin[0].prevout.hash.ToString());
+                txHash = block.vtx[i].vin[0].prevout.hash;
+
+                if (!GetTransaction(txHash, inputTx, Params().GetConsensus(), txHash, true)) // used to check that miners are paid enough
+                    LogPrintf("DTP-IPFS: No information available about transaction %s\n", txHash.ToString());
                 else if (inputTx.vout[block.vtx[i].vin[0].prevout.n].nValue >= block.vtx[i].vout[1].nValue + 1 * CENT)
-                    ProcessPossibleDtpIpfsRegistration(block.vtx[i].vout[0].scriptPubKey);
+                    ProcessPossibleDtpIpfsRegistration(block.vtx[i].vout[0].scriptPubKey, chainActive.Height() + 1, i);
                 else
                     LogPrintf("DTP-IPFS: Miners were not paid enough for the DTP-IPFS registration in transaction %s\n", inputTx.GetHash().ToString());
+            } else if (block.vtx[i].vout[0].scriptPubKey.Find(OP_RETURN) && block.vtx[i].vout[0].nValue == 0.05 * CENT && block.vtx[i].vout.size() == 2) {
+                txHash = block.vtx[i].vin[0].prevout.hash;
+                
+                if (!GetTransaction(txHash, inputTx, Params().GetConsensus(), txHash, true))
+                    LogPrintf("DTP-IPFS: No information available about transaction %s\n", txHash.ToString());
+                else if (inputTx.vout[block.vtx[i].vin[0].prevout.n].nValue >= block.vtx[i].vout[1].nValue + 0.1 * CENT) {
+                    ProcessPossibleDtpIpfsUpdate(block.vtx[i], inputTx);
+                } else
+                    LogPrintf("DTP-IPFS: Miners were not paid enough for the DTP-IPFS registration in transaction %s\n", inputTx.GetHash().ToString());
             }
+
+        ProcessExpiredDtpIpfsRegistrations(chainActive.Height() + 1 - Params().GetConsensus().nBlocksPerYear);
     } catch (const std::runtime_error& e) {
         return AbortNode(state, std::string("System error: ") + e.what());
     }

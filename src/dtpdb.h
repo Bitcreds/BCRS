@@ -17,9 +17,9 @@ public:
     CDTPDB(size_t nCacheSize, bool fMemory = false, bool fWipe = false);
 
     std::string GetIPFSofDTP(const std::string &dtpAddress);
-    bool ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight);
-    bool WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int blockHeight);
-    bool UpdateDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash);
+    bool ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight, int &txIndex);
+    bool WriteDTPAssociation(const std::string &dtpAddress, const std::string &ipfsHash, const int blockHeight, const int txIndex);
+    bool UpdateDTPAssociation(const std::string &dtpAddress, const std::string &ipfsHash);
     bool EraseDTPAssociation(const std::string &dtpAddress);
 };
 

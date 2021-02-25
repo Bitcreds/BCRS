@@ -1051,7 +1051,7 @@ UniValue registerdtpipfs(const UniValue& params, bool fHelp)
             "The wallet must be unlocked by passphrase before registering.\n"
             "Returns the hex-encoded hash of the registration transaction if it was completed successfully.\n"
             "\nArguments:\n"
-            "1. \"creditsaddress\" (string, required) The Bitcreds address used to pay for the registration."
+            "1. \"bitcredsaddress\" (string, required) The Bitcreds address used to pay for the registration.\n"
             "2. \"dtpurl\" (string, required) The DTP domain name that will be registered. It must not contain \"/\" character.\n"
             "3. \"ipfshash\" (string, required) The IPFS hash where the DTP name will point to.\n"
             "\nResult:\n"
@@ -1078,6 +1078,8 @@ UniValue registerdtpipfs(const UniValue& params, bool fHelp)
 
     if (!payingAddress.IsValid())
       throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Bitcreds address: ") + payingAddress.ToString());
+
+    // check dtpAdress already registered
 
     CMutableTransaction rawTx;
     CTxIn in;
@@ -1140,6 +1142,133 @@ UniValue registerdtpipfs(const UniValue& params, bool fHelp)
     return sendrawtransaction(signedResult, false);
 }
 
+UniValue updatedtpipfs(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 3)
+        throw std::runtime_error(
+            "updatedtpipfs \"bitcredsaddress\" \"dtpurl\" \"ipfshash\"\n"
+            "\nUpdate the corresponding IPFS or IPNS hash of a DTP address and pay for it with the required amount.\n"
+            "It creates the DTP-IPFS update transaction, signs it and then sends it to the network.\n"
+            "The wallet must be unlocked by passphrase before updating.\n"
+            "Returns the hex-encoded hash of the update transaction if it was completed successfully.\n"
+            "\nArguments:\n"
+            "1. \"bitcredsaddress\" (string, required) The Bitcreds address used to pay for the update.\n"
+            "2. \"dtpurl\" (string, required) The DTP domain name that will be updated.\n"
+            "3. \"ipfshash\" (string, required) The IPFS hash where the DTP name will point to.\n"
+            "\nResult:\n"
+            "\"hex\" (string) The hex-encoded hash of the update transaction.\n"
+            "\nExample:\n"
+            "updatedtpipfs \"CXAMcudgejBnG5P5z6ENNGtQxdKD1sZRAo\" \"ipfs.org\" \"QmYwAPJzv5CZsnA625s3Xf2nemtYgPpHdWEz79ojWnPbdG\""
+        );
+
+    if (params[0].isNull() || params[1].isNull() || params[2].isNull())
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, arguments 1, 2 and 3 must be non-null.");
+
+    if (params[0].get_str().length() != 34)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 1 does not have the required length of a Bitcreds address (34 characters).");
+
+    if (params[1].get_str().length() > 30)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 2 can have at most 30 characters.");
+
+    if (params[2].get_str().length() != 46)
+        throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 3 does not have the required length of an IPFS hash (46 characters).");
+
+    std::string dtpUrl = params[1].get_str();
+    std::string newIpfsHash = params[2].get_str();
+    CBitcredsAddress payingAddress(params[0].get_str());
+
+    if (!payingAddress.IsValid())
+      throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Bitcreds address: ") + payingAddress.ToString());
+
+    std::string oldIpfsHash;
+    int regBlockHeight, regTxIndex;
+
+    pdtpdb->ReadDTPAssociation(dtpUrl, oldIpfsHash, regBlockHeight, regTxIndex);
+
+    if (oldIpfsHash.length() == 0)
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "The DTP domain name is not registered.");
+
+    CBlock block;
+    CBlockIndex* pblockindex = chainActive[regBlockHeight];
+
+    if (fHavePruned && !(pblockindex->nStatus & BLOCK_HAVE_DATA) && pblockindex->nTx > 0)
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "Block not available (pruned data).");
+
+    if (!ReadBlockFromDisk(block, pblockindex, Params().GetConsensus()))
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "Can't read block from disk.");
+
+    CTxDestination regAddress;
+
+    // checks for poss segm fault because of erronous regTxIndex or regBlockHeight
+
+    if (!ExtractDestination(block.vtx[regTxIndex].vout[1].scriptPubKey, regAddress))
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "Can't extract Bitcreds address from registration transaction." + std::to_string(regBlockHeight) + " txI " + std::to_string(regTxIndex) +
+            " prevPubKey " + HexStr(block.vtx[regTxIndex].vout[1].scriptPubKey));
+
+    if (!(CBitcredsAddress(regAddress) == payingAddress))
+        throw JSONRPCError(RPC_INTERNAL_ERROR, "The Bitcreds address used for updating the DTP domain is not the same as the one used at registration.");
+
+    CMutableTransaction rawTx;
+    CTxIn in;
+    CAmount change;
+
+    std::vector<COutput> vecOutputs;
+    assert(pwalletMain != NULL);
+
+#ifdef ENABLE_WALLET
+    LOCK2(cs_main, pwalletMain ? &pwalletMain->cs_wallet : NULL);
+#else
+    LOCK(cs_main);
+#endif
+
+    pwalletMain->AvailableCoins(vecOutputs, false, NULL, true);
+
+    // going through all unspent outputs
+    BOOST_FOREACH(const COutput& out, vecOutputs) {
+        CTxDestination address;
+        if (!ExtractDestination(out.tx->vout[out.i].scriptPubKey, address))
+            continue;
+        // if an unsepent output corresponding to the parameter address is found
+        // we can try to use it
+        if (!(payingAddress == CBitcredsAddress(address)))
+            continue;
+
+        CAmount nValue = out.tx->vout[out.i].nValue;
+
+        // price of updating is 0.001 Bitcreds or 0.1 Cent so the output has to hold at least that amount
+        // half of it gets burned and the other goes to the miners as transaction fee
+        if (nValue >= CENT) {
+            change = nValue - 0.1 * CENT;
+            in = CTxIn(out.tx->GetHash(), out.i);
+            rawTx.vin.push_back(in);
+            break;
+        }
+    }
+
+    // if CTxIn exists only then we can register
+    if (rawTx.vin.size() == 1) {
+        std::string hexToRegister = HexStr("di/" + dtpUrl + std::string("/") + newIpfsHash);
+        CTxOut outUpdate(0.05 * CENT, CScript() << OP_RETURN << ParseHex(hexToRegister));
+
+        rawTx.vout.push_back(outUpdate);
+
+        CScript scriptPubKey = GetScriptForDestination(payingAddress.Get());
+        CTxOut outChange(change, scriptPubKey);
+
+        rawTx.vout.push_back(outChange);
+    } else
+        throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "The specified address is invalid or it does not have enough funds.");
+
+
+    UniValue toSign = UniValue(UniValue::VType::VARR);
+    toSign.push_back(UniValue(EncodeHexTx(rawTx)));
+
+    UniValue signedResult = UniValue(UniValue::VType::VARR);
+    signedResult.push_back(signrawtransaction(toSign, false).getValues().at(0));
+
+    return sendrawtransaction(signedResult, false);
+}
+
 UniValue getipfsofdtp(const UniValue& params, bool fHelp) {
     if (fHelp || params.size() != 1)
         throw std::runtime_error(
@@ -1151,7 +1280,7 @@ UniValue getipfsofdtp(const UniValue& params, bool fHelp) {
             "\n (string) The IPFS or IPNS hash of the registered domain.\n"
             "\nExample:\n"
             "getipfsofdtp \"ipfs.org\""
-    );
+        );
     
     if (params[0].isNull())
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, argument 1 must be non-null.");

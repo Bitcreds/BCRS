@@ -9,20 +9,21 @@
 CDTPDB::CDTPDB(size_t nCacheSize, bool fMemory, bool fWipe) : CDBWrapper(GetDataDir() / "dtp", nCacheSize, fMemory, fWipe) {}
 
 std::string CDTPDB::GetIPFSofDTP(const std::string &dtpAddress) {
-    std::pair<std::string, int> storedValue;
+    std::pair<std::string, std::pair<int, int>> storedValue;
     
     if (Read(dtpAddress, storedValue))
         return storedValue.first;
 
-    return "Not Found";
+    return "Record not found.";
 }
 
-bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight) {
-    std::pair<std::string, int> storedValue;
+bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int &blockHeight, int &txIndex) {
+    std::pair<std::string, std::pair<int, int>> storedValue;
 
     if (Read(dtpAddress, storedValue)) {
         ipfsHash = storedValue.first;
-        blockHeight = storedValue.second;
+        blockHeight = storedValue.second.first;
+        txIndex = storedValue.second.second;
         
         return true;
     }
@@ -30,14 +31,14 @@ bool CDTPDB::ReadDTPAssociation(const std::string &dtpAddress, std::string &ipfs
     return false;
 }
 
-bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, std::string &ipfsHash, int blockHeight) {
+bool CDTPDB::WriteDTPAssociation(const std::string &dtpAddress, const std::string &ipfsHash, int blockHeight, int txIndex) {
     CDBBatch batch(&GetObfuscateKey());
-    batch.Write(dtpAddress, std::make_pair(ipfsHash, blockHeight));
+    batch.Write(dtpAddress, std::make_pair(ipfsHash, std::make_pair(blockHeight, txIndex)));
     return WriteBatch(batch);
 }
 
-bool CDTPDB::UpdateDTPAssociation(const std::string &dtpAddress, std::string &newIpfsHash) {
-    std::pair<std::string, int> storedValue;
+bool CDTPDB::UpdateDTPAssociation(const std::string &dtpAddress, const std::string &newIpfsHash) {
+    std::pair<std::string, std::pair<int, int>> storedValue;
     
     if (Read(dtpAddress, storedValue)) {
         CDBBatch batch(&GetObfuscateKey());

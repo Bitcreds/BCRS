@@ -357,6 +357,7 @@ static const CRPCCommand vRPCCommands[] =
 #ifdef ENABLE_WALLET
     { "Bitcreds",                "privatesend",            &privatesend,            false },
     { "Bitcreds",                "registerdtpipfs",        &registerdtpipfs,        false },
+    { "Bitcreds",                "updatedtpipfs",          &updatedtpipfs,          false },
 
     /* Wallet */
     { "Wallet",             "keepass",                &keepass,                true },
