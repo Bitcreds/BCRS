@@ -409,6 +409,9 @@ void CMasternodeSync::SendGovernanceSyncRequest(CNode* pnode)
 
 void CMasternodeSync::AcceptedBlockHeader(const CBlockIndex *pindexNew)
 {
+    if (fLiteMode)
+        return;
+
     LogPrintf("CMasternodeSync::AcceptedBlockHeader -- pindexNew->nHeight: %d\n", pindexNew->nHeight);
 
     if (!IsBlockchainSynced()) {
@@ -419,6 +422,9 @@ void CMasternodeSync::AcceptedBlockHeader(const CBlockIndex *pindexNew)
 
 void CMasternodeSync::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitialDownload)
 {
+    if (fLiteMode)
+        return;
+
     LogPrintf("CMasternodeSync::NotifyHeaderTip -- pindexNew->nHeight: %d fInitialDownload=%d\n", pindexNew->nHeight, fInitialDownload);
 
     if (IsFailed() || IsSynced() || !pindexBestHeader)
@@ -432,6 +438,9 @@ void CMasternodeSync::NotifyHeaderTip(const CBlockIndex *pindexNew, bool fInitia
 
 void CMasternodeSync::UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitialDownload)
 {
+    if (fLiteMode)
+        return;
+
     LogPrintf("CMasternodeSync::UpdatedBlockTip -- pindexNew->nHeight: %d fInitialDownload=%d\n", pindexNew->nHeight, fInitialDownload);
 
     if (IsFailed() || IsSynced() || !pindexBestHeader)

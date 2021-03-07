@@ -769,7 +769,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     result.push_back(Pair("height", (int64_t)nNextHeight));
 
     UniValue masternodeObj(UniValue::VOBJ);
-    if(pblock->txoutMasternode != CTxOut()) {
+    if(pblock->txoutMasternode != CTxOut() && nNextHeight < consensusParams.nHardForkSeven) {
         CTxDestination address1;
         ExtractDestination(pblock->txoutMasternode.scriptPubKey, address1);
         CBitcredsAddress address2(address1);
@@ -788,8 +788,8 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     else
         result.push_back(Pair("masternode_payments_enforced", sporkManager.IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)));
 
-    if (nNextHeight > consensusParams.nHardForkTwo) {
-        std::string strDevAddress; 
+    if (nNextHeight > consensusParams.nHardForkTwo && nNextHeight < consensusParams.nHardForkSeven) {
+        std::string strDevAddress;
         CAmount fundReward = GetDevelopmentFundPayment(nNextHeight);
 
         if (nNextHeight <= consensusParams.nHardForkThree)

@@ -43,6 +43,7 @@ struct Params {
     int nHardForkFour; //block
     int nHardForkFive; //block
     int nHardForkSix; // block
+    int nHardForkSeven; // block
     int nTempDevFundIncreaseEnd; //block height for temporal Dev fund increase ending
     int nMasternodePaymentsStartBlock;
     int nInstantSendKeepLock; // in blocks
@@ -80,6 +81,7 @@ struct Params {
     int64_t nDifficultyAdjustmentInterval;
     int64_t nOldPowTargetSpacing;
     int64_t nNewPowTargetSpacing;
+
     int64_t GetCurrentPowTargetSpacing(const int& nHeight) const {
         if (nHeight > nHardForkSix)
             return nNewPowTargetSpacing;

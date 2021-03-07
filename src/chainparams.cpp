@@ -115,11 +115,12 @@ public:
         strNetworkID = "main";
         consensus.nHardForkOne = 250000; // block
         consensus.nHardForkTwo = 375000; // block
-        consensus.nHardForkThree = 550000; //block
-        consensus.nHardForkFour = 665000; //block
-        consensus.nHardForkFive = 850000; //block
-        consensus.nHardForkSix = 1000000; //block
-        consensus.nTempDevFundIncreaseEnd = 625000; //block
+        consensus.nHardForkThree = 550000; // block
+        consensus.nHardForkFour = 665000; // block
+        consensus.nHardForkFive = 850000; // block
+        consensus.nHardForkSix = 1000000; // block
+        consensus.nHardForkSeven = 1020000; // block
+        consensus.nTempDevFundIncreaseEnd = 625000; // block
         consensus.nMasternodePaymentsStartBlock = 100; // Masternode Payments begin on block 100.
         consensus.nInstantSendKeepLock = 24;
         consensus.nBudgetPaymentsStartBlock = 20545; // Bitcreds doesn't use budget payments.
@@ -216,6 +217,7 @@ public:
             //   (the tx=... number in the SetBestChain debug.log lines)
             2000        // * estimated number of transactions per day after checkpoint
         };
+
         consensus.nIntPhaseTotalBlocks = 125000;
         consensus.nBlocksPerYear = 87600;
     }
@@ -231,11 +233,12 @@ public:
         strNetworkID = "test";
         consensus.nHardForkOne = 25000; // block
         consensus.nHardForkTwo = 37500; // block
-        consensus.nHardForkThree = 55000; //block
-        consensus.nHardForkFour = 66500; //block
-        consensus.nHardForkFive = 85000; //block
-        consensus.nHardForkSix = 100000; //block
-        consensus.nTempDevFundIncreaseEnd = 62500; //block
+        consensus.nHardForkThree = 55000; // block
+        consensus.nHardForkFour = 66500; // block
+        consensus.nHardForkFive = 85000; // block
+        consensus.nHardForkSix = 100000; // block
+        consensus.nHardForkSeven = 102000; // block
+        consensus.nTempDevFundIncreaseEnd = 62500; // block
         consensus.nMasternodePaymentsStartBlock = 0;
         consensus.nInstantSendKeepLock = 24;
         consensus.nBudgetPaymentsStartBlock = 200;
@@ -344,11 +347,12 @@ public:
         strNetworkID = "regtest";
         consensus.nHardForkOne = 25000; // block
         consensus.nHardForkTwo = 37500; // block
-        consensus.nHardForkThree = 55000; //block
-        consensus.nHardForkFour = 66500; //block
-        consensus.nHardForkFive = 85000; //block
-        consensus.nHardForkSix = 100000; //block
-        consensus.nTempDevFundIncreaseEnd = 62500; //block
+        consensus.nHardForkThree = 55000; // block
+        consensus.nHardForkFour = 66500; // block
+        consensus.nHardForkFive = 85000; // block
+        consensus.nHardForkSix = 100000; // block
+        consensus.nHardForkSeven = 102000; // block
+        consensus.nTempDevFundIncreaseEnd = 62500; // block
         consensus.nMasternodePaymentsStartBlock = 0;
         consensus.nInstantSendKeepLock = 24;
         consensus.nBudgetPaymentsStartBlock = 1000;
