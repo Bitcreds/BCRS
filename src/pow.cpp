@@ -28,10 +28,72 @@ const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex)
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
-    return DeriveNextWorkRequired(pindexLast, pblock, params);
+    // Most recent algo first
+    if (pindexLast->nHeight + 1 >= params.nHardForkSeven) {
+        return DeriveNextWorkRequiredLWMA(pindexLast, pblock, params);
+    } else {
+        return DeriveNextWorkRequiredDELTA(pindexLast, pblock, params);
+    }
 }
 
-unsigned int DeriveNextWorkRequired(const INDEX_TYPE pindexLast, const BLOCK_TYPE block,
+unsigned int DeriveNextWorkRequiredLWMA(const INDEX_TYPE pindexLast, const BLOCK_TYPE block, const Consensus::Params& params)
+{
+    const int64_t T = params.GetCurrentPowTargetSpacing(pindexLast->nHeight + 1);
+
+    // For T=600, 300, 150 use approximately N=60, 90, 120
+    const int64_t N = 80; // TODO_BCRS_LOW maybe move to params
+
+    // Define a k that will be used to get a proper average after weighting the solvetimes.
+    const int64_t k = N * (N + 1) * T / 2;
+
+    const int64_t height = pindexLast->nHeight;
+    const arith_uint256 powLimit = UintToArith256(params.powLimit);
+
+    // New coins just "give away" first N blocks. It's better to guess
+    // this value instead of using powLimit, but err on high side to not get stuck.
+    if (height < N) { return powLimit.GetCompact(); }
+
+    arith_uint256 avgTarget, nextTarget;
+    int64_t thisTimestamp, previousTimestamp;
+    int64_t sumWeightedSolvetimes = 0, j = 0;
+
+    const CBlockIndex* blockPreviousTimestamp = pindexLast->GetAncestor(height - N);
+    previousTimestamp = blockPreviousTimestamp->GetBlockTime();
+
+    // Loop through N most recent blocks.
+    for (int64_t i = height - N + 1; i <= height; i++) {
+        const CBlockIndex* block = pindexLast->GetAncestor(i);
+
+        // Prevent solvetimes from being negative in a safe way. It must be done like this.
+        // Do not attempt anything like  if (solvetime < 1) {solvetime=1;}
+        // The +1 ensures new coins do not calculate nextTarget = 0.
+        thisTimestamp = (block->GetBlockTime() > previousTimestamp) ? block->GetBlockTime() : previousTimestamp + 1;
+
+        // 6*T limit prevents large drops in diff from long solvetimes which would cause oscillations.
+        int64_t solvetime = std::min(6 * T, thisTimestamp - previousTimestamp);
+
+        // The following is part of "preventing negative solvetimes".
+        previousTimestamp = thisTimestamp;
+
+        // Give linearly higher weight to more recent solvetimes.
+        j++;
+        sumWeightedSolvetimes += solvetime * j;
+
+        arith_uint256 target;
+        target.SetCompact(block->nBits);
+        avgTarget += target / N / k; // Dividing by k here prevents an overflow below.
+    }
+
+    // Desired equation in next line was nextTarget = avgTarget * sumWeightSolvetimes / k
+    // but 1/k was moved to line above to prevent overflow in new coins
+    nextTarget = avgTarget * sumWeightedSolvetimes;
+
+    if (nextTarget > powLimit) { nextTarget = powLimit; }
+
+    return nextTarget.GetCompact();
+}
+
+unsigned int DeriveNextWorkRequiredDELTA(const INDEX_TYPE pindexLast, const BLOCK_TYPE block,
                                     const Consensus::Params& params)
 {
     int64_t nRetargetTimespan = params.GetCurrentPowTargetSpacing(pindexLast->nHeight + 1);
