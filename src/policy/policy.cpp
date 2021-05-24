@@ -8,6 +8,7 @@
 #include "policy/policy.h"
 
 #include "main.h"
+#include "chainparams.h"
 #include "tinyformat.h"
 #include "util.h"
 #include "utilstrencodings.h"
@@ -49,9 +50,12 @@ bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType)
             return false;
         if (m < 1 || m > n)
             return false;
-    } else if (whichType == TX_NULL_DATA &&
-               (!fAcceptDatacarrier || scriptPubKey.size() > nMaxDatacarrierBytes))
+    } else if (whichType == TX_NULL_DATA) {
+        nMaxDatacarrierBytes = MaxOpReturnSize(chainActive.Height() >= Params().GetConsensus().nHardForkSeven);
+        if (!fAcceptDatacarrier || scriptPubKey.size() > nMaxDatacarrierBytes)
           return false;
+    }
+
 
     return whichType != TX_NONSTANDARD;
 }
