@@ -1,8 +1,10 @@
-# **Bitcreds (BCRS) v1.7.2.0**
+# **Bitcreds (BCRS) v1.7.3.0**
 
 ![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
 **Copyright (c) 2017-2021 Bitcreds Developers**
+
+Note for this version: v1.7.3 represents the first part of a transition process that will result in upgrading our codebase to newer standards from Dash, this version by itself will be rejected by the network by block 1,036,000 so it is necessary to upgrade right away when the next version gets released.
 
 What are Bitcreds?
 ----------------

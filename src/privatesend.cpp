@@ -2465,8 +2465,5 @@ void ThreadCheckPrivateSendPool()
                 nDoAutoNextRun = nTick + PRIVATESEND_AUTO_TIMEOUT_MIN + GetRandInt(PRIVATESEND_AUTO_TIMEOUT_MAX - PRIVATESEND_AUTO_TIMEOUT_MIN);
             }
         }
-
-        if (fLiteMode)
-            return;
     }
 }
