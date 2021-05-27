@@ -51,7 +51,7 @@ bool IsStandard(const CScript& scriptPubKey, txnouttype& whichType)
         if (m < 1 || m > n)
             return false;
     } else if (whichType == TX_NULL_DATA) {
-        nMaxDatacarrierBytes = MaxOpReturnSize(chainActive.Height() >= Params().GetConsensus().nHardForkSeven);
+        nMaxDatacarrierBytes = MaxOpReturnSize(chainActive.Height() + 1 >= Params().GetConsensus().nHardForkSeven);
         if (!fAcceptDatacarrier || scriptPubKey.size() > nMaxDatacarrierBytes)
           return false;
     }

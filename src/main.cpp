@@ -3144,7 +3144,7 @@ void static UpdateTip(CBlockIndex *pindexNew) {
       DateTimeStrFormat("%Y-%m-%d %H:%M:%S", chainActive.Tip()->GetBlockTime()),
       Checkpoints::GuessVerificationProgress(chainParams.Checkpoints(), chainActive.Tip()), pcoinsTip->BitcredsMemoryUsage() * (1.0 / (1<<20)), pcoinsTip->GetCacheSize());
     
-    if (chainActive.Tip()->nHeight >= chainParams.GetConsensus().nHardForkSeven - 1) {
+    if (chainActive.Height() + 1 >= chainParams.GetConsensus().nHardForkSeven) {
         fLiteMode = true;
     }
 

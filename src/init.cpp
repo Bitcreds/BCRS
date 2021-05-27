@@ -1917,7 +1917,7 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
         return InitError("You can not start a Masternode in litemode");
     }
 
-    if (chainActive.Height() >= chainparams.GetConsensus().nHardForkSeven - 1)
+    if (chainActive.Height() + 1 >= chainparams.GetConsensus().nHardForkSeven)
         fLiteMode = true;
 
     LogPrintf("fLiteMode %d\n", fLiteMode);
