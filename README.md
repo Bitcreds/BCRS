@@ -4,7 +4,7 @@
 
 **Copyright (c) 2017-2021 Bitcreds Developers**
 
-Note for this version: v1.7.3 represents the first part of a transition process that will result in upgrading our codebase to newer standards from Dash, this version by itself will be rejected by the network by block 1,036,000 so it is necessary to upgrade right away when the next version gets released.
+Note for this version: v1.7.3 represents the first part of a transition process that will result in upgrading our codebase to newer standards from Dash, this version by itself will be rejected by the network by block 1,040,000 (or earlier) so it is necessary to upgrade right away when the next version gets released. After block 1,034,000 all Bitcreds nodes running this version will switch to lite mode, disabling Masternodes, InstantSend, PrivateSend and allowing only the basic operations inherited from Bitcoin.
 
 What are Bitcreds?
 ----------------
