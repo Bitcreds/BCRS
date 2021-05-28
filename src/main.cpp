@@ -1832,21 +1832,11 @@ CAmount GetMasternodePayment(const int& nHeight) {
             case 4: nIntMNReward = 6 * COIN;
         }
     }
-    else if (nHeight > consensusParams.nHardForkSix && nHeight < consensusParams.nHardForkSix + 2 * consensusParams.nBlocksPerYear) {
-        int nIntPhase = (nHeight - consensusParams.nHardForkSix) / (consensusParams.nBlocksPerYear / 2);
-
-        switch (nIntPhase) {
-            case 0: nIntMNReward = 6 * COIN;
-                    break;
-            case 1: nIntMNReward = 5 * COIN;
-                    break;
-            case 2: nIntMNReward = 4 * COIN;
-                    break;
-            case 3: nIntMNReward = 3 * COIN;
-        }
+    else if (nHeight > consensusParams.nHardForkSix && nHeight < consensusParams.nHardForkSeven) {
+        nIntMNReward = 6 * COIN;
     }
     else
-        nIntMNReward = 2 * COIN;
+        nIntMNReward = 0 * COIN;
 
     LogPrint("creation", "GetMasternodePayment(): create=%s MN Payment=%d\n", FormatMoney(nIntMNReward), nIntMNReward);
     return nIntMNReward;
@@ -1864,7 +1854,7 @@ CAmount GetDevelopmentFundPayment(const int& nHeight) {
         else
             nIntDevFundReward = 0.5 * COIN;
     } 
-    else if (nHeight > consensusParams.nHardForkSix)
+    else if (nHeight > consensusParams.nHardForkSix && nHeight < consensusParams.nHardForkSeven)
         nIntDevFundReward = 2 * COIN;
 
     LogPrint("creation", "GetDevelopmentFundPayment(): create=%s Dev Fund Payment=%d\n", FormatMoney(nIntDevFundReward), nIntDevFundReward);
@@ -2606,13 +2596,13 @@ bool IsFundRewardValid(const CTransaction& txNew, CAmount fundReward, const int&
     std::string strDevAddress;
     
     //Use the new Dev Fund address after HardForkThree (block 550,001)
-    if (nHeight > Params().GetConsensus().nHardForkThree)
+    if (nHeight > Params().GetConsensus().nHardForkThree && nHeight < Params().GetConsensus().nHardForkSeven)
         strDevAddress = "CPhPudPYNC8uXZPCHovyTyY98Q6fJzjJLm";
     //Use the old Dev Fund address starting from HardForkTwo until HardForkThree
     else if (nHeight > Params().GetConsensus().nHardForkTwo && nHeight <= Params().GetConsensus().nHardForkThree)
         strDevAddress = "53NTdWeAxEfVjXufpBqU2YKopyZYmN9P1V";
     else if (txNew.vout.size() <= 2) // before HardForkTwo there should be at most 2 outgoing transanctions, PoW and MN rewards
-        return true;
+        return true; // after HardForkSeven only PoW reward will be paid
 
     CScript devScriptPubKey = GetScriptForDestination(CBitcredsAddress(strDevAddress.c_str()).Get());
 
@@ -3153,6 +3143,11 @@ void static UpdateTip(CBlockIndex *pindexNew) {
       chainActive.Tip()->GetBlockHash().ToString(), chainActive.Height(), log(chainActive.Tip()->nChainWork.getdouble())/log(2.0), (unsigned long)chainActive.Tip()->nChainTx,
       DateTimeStrFormat("%Y-%m-%d %H:%M:%S", chainActive.Tip()->GetBlockTime()),
       Checkpoints::GuessVerificationProgress(chainParams.Checkpoints(), chainActive.Tip()), pcoinsTip->BitcredsMemoryUsage() * (1.0 / (1<<20)), pcoinsTip->GetCacheSize());
+    
+    if (chainActive.Height() + 1 >= chainParams.GetConsensus().nHardForkSeven) {
+        fLiteMode = true;
+    }
+
     if (!warningMessages.empty())
         LogPrintf(" warning='%s'", boost::algorithm::join(warningMessages, ", "));
     LogPrintf("\n");

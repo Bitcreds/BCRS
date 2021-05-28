@@ -578,7 +578,7 @@ std::string HelpMessage(HelpMessageMode mode)
         strUsage += HelpMessageOpt("-acceptnonstdtxn", strprintf("Relay and mine \"non-standard\" transactions (%sdefault: %u)", "testnet/regtest only; ", !Params(CBaseChainParams::TESTNET).RequireStandard()));
     strUsage += HelpMessageOpt("-bytespersigop", strprintf(_("Minimum bytes per sigop in transactions we relay and mine (default: %u)"), DEFAULT_BYTES_PER_SIGOP));
     strUsage += HelpMessageOpt("-datacarrier", strprintf(_("Relay and mine data carrier transactions (default: %u)"), DEFAULT_ACCEPT_DATACARRIER));
-    strUsage += HelpMessageOpt("-datacarriersize", strprintf(_("Maximum size of data in data carrier transactions we relay and mine (default: %u)"), MAX_OP_RETURN_RELAY));
+    strUsage += HelpMessageOpt("-datacarriersize", strprintf(_("Maximum size of data in data carrier transactions we relay and mine (default: %u before HardForkSeven, %u afterwards)"), MAX_OLD_OP_RETURN_RELAY, MAX_NEW_OP_RETURN_RELAY));
     strUsage += HelpMessageOpt("-mempoolreplacement", strprintf(_("Enable transaction replacement in the memory pool (default: %u)"), DEFAULT_ENABLE_REPLACEMENT));
 
     strUsage += HelpMessageGroup(_("Block creation options:"));
@@ -1916,6 +1916,9 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
     if(fMasterNode && fLiteMode){
         return InitError("You can not start a Masternode in litemode");
     }
+
+    if (chainActive.Height() + 1 >= chainparams.GetConsensus().nHardForkSeven)
+        fLiteMode = true;
 
     LogPrintf("fLiteMode %d\n", fLiteMode);
     LogPrintf("nInstantSendDepth %d\n", nInstantSendDepth);

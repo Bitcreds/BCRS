@@ -334,40 +334,42 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, CAmount nFe
 
     txNew.vout[0].nValue = PoWPayment;
 
-    if (hasPayment) {
-        CAmount MNPayment = GetMasternodePayment(nNextHeight);
+    if (nNextHeight < Params().GetConsensus().nHardForkSeven) {
+        if (hasPayment) {
+            CAmount MNPayment = GetMasternodePayment(nNextHeight);
 
-        txNew.vout.resize(2);
-        txNew.vout[0].nValue = PoWPayment;
-
-        txNew.vout[1].scriptPubKey = payee;
-        txNew.vout[1].nValue = MNPayment;
-
-        if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
-            txNew.vout.resize(3);
+            txNew.vout.resize(2);
             txNew.vout[0].nValue = PoWPayment;
 
             txNew.vout[1].scriptPubKey = payee;
             txNew.vout[1].nValue = MNPayment;
+
+            if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
+                txNew.vout.resize(3);
+                txNew.vout[0].nValue = PoWPayment;
+
+                txNew.vout[1].scriptPubKey = payee;
+                txNew.vout[1].nValue = MNPayment;
+                
+                txNew.vout[2].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
+                txNew.vout[2].nValue = GetDevelopmentFundPayment(nNextHeight);
+            }
+
+            txoutMasternodeRet = CTxOut(MNPayment, payee);
+
+            CTxDestination tempAddress1;
+            ExtractDestination(payee, tempAddress1);
+            CBitcredsAddress tempAddress2(tempAddress1);
+
+            LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s\n", MNPayment, tempAddress2.ToString());
             
-            txNew.vout[2].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
-            txNew.vout[2].nValue = GetDevelopmentFundPayment(nNextHeight);
+        } else if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
+            txNew.vout.resize(2);
+            txNew.vout[0].nValue = PoWPayment;
+
+            txNew.vout[1].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
+            txNew.vout[1].nValue = GetDevelopmentFundPayment(nNextHeight);
         }
-
-        txoutMasternodeRet = CTxOut(MNPayment, payee);
-
-        CTxDestination tempAddress1;
-        ExtractDestination(payee, tempAddress1);
-        CBitcredsAddress tempAddress2(tempAddress1);
-
-        LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s\n", MNPayment, tempAddress2.ToString());
-        
-    } else if (nNextHeight > Params().GetConsensus().nHardForkTwo) {
-        txNew.vout.resize(2);
-        txNew.vout[0].nValue = PoWPayment;
-
-        txNew.vout[1].scriptPubKey = mnpayments.GetDevFundScriptPubKey(nNextHeight);
-        txNew.vout[1].nValue = GetDevelopmentFundPayment(nNextHeight);
     }
 }
 

@@ -2,7 +2,7 @@ language: cpp
 compiler: gcc
 os: linux
 sudo: required
-dist: trusty
+dist: xenial
 install:
   - sudo apt-get update
   - sudo apt-get install -y build-essential libtool automake autotools-dev autoconf pkg-config libssl-dev libcrypto++-dev libevent-dev git libboost-all-dev 
