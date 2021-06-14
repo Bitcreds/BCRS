@@ -1050,24 +1050,22 @@ void BitcredsGUI::setAdditionalDataSyncProgress(double nSyncProgress)
             progressBar->setVisible(false);
             labelBlocksIcon->setPixmap(QIcon(":/icons/" + theme + "/synced").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
         } else {
-
             labelBlocksIcon->setPixmap(platformStyle->SingleColorIcon(QString(
                 ":/movies/spinner-%1").arg(spinnerFrame, 3, 10, QChar('0')))
                 .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
             spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES;
 
-#ifdef ENABLE_WALLET
-            if(walletFrame)
-        {
-            walletFrame->showOutOfSyncWarning(false);
-            modalOverlay->showHide(true, true);
-        }
-#endif // ENABLE_WALLET
-
             progressBar->setFormat(tr("Synchronizing additional data: %p%"));
             progressBar->setMaximum(1000000000);
             progressBar->setValue(nSyncProgress * 1000000000.0 + 0.5);
         }
+
+#ifdef ENABLE_WALLET
+        if(walletFrame) {
+            walletFrame->showOutOfSyncWarning(false);
+            modalOverlay->showHide(true, true);
+        }
+#endif // ENABLE_WALLET
 
         strSyncStatus = QString(masternodeSync.GetSyncStatus().c_str());
         progressBarLabel->setText(strSyncStatus);
