@@ -66,8 +66,17 @@ void CMasternodeSync::SwitchToNextAsset()
             break;
         case(MASTERNODE_SYNC_INITIAL):
             ClearFulfilledRequests();
-            nRequestedMasternodeAssets = MASTERNODE_SYNC_WAITING;
-            LogPrintf("CMasternodeSync::SwitchToNextAsset -- Starting %s\n", GetAssetName());
+
+            if (fLiteMode) {
+                LogPrintf("CMasternodeSync::SwitchToNextAsset -- LiteMode active, skipping MN sync\n");
+                nRequestedMasternodeAssets = MASTERNODE_SYNC_GOVERNANCE;
+                SwitchToNextAsset();
+                return;
+            } else {
+                nRequestedMasternodeAssets = MASTERNODE_SYNC_WAITING;
+                LogPrintf("CMasternodeSync::SwitchToNextAsset -- Starting %s\n", GetAssetName());
+            }
+            
             break;
         case(MASTERNODE_SYNC_WAITING):
             ClearFulfilledRequests();
@@ -86,7 +95,9 @@ void CMasternodeSync::SwitchToNextAsset()
             LogPrintf("CMasternodeSync::SwitchToNextAsset -- Starting %s\n", GetAssetName());
             break;
         case(MASTERNODE_SYNC_GOVERNANCE):
-            LogPrintf("CMasternodeSync::SwitchToNextAsset -- Completed %s in %llds\n", GetAssetName(), GetTime() - nTimeAssetSyncStarted);
+            if (!fLiteMode)
+                LogPrintf("CMasternodeSync::SwitchToNextAsset -- Completed %s in %llds\n", GetAssetName(), GetTime() - nTimeAssetSyncStarted);
+            
             nRequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
             uiInterface.NotifyAdditionalDataSyncProgressChanged(1);
             //try to activate our Masternode if possible
