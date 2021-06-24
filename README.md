@@ -1,4 +1,8 @@
-# **Bitcreds (BCRS) v1.7.3.0**
+# **Bitcreds (BCRS) v1.7.3.1**
+
+**!! Important Announcement !!**
+
+This repository is no longer maintained since Bitcreds has been rebranded as Alterdot as of version v1.8.0. The new repository can be found [here](https://github.com/Alterdot/Alterdot).
 
 ![BCRS logo](https://github.com/Bitcreds/Bitcreds/blob/master/src/qt/res/icons/light/about.png) **master** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=master)](https://travis-ci.org/Bitcreds/Bitcreds) **develop** [![Build Status](https://travis-ci.org/Bitcreds/Bitcreds.svg?branch=develop)](https://travis-ci.org/Bitcreds/Bitcreds)
 
